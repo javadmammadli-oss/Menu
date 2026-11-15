@@ -26,7 +26,7 @@ window.MENU_DATA = {
       desc: { az: "Dik vəziyyətdə, bərabər qaralma", ru: "Равномерный загар стоя", en: "Even tan, standing" },
       icon: "▮",
       prices: [
-        { minutes: 3,  price: 3 },
+        { minutes: 3,  price: 100 },
         { minutes: 6,  price: 5 },
         { minutes: 9,  price: 7 },
         { minutes: 12, price: 9 }
