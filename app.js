@@ -129,7 +129,7 @@
     } catch (e) { /* internet yoxdur — növbəti dəfə yoxla */ }
   }
   checkUpdate();
-  setInterval(checkUpdate, 5 * 60 * 1000);
+  setInterval(checkUpdate, 60 * 1000);
 
   /* ---------- ALWAYS ON ---------- */
   let wl = null;
