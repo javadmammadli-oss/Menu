@@ -22,7 +22,7 @@ window.MENU_DATA = {
   solarium: [
     {
       id: "vertical",
-      name: { az: "Cavad", ru: "Cavad", en: "Cavad" },
+      name: { az: "Ayaq üstü", ru: "Стоя", en: "Standing" },
       desc: { az: "Dik vəziyyətdə, bərabər qaralma", ru: "Равномерный загар стоя", en: "Even tan, standing" },
       icon: "▮",
       prices: [
