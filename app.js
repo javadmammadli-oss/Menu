@@ -25,23 +25,26 @@
   }
 
   function renderSolarium() {
-    const cards = D.solarium.map((s) => `
-      <div class="card">
-        <h2>${t(s.name)}</h2><p>${t(s.desc)}</p>
-        ${s.prices.map((p) => `<div class="row"><span class="t">${p.minutes} <small>${t(D.ui.min)}</small></span><span class="price">${money(p.price)}</span></div>`).join("")}
-      </div>`).join("");
+    const machines = D.solarium.map((s) => `
+      <article class="mach">
+        <header><h2>${t(s.name)}</h2><p>${t(s.desc)}</p></header>
+        <div class="tiles">${s.prices.map((p, i) => `
+          <div class="tile" style="--i:${i}"><b class="min">${p.minutes}</b><span class="u">${t(D.ui.min)}</span><span class="pr">${money(p.price)}</span></div>`).join("")}
+        </div>
+      </article>`).join("");
     const packs = D.packages.length
-      ? `<div class="pk">${D.packages.map((p) => `<div class="pack"><span>${t(p.name)}${p.badge ? `<span class="badge">${p.badge}</span>` : ""}</span><span class="price">${money(p.price)}</span></div>`).join("")}</div>` : "";
-    return `<div class="cols">${cards}</div>${packs}`;
+      ? `<div class="packs">${D.packages.map((p) => `<div class="pack"><span>${t(p.name)}${p.badge ? `<span class="badge">${p.badge}</span>` : ""}</span><span class="pr">${money(p.price)}</span></div>`).join("")}</div>` : "";
+    return `<div class="stack">${machines}${packs}</div>`;
   }
 
   function renderDrinks() {
     const chips = D.drinkCategories
       .map((c) => `<button class="chip ${cat === c.id ? "on" : ""}" data-cat="${c.id}">${t(c.name)}</button>`).join("");
-    const items = D.drinks.filter((d) => d.cat === cat).map((d) => `
-      <div class="item"><div class="em">${d.emoji || "🥤"}</div><div class="nm">${t(d.name)}</div>
-      <div class="sz">${d.size || ""}</div><div class="price">${money(d.price)}</div></div>`).join("");
-    return `<div class="chips">${chips}</div><div class="grid">${items}</div>`;
+    const items = D.drinks.filter((d) => d.cat === cat).map((d, i) => `
+      <div class="dish" style="--i:${i}"><span class="ic">${d.emoji || "🥤"}</span>
+        <span class="nm">${t(d.name)}<small>${d.size || ""}</small></span>
+        <i class="lead"></i><span class="pr">${money(d.price)}</span></div>`).join("");
+    return `<div class="chips">${chips}</div><div class="menu">${items}</div>`;
   }
 
   function render() {
