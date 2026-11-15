@@ -121,8 +121,11 @@
   let version = null, updatePending = false;
   async function checkUpdate() {
     try {
+      // 1-ci yoxlama: yüklənmiş (keşdəki) versiya = baza. Sonrakılar: serverdən məcburi təzə nüsxə
+      // ("reload" brauzer keşini də yeniləyir, ona görə səhifə yenilənəndə köhnə fayl gəlmir)
+      const mode = version === null ? "default" : "reload";
       const parts = await Promise.all(WATCH.map((f) =>
-        fetch(f + "?_=" + Date.now(), { cache: "no-store" }).then((r) => (r.ok ? r.text() : Promise.reject()))));
+        fetch(f, { cache: mode }).then((r) => (r.ok ? r.text() : Promise.reject()))));
       const v = parts.join("\u0000");
       if (version === null) version = v;
       else if (v !== version) updatePending = true;
