@@ -11,7 +11,7 @@ window.MENU_DATA = {
   night: { from: "00:00", to: "09:00", dim: 0.85 }, // gecə ekranı qaraldır (yanma olmasın)
 
   /* TEST LÖVHƏSİ: yenilənmə vaxtını ölçmək üçün. Silmək üçün: banner: null */
-  banner: { text: { az: "Uğurludur", ru: "Успешно", en: "Success" }, pushedAt: "00:50:04" },
+  banner: null,
 
   ui: {
     solarium: { az: "Solarium",  ru: "Солярий",  en: "Solarium" },
