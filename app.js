@@ -161,6 +161,15 @@
   // kontekst menyusunu və uzun basmanı blokla
   document.addEventListener("contextmenu", (e) => e.preventDefault());
 
+  if (D.banner) {
+    const p = (n) => String(n).padStart(2, "0"), d = new Date();
+    const b = document.createElement("div");
+    b.id = "banner";
+    b.textContent = "✓ " + t(D.banner.text) + "  ·  push: " + D.banner.pushedAt +
+      "  ·  tablet: " + p(d.getHours()) + ":" + p(d.getMinutes()) + ":" + p(d.getSeconds());
+    document.body.appendChild(b);
+  }
+
   if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
 
   render();

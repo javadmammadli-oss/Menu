@@ -97,5 +97,9 @@ footer{text-align:center;color:var(--muted);font-size:clamp(12px,1.8vh,18px)}
   letter-spacing:.5px;animation:blink 2.4s ease-in-out infinite;text-shadow:0 2px 12px #000;pointer-events:none}
 @keyframes blink{50%{opacity:.35}}
 
+#banner{position:fixed;left:50%;bottom:5vh;transform:translateX(-50%);z-index:30;background:#1faa59;color:#fff;
+  padding:1.4vh 3vw;border-radius:99px;font-size:clamp(18px,3vh,34px);font-weight:800;white-space:nowrap;
+  box-shadow:0 8px 30px rgba(0,0,0,.5);pointer-events:none}
+
 /* night dim */
 #dim{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;z-index:100;transition:opacity 3s}

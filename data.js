@@ -1,4 +1,4 @@
-/* ===========================================================
+﻿/* ===========================================================
    MENYU MƏLUMATLARI — yalnız bu faylı dəyişmək kifayətdir.
    Qiymətlər NÜMUNƏDİR, öz real qiymətlərinlə əvəz et.
    Hər mətn 3 dildə: az / ru / en
@@ -9,6 +9,9 @@ window.MENU_DATA = {
   idleSeconds: 45,                 // toxunulmasa neçə saniyədən sonra reklam başlasın
   reloadAt: "04:00",               // hər gün bu saatda səhifə özünü yeniləyir
   night: { from: "00:00", to: "09:00", dim: 0.85 }, // gecə ekranı qaraldır (yanma olmasın)
+
+  /* TEST LÖVHƏSİ: yenilənmə vaxtını ölçmək üçün. Silmək üçün: banner: null */
+  banner: { text: { az: "Uğurludur", ru: "Успешно", en: "Success" }, pushedAt: "00:30:13" },
 
   ui: {
     solarium: { az: "Solarium",  ru: "Солярий",  en: "Solarium" },
