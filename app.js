@@ -18,9 +18,8 @@
       .map((l) => `<button class="lang ${lang === l ? "on" : ""}" data-lang="${l}">${l.toUpperCase()}</button>`).join("");
     $("note").textContent = t(D.ui.note);
     $("cover-title").textContent = t(D.ui.title);
-    const art = $("cover-art");
-    art.style.backgroundImage = D.cover && D.cover.image ? `url("${D.cover.image}")` : "";
-    art.classList.toggle("photo", !!(D.cover && D.cover.image));
+    const img = $("cover-img"), src = D.cover && D.cover.image;
+    if (src) { if (img.getAttribute("src") !== src) img.src = src; img.hidden = false; } else img.hidden = true;
     document.documentElement.lang = lang;
   }
 

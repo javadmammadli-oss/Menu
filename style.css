@@ -16,21 +16,23 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 @keyframes rise{from{opacity:0;transform:translateY(2vh)}to{opacity:1;transform:none}}
 
 /* ---------- LAYOUT ---------- */
-#app{height:100%;display:grid;grid-template-columns:minmax(230px,27vw) 1fr}
+#app{height:100%;display:grid;grid-template-columns:minmax(250px,32vw) 1fr}
 
 /* sol panel: şəkil / günəş sahəsi + şaquli başlıq */
-#cover{position:relative;isolation:isolate;overflow:hidden;color:#fff;display:flex;flex-direction:column;
-  justify-content:space-between;align-items:flex-start;padding:4.4vh 2.2vw 3.6vh}
+#cover{position:relative;isolation:isolate;overflow:hidden;color:#fff;display:grid;
+  grid-template-columns:auto 1fr;grid-template-rows:auto 1fr auto;column-gap:.6vw;padding:4.4vh 1.8vw 3.6vh}
+.cover-logo{grid-column:1 / -1}
+.cover-foot{grid-column:1 / -1}
+#cover-img{grid-column:2;grid-row:2;align-self:center;justify-self:center;width:100%;max-height:100%;min-height:0;
+  object-fit:contain;filter:drop-shadow(0 1.4vh 3vh rgba(0,0,0,.45))}
 #cover-art{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,var(--cover-top) 0%,var(--cover-mid) 46%,var(--cover-bot) 100%);
   background-size:cover;background-position:center}
 #cover-art::before{content:"";position:absolute;width:150vh;height:150vh;right:-75vh;top:-75vh;border-radius:50%;
   background:repeating-conic-gradient(from 0deg,rgba(255,204,12,.2) 0 4deg,transparent 4deg 12deg);
   -webkit-mask:radial-gradient(circle,#000 8%,transparent 56%);mask:radial-gradient(circle,#000 8%,transparent 56%);
   animation:spin 360s linear infinite}
-#cover-art.photo::before{display:none}
-#cover-art.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.65),rgba(0,0,0,.15))}
 .cover-logo{width:72%;max-height:8vh;object-fit:contain;object-position:left;display:block}
-#cover-title{margin:0 0 0 .6vw;align-self:center;writing-mode:vertical-rl;transform:rotate(180deg);
+#cover-title{grid-column:1;grid-row:2;margin:0;align-self:center;writing-mode:vertical-rl;transform:rotate(180deg);
   font-size:var(--fs-title);line-height:1;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
   text-shadow:0 .4vh 2vh rgba(0,0,0,.35)}
 .cover-foot{width:100%;display:flex;flex-direction:column;gap:1.8vh}
@@ -65,9 +67,10 @@ main::-webkit-scrollbar{display:none}
 /* portrait */
 @media (orientation:portrait){
   #app{grid-template-columns:1fr;grid-template-rows:auto 1fr}
-  #cover{flex-direction:row;align-items:center;gap:3vw;padding:2.4vh 4vw}
+  #cover{display:flex;flex-direction:row;align-items:center;gap:3vw;padding:2.4vh 4vw}
   .cover-logo{width:auto;max-height:6vh}
   #cover-title{writing-mode:horizontal-tb;transform:none;font-size:clamp(22px,3.4vh,40px);margin:0;align-self:center}
+  #cover-img{display:none}
   .cover-foot{width:auto;margin-left:auto}
   #note{display:none}
   .sheet{grid-template-columns:1fr}

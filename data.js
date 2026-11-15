@@ -13,8 +13,8 @@ window.MENU_DATA = {
   /* TEST LÖVHƏSİ: yenilənmə vaxtını ölçmək üçün. Silmək üçün: banner: null */
   banner: null,
 
-  /* Sol paneldəki şəkil. Real foto üçün: cover: { image: "media/cover.jpg" } (şəkli media qovluğuna at) */
-  cover: { image: "" },
+  /* Sol paneldəki şəkil (media qovluğunda). Şəkil istəmirsənsə: cover: { image: "" } */
+  cover: { image: "media/cover.webp" },
   /* Siyahının altındakı əlaqə sətri. Doldurmaq üçün: contact: { address: "...", phone: "...", instagram: "@..." } */
   contact: null,
 
