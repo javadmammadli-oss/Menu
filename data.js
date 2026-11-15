@@ -8,7 +8,7 @@ window.MENU_DATA = {
   currency: "₼",
   idleSeconds: 45,                 // toxunulmasa neçə saniyədən sonra reklam başlasın
   reloadAt: "04:00",               // hər gün bu saatda səhifə özünü yeniləyir
-  night: { from: "00:00", to: "09:00", dim: 0.85 }, // gecə ekranı qaraldır (yanma olmasın)
+  night: null, // gecə qaralması söndürülüb. Yandırmaq üçün: { from: "00:00", to: "09:00", dim: 0.85 }
 
   /* TEST LÖVHƏSİ: yenilənmə vaxtını ölçmək üçün. Silmək üçün: banner: null */
   banner: null,
