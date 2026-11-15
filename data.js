@@ -13,7 +13,14 @@ window.MENU_DATA = {
   /* TEST LÖVHƏSİ: yenilənmə vaxtını ölçmək üçün. Silmək üçün: banner: null */
   banner: null,
 
+  /* Sol paneldəki şəkil. Real foto üçün: cover: { image: "media/cover.jpg" } (şəkli media qovluğuna at) */
+  cover: { image: "" },
+  /* Siyahının altındakı əlaqə sətri. Doldurmaq üçün: contact: { address: "...", phone: "...", instagram: "@..." } */
+  contact: null,
+
   ui: {
+    title:    { az: "Qiymətlər", ru: "Цены",     en: "Price list" },
+    packages: { az: "Paketlər",  ru: "Пакеты",   en: "Packages" },
     solarium: { az: "Solarium",  ru: "Солярий",  en: "Solarium" },
     drinks:   { az: "Bar",       ru: "Бар",      en: "Bar" },
     min:      { az: "dəq",       ru: "мин",      en: "min" },

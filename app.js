@@ -8,58 +8,55 @@
   };
 
   let lang = store.get("lang", "az");
-  let tab = "solarium";
-  let cat = D.drinkCategories[0].id;
 
   const t = (o) => (typeof o === "string" ? o : o[lang] || o.az);
   const money = (n) => (Number.isInteger(n) ? n : n.toFixed(2).replace(/0$/, "")) + " " + D.currency;
 
-  /* ---------- MENU ---------- */
-  function renderHeader() {
-    $("tabs").innerHTML = ["solarium", "drinks"]
-      .map((k) => `<button class="tab ${tab === k ? "on" : ""}" data-tab="${k}">${t(D.ui[k])}</button>`).join("");
+  /* ---------- QİYMƏT SİYAHISI ---------- */
+  function renderCover() {
     $("langs").innerHTML = LANGS
       .map((l) => `<button class="lang ${lang === l ? "on" : ""}" data-lang="${l}">${l.toUpperCase()}</button>`).join("");
     $("note").textContent = t(D.ui.note);
+    $("cover-title").textContent = t(D.ui.title);
+    const art = $("cover-art");
+    art.style.backgroundImage = D.cover && D.cover.image ? `url("${D.cover.image}")` : "";
+    art.classList.toggle("photo", !!(D.cover && D.cover.image));
     document.documentElement.lang = lang;
   }
 
-  function renderSolarium() {
-    const machines = D.solarium.map((s) => `
-      <article class="mach">
-        <header><h2>${t(s.name)}</h2><p>${t(s.desc)}</p></header>
-        <div class="tiles">${s.prices.map((p, i) => `
-          <div class="tile" style="--i:${i}"><b class="min">${p.minutes}</b><span class="u">${t(D.ui.min)}</span><span class="pr">${money(p.price)}</span></div>`).join("")}
-        </div>
-      </article>`).join("");
-    const packs = D.packages.length
-      ? `<div class="packs">${D.packages.map((p) => `<div class="pack"><span>${t(p.name)}${p.badge ? `<span class="badge">${p.badge}</span>` : ""}</span><span class="pr">${money(p.price)}</span></div>`).join("")}</div>` : "";
-    return `<div class="stack">${machines}${packs}</div>`;
-  }
+  const row = (name, sub, price) =>
+    `<div class="r"><span class="rn">${name}${sub ? `<small>${sub}</small>` : ""}</span><i class="lead"></i><span class="rp">${price}</span></div>`;
+  const sec = (title, rows, i) =>
+    `<section class="sec" style="--i:${i}"><h3>${title}</h3>${rows}</section>`;
 
-  function renderDrinks() {
-    const chips = D.drinkCategories
-      .map((c) => `<button class="chip ${cat === c.id ? "on" : ""}" data-cat="${c.id}">${t(c.name)}</button>`).join("");
-    const items = D.drinks.filter((d) => d.cat === cat).map((d, i) => `
-      <div class="dish" style="--i:${i}"><span class="ic">${d.emoji || "🥤"}</span>
-        <span class="nm">${t(d.name)}<small>${d.size || ""}</small></span>
-        <i class="lead"></i><span class="pr">${money(d.price)}</span></div>`).join("");
-    return `<div class="chips">${chips}</div><div class="menu">${items}</div>`;
+  function renderSheet() {
+    let i = 0;
+    const sol = D.solarium.map((s) =>
+      sec(t(s.name), s.prices.map((p) => row(`${p.minutes} ${t(D.ui.min)}`, "", money(p.price))).join(""), i++)).join("");
+    const packs = D.packages.length
+      ? sec(t(D.ui.packages), D.packages.map((p) =>
+          row(t(p.name) + (p.badge ? `<b class="badge">${p.badge}</b>` : ""), "", money(p.price))).join(""), i++) : "";
+    const bar = D.drinkCategories.map((c) =>
+      sec(t(c.name), D.drinks.filter((d) => d.cat === c.id).map((d) => row(t(d.name), d.size || "", money(d.price))).join(""), i++)).join("");
+    const c = D.contact;
+    const contact = c ? `<footer class="contact">${[c.address, c.phone, c.instagram].filter(Boolean).map((x) => `<span>${x}</span>`).join("")}</footer>` : "";
+    return `<div class="sheet">
+      <div class="col"><div class="grp">${t(D.ui.solarium)}</div>${sol}${packs}</div>
+      <div class="col"><div class="grp">${t(D.ui.drinks)}</div>${bar}</div>
+    </div>${contact}`;
   }
 
   function render() {
-    renderHeader();
+    renderCover();
     const v = $("view");
-    v.innerHTML = tab === "solarium" ? renderSolarium() : renderDrinks();
+    v.innerHTML = renderSheet();
+    v.scrollTop = 0;
     v.style.animation = "none"; void v.offsetWidth; v.style.animation = "";
   }
 
   document.addEventListener("click", (e) => {
     const b = e.target.closest("button");
-    if (!b) return;
-    if (b.dataset.tab) { tab = b.dataset.tab; render(); }
-    else if (b.dataset.lang) { lang = b.dataset.lang; store.set("lang", lang); render(); }
-    else if (b.dataset.cat) { cat = b.dataset.cat; render(); }
+    if (b && b.dataset.lang) { lang = b.dataset.lang; store.set("lang", lang); render(); }
   });
 
   /* ---------- ADS ---------- */
@@ -98,8 +95,7 @@
     clearTimeout(adTimer);
     $("ad").classList.add("hidden");
     $("slides").innerHTML = "";
-    tab = "solarium"; cat = D.drinkCategories[0].id;   // menyu hər dəfə əvvəldən açılır
-    render();
+    render();   // siyahı hər dəfə yuxarıdan açılır
   }
 
   /* ---------- IDLE ---------- */
