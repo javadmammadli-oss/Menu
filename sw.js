@@ -1,4 +1,4 @@
-const CACHE = "menu-v2";
+const CACHE = "menu-v3";
 const FILES = ["./", "index.html", "style.css", "app.js", "data.js", "icon.svg", "logo.svg", "manifest.webmanifest"];
 
 self.addEventListener("install", (e) => {
@@ -8,12 +8,16 @@ self.addEventListener("activate", (e) => {
   e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
     .then(() => self.clients.claim()));
 });
-// Əvvəl keşdən göstər (internet olmasa da işləsin), arxada yenilə
+// İnternet varsa həmişə ən yeni fayl, yoxdursa keş (offline işləsin)
 self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
-  e.respondWith(caches.open(CACHE).then(async (c) => {
-    const hit = await c.match(e.request);
-    const net = fetch(e.request).then((r) => { if (r.ok) c.put(e.request, r.clone()); return r; }).catch(() => hit);
-    return hit || net;
-  }));
+  if (new URL(e.request.url).search.includes("_=")) return; // yenilənmə yoxlaması keşlənmir
+  e.respondWith(
+    fetch(e.request)
+      .then((r) => {
+        if (r.ok) { const copy = r.clone(); caches.open(CACHE).then((c) => c.put(e.request, copy)); }
+        return r;
+      })
+      .catch(() => caches.match(e.request))
+  );
 });

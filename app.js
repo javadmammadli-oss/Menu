@@ -112,7 +112,24 @@
 
   setInterval(() => {
     if (!adOn && Date.now() - last > D.idleSeconds * 1000) startAd();
+    // yeni versiya tapılıbsa, müştəri 10 san toxunmayanda yenilə
+    if (updatePending && Date.now() - last > 10000) location.reload();
   }, 1000);
+
+  /* ---------- AUTO UPDATE ---------- */
+  const WATCH = ["index.html", "data.js", "app.js", "style.css", "logo.svg"];
+  let version = null, updatePending = false;
+  async function checkUpdate() {
+    try {
+      const parts = await Promise.all(WATCH.map((f) =>
+        fetch(f + "?_=" + Date.now(), { cache: "no-store" }).then((r) => (r.ok ? r.text() : Promise.reject()))));
+      const v = parts.join("\u0000");
+      if (version === null) version = v;
+      else if (v !== version) updatePending = true;
+    } catch (e) { /* internet yoxdur — növbəti dəfə yoxla */ }
+  }
+  checkUpdate();
+  setInterval(checkUpdate, 5 * 60 * 1000);
 
   /* ---------- ALWAYS ON ---------- */
   let wl = null;
