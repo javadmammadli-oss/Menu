@@ -126,7 +126,16 @@
       const v = parts.join("\u0000");
       if (version === null) version = v;
       else if (v !== version) updatePending = true;
-    } catch (e) { /* internet yoxdur — növbəti dəfə yoxla */ }
+      showDebug("OK");
+    } catch (e) { showDebug("internet yoxdur"); }
+  }
+  // test rejimi: linkin sonuna ?debug=1 əlavə et → altda son yoxlama saatı görünür
+  const DEBUG = /[?&]debug=1/.test(location.search);
+  function showDebug(state) {
+    if (!DEBUG) return;
+    const d = new Date(), p = (n) => String(n).padStart(2, "0");
+    $("note").textContent = "Son yoxlama: " + p(d.getHours()) + ":" + p(d.getMinutes()) + ":" + p(d.getSeconds()) +
+      " · " + state + (updatePending ? " · YENİ VERSİYA TAPILDI" : "") + " · hər 60 san";
   }
   checkUpdate();
   setInterval(checkUpdate, 60 * 1000);
