@@ -12,7 +12,7 @@ window.MENU_DATA = {
 
   ui: {
     solarium: { az: "Solarium",  ru: "Солярий",  en: "Solarium" },
-    drinks:   { az: "İçkilər",   ru: "Напитки",  en: "Drinks" },
+    drinks:   { az: "Bar",       ru: "Бар",      en: "Bar" },
     min:      { az: "dəq",       ru: "мин",      en: "min" },
     touch:    { az: "Menyu üçün toxunun", ru: "Коснитесь для меню", en: "Touch for menu" },
     note:     { az: "Qiymətlər manatla göstərilib", ru: "Цены указаны в манатах", en: "Prices are in AZN" }
