@@ -38,14 +38,14 @@ window.MENU_DATA = {
       name: { az: "Ayaqüstə", ru: "Стоя", en: "Standing" },
       prices: [
         { minutes: 5,  price: 10 },
-        { minutes: 8,  price: 13 },
-        { minutes: 10, price: 15 },
-        { minutes: 12, price: 16 },
-        { minutes: 15, price: 21 },
-        { minutes: 18, price: 22 },
-        { minutes: 20, price: 23 },
-        { minutes: 22, price: 24 },
-        { minutes: 25, price: 26 }
+        { minutes: 8,  price: 14 },
+        { minutes: 10, price: 16 },
+        { minutes: 12, price: 17 },
+        { minutes: 15, price: 22 },
+        { minutes: 18, price: 23 },
+        { minutes: 20, price: 24 },
+        { minutes: 22, price: 25 },
+        { minutes: 25, price: 27 }
       ]
     },
     {
@@ -53,14 +53,14 @@ window.MENU_DATA = {
       name: { az: "Uzanan", ru: "Лёжа", en: "Lying" },
       prices: [
         { minutes: 5,  price: 11 },
-        { minutes: 8,  price: 15 },
-        { minutes: 10, price: 17 },
-        { minutes: 12, price: 18 },
-        { minutes: 15, price: 23 },
-        { minutes: 18, price: 24 },
-        { minutes: 20, price: 25 },
-        { minutes: 22, price: 26 },
-        { minutes: 25, price: 28 }
+        { minutes: 8,  price: 16 },
+        { minutes: 10, price: 18 },
+        { minutes: 12, price: 19 },
+        { minutes: 15, price: 24 },
+        { minutes: 18, price: 25 },
+        { minutes: 20, price: 26 },
+        { minutes: 22, price: 27 },
+        { minutes: 25, price: 29 }
       ]
     }
   ],
