@@ -75,7 +75,7 @@ window.MENU_DATA = {
   drinks: [
     { name: { az: "Çay",       ru: "Чай",       en: "Tea" },       free: true },
     { name: { az: "Nescafe",   ru: "Нескафе",   en: "Nescafe" },   free: true },
-    { name: { az: "Red Bull",  ru: "Red Bull",  en: "Red Bull" },  price: 4.5 },
+    { name: { az: "Red Bull",  ru: "Red Bull",  en: "Red Bull" },  price: 6 },
     { name: { az: "Americano", ru: "Американо", en: "Americano" }, price: 3.5 },
     { name: { az: "MegaSun çay set 1", ru: "MegaSun чай сет 1", en: "MegaSun tea set 1" }, price: null, preview: "media/Ad8.png" },
     { name: { az: "MegaSun çay set 2", ru: "MegaSun чай сет 2", en: "MegaSun tea set 2" }, price: null, preview: "media/Ad9.png" },
