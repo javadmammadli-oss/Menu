@@ -35,7 +35,7 @@ window.MENU_DATA = {
   solarium: [
     {
       id: "vertical",
-      name: { az: "Ayaqüstə", ru: "Стоя", en: "Standing" },
+      name: { az: "Ayaqüstə", ru: "Вертикальный", en: "Standing" },
       prices: [
         { minutes: 5,  price: 10 },
         { minutes: 8,  price: 14 },
@@ -50,7 +50,7 @@ window.MENU_DATA = {
     },
     {
       id: "horizontal",
-      name: { az: "Uzanan", ru: "Лёжа", en: "Lying" },
+      name: { az: "Uzanan", ru: "Горизонтальный", en: "Lying" },
       prices: [
         { minutes: 5,  price: 11 },
         { minutes: 8,  price: 16 },
