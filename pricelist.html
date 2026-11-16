@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Price List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+/* Fon şəkli: media/bg.jpg (və ya .webp/.png) — aşağıdakı --bg-i dəyiş */
+:root{
+  --bg-img:url("media/bg.avif");
+  --text:#fff; --soft:rgba(255,255,255,.72); --line:rgba(255,255,255,.55);
+  --accent:#ffcc0c;
+}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:#0b0907}
+body{display:grid;place-items:center;font-family:Montserrat,"Segoe UI",system-ui,sans-serif;color:var(--text)}
+
+/* 9:16 kətan — hər ekrana sığır, ölçülər cqw ilə miqyaslanır */
+#poster{position:relative;overflow:hidden;container-type:size;
+  height:min(100vh,calc(100vw*16/9));aspect-ratio:9/16;
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.42)),
+    var(--bg-img) center/cover no-repeat,
+    radial-gradient(circle at 70% 20%,#8a3a00,#3b1700 55%,#140800);}
+#poster::before{content:"";position:absolute;inset:0;background:rgba(20,14,8,.28);backdrop-filter:blur(2.2cqw);-webkit-backdrop-filter:blur(2.2cqw)}
+
+.logo{position:absolute;top:6.2cqw;right:6cqw;z-index:3;height:5.2cqw}
+.logo img{height:100%;display:block}
+.langs{position:absolute;top:13cqw;right:6cqw;z-index:3;display:flex;gap:1.4cqw}
+.langs button{font:inherit;font-size:2.2cqw;letter-spacing:.1em;color:var(--soft);background:none;border:1px solid var(--line);
+  border-radius:99px;padding:.7cqw 2.2cqw;cursor:pointer}
+.langs button.on{background:#fff;color:#1a1300;border-color:#fff}
+
+h1.big{position:absolute;z-index:4;left:7cqw;top:10cqw;font-weight:200;font-size:21cqw;line-height:.86;letter-spacing:-.01em;
+  pointer-events:none}
+h1.big span{display:block}
+h1.big span+span{margin-left:11cqw}
+
+.card{position:absolute;z-index:2;left:5.6cqw;right:5.6cqw;top:26.5%;bottom:11.5%;
+  background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.07));
+  border:1px solid rgba(255,255,255,.14);border-radius:5.6cqw;
+  backdrop-filter:blur(4cqw) brightness(.8);-webkit-backdrop-filter:blur(4cqw) brightness(.8);
+  box-shadow:0 2cqw 8cqw rgba(0,0,0,.25);
+  padding:6.6cqw 6.4cqw 4.6cqw;display:flex;flex-direction:column;min-height:0}
+.card h2{font-weight:300;font-size:6.6cqw;letter-spacing:.01em;margin-bottom:6cqw}
+
+.head,.row{display:grid;grid-template-columns:1fr 24cqw;align-items:center}
+.head{font-size:3cqw;font-weight:300;line-height:1.25;color:var(--soft);padding-bottom:3cqw;border-bottom:1px solid var(--line)}
+.head .h2{text-align:center;color:#fff;font-size:3.4cqw}
+.list{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.grp{font-size:2.6cqw;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);padding:2.6cqw 0 1cqw}
+.row{flex:1 1 0;min-height:0;border-bottom:1px solid var(--line);font-size:3.3cqw;font-weight:400}
+.row:last-child{border-bottom:0}
+.row .n{padding-right:2cqw}
+.row .n small{display:block;font-size:.78em;font-weight:300;color:var(--soft);margin-top:.3em}
+.row .p{height:62%;display:flex;align-items:center;justify-content:flex-end;border-left:1px solid var(--line);
+  font-size:3.4cqw;white-space:nowrap;font-variant-numeric:tabular-nums}
+.badge{margin-left:.7em;font-size:.72em;padding:.1em .6em;border-radius:99px;background:var(--accent);color:#1a1300;font-weight:500}
+.foot-note{margin-top:3cqw;text-align:center;font-size:2.7cqw;font-weight:300;line-height:1.5;color:var(--soft)}
+
+.contact{position:absolute;z-index:3;left:6.6cqw;right:6.6cqw;bottom:4.4cqw;display:flex;justify-content:space-between;
+  align-items:center;gap:2cqw;font-size:2.9cqw;font-weight:300}
+.contact span{display:flex;align-items:center;gap:1.4cqw;white-space:nowrap}
+.contact svg{width:4cqw;height:4cqw;stroke:#fff;fill:none;stroke-width:1.5}
+</style>
+</head>
+<body>
+<div id="poster">
+  <div class="logo"><img src="logo.svg" alt=""></div>
+  <div class="langs" id="langs"></div>
+  <h1 class="big"><span>Price</span><span>List</span></h1>
+  <section class="card">
+    <h2 id="ctitle"></h2>
+    <div class="head"><div id="h1"></div><div class="h2" id="h2"></div></div>
+    <div class="list" id="list"></div>
+    <p class="foot-note" id="note"></p>
+  </section>
+  <footer class="contact" id="contact"></footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  const D = window.MENU_DATA, LANGS = ["az","ru","en"];
+  let lang = (function(){try{return localStorage.getItem("lang")||"az"}catch(e){return"az"}})();
+  const t = o => typeof o === "string" ? o : (o[lang] || o.az);
+  const money = n => (Number.isInteger(n) ? n : n.toFixed(2).replace(/0$/,"")) + " " + D.currency;
+  const ic = {
+    pin:'<svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>',
+    tel:'<svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>',
+    ig:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6"/></svg>'
+  };
+  const U = D.ui;
+  const row = (n, sub, p) => `<div class="row"><div class="n">${n}${sub?`<small>${sub}</small>`:""}</div><div class="p">${p}</div></div>`;
+
+  function render(){
+    document.documentElement.lang = lang;
+    document.getElementById("langs").innerHTML = LANGS.map(l=>`<button class="${l===lang?"on":""}" data-l="${l}">${l.toUpperCase()}</button>`).join("");
+    document.getElementById("ctitle").textContent = t(U.solarium);
+    document.getElementById("h1").innerHTML = t({az:"Xidmət<br>növü",ru:"Название<br>процедуры",en:"Service<br>name"});
+    document.getElementById("h2").textContent = t({az:"Qiymət",ru:"Цена",en:"Price"});
+    let h = "";
+    D.solarium.forEach(s=>{
+      h += `<div class="grp">${t(s.name)}</div>` + s.prices.map(p=>row(`${p.minutes} ${t(U.min)}`,"",money(p.price))).join("");
+    });
+    if (D.packages.length){
+      h += `<div class="grp">${t(U.packages)}</div>` + D.packages.map(p=>row(t(p.name)+(p.badge?`<span class="badge">${p.badge}</span>`:""),"",money(p.price))).join("");
+    }
+    document.getElementById("list").innerHTML = h;
+    document.getElementById("note").textContent = t(U.note);
+    const c = D.contact || {};
+    document.getElementById("contact").innerHTML =
+      [["pin",c.address],["tel",c.phone],["ig",c.instagram]].filter(x=>x[1]).map(x=>`<span>${ic[x[0]]}${x[1]}</span>`).join("");
+  }
+  document.addEventListener("click",e=>{
+    const b = e.target.closest("button[data-l]");
+    if(b){ lang=b.dataset.l; try{localStorage.setItem("lang",lang)}catch(x){} render(); }
+  });
+  render();
+})();
+</script>
+</body>
+</html>

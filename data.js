@@ -8,6 +8,7 @@ window.MENU_DATA = {
   currency: "₼",
   idleSeconds: 45,                 // toxunulmasa neçə saniyədən sonra reklam başlasın
   reloadAt: "04:00",               // hər gün bu saatda səhifə özünü yeniləyir
+  testButton: true,                // MÜVƏQQƏTİ: sol altda "▶ Reklam" düyməsi (reklamı dərhal test etmək üçün). Söndürmək: false
   night: null, // gecə qaralması söndürülüb. Yandırmaq üçün: { from: "00:00", to: "09:00", dim: 0.85 }
 
   /* TEST LÖVHƏSİ: yenilənmə vaxtını ölçmək üçün. Silmək üçün: banner: null */
@@ -20,7 +21,7 @@ window.MENU_DATA = {
 
   ui: {
     title:    { az: "Qiymətlər", ru: "Цены",     en: "Price list" },
-    packages: { az: "Paketlər",  ru: "Пакеты",   en: "Packages" },
+    packages: { az: "Əlavə",     ru: "Дополнительно", en: "Extra" },
     solarium: { az: "Solarium",  ru: "Солярий",  en: "Solarium" },
     drinks:   { az: "Bar",       ru: "Бар",      en: "Bar" },
     min:      { az: "dəq",       ru: "мин",      en: "min" },
@@ -28,39 +29,43 @@ window.MENU_DATA = {
     note:     { az: "Qiymətlər manatla göstərilib", ru: "Цены указаны в манатах", en: "Prices are in AZN" }
   },
 
-  /* ---------- SOLARİUM ---------- */
+  /* ---------- SOLARİUM (çap olunmuş qiymət vərəqindən) ---------- */
   solarium: [
     {
       id: "vertical",
-      name: { az: "Ayaq üstü", ru: "Стоя", en: "Standing" },
-      desc: { az: "Dik vəziyyətdə, bərabər qaralma", ru: "Равномерный загар стоя", en: "Even tan, standing" },
-      icon: "▮",
+      name: { az: "Ayaqüstə", ru: "Стоя", en: "Standing" },
       prices: [
-        { minutes: 3,  price: 100 },
-        { minutes: 6,  price: 5 },
-        { minutes: 9,  price: 7 },
-        { minutes: 12, price: 9 }
+        { minutes: 5,  price: 10 },
+        { minutes: 8,  price: 13 },
+        { minutes: 10, price: 15 },
+        { minutes: 12, price: 16 },
+        { minutes: 15, price: 21 },
+        { minutes: 18, price: 22 },
+        { minutes: 20, price: 23 },
+        { minutes: 22, price: 24 },
+        { minutes: 25, price: 26 }
       ]
     },
     {
       id: "horizontal",
-      name: { az: "Horizontal solarium", ru: "Горизонтальный солярий", en: "Horizontal solarium" },
-      desc: { az: "Maksimum rahatlıq, LED texnologiya", ru: "Максимальный комфорт, LED", en: "Maximum comfort, LED technology" },
-      icon: "▬",
+      name: { az: "Uzanan", ru: "Лёжа", en: "Lying" },
       prices: [
-        { minutes: 10, price: 6 },
-        { minutes: 15, price: 9 },
-        { minutes: 20, price: 12 },
-        { minutes: 25, price: 14 }
+        { minutes: 5,  price: 11 },
+        { minutes: 8,  price: 15 },
+        { minutes: 10, price: 17 },
+        { minutes: 12, price: 18 },
+        { minutes: 15, price: 23 },
+        { minutes: 18, price: 24 },
+        { minutes: 20, price: 25 },
+        { minutes: 22, price: 26 },
+        { minutes: 25, price: 28 }
       ]
     }
   ],
-  /* abunəlik / paketlər (istəməsən boş burax: []) */
+  /* əlavə xidmətlər (istəməsən boş burax: []) — prefix: qiymətin qarşısındakı işarə */
   packages: [
-    { name: { az: "5 seans paketi", ru: "Пакет 5 сеансов", en: "5-session pack" }, price: 40, badge: "-10%" },
-    { name: { az: "10 seans paketi", ru: "Пакет 10 сеансов", en: "10-session pack" }, price: 75, badge: "-15%" }
+    { name: { az: "Vibra-nano", ru: "Вибра-нано", en: "Vibra-nano" }, price: 3, prefix: "+" }
   ],
-
   /* ---------- İÇKİLƏR ---------- */
   drinkCategories: [
     { id: "energy", name: { az: "Enerji içkiləri", ru: "Энергетики", en: "Energy drinks" } },
@@ -89,18 +94,14 @@ window.MENU_DATA = {
            "video" → src: "media/video.mp4" (səssiz, avtomatik)
      seconds: slaydın qalma müddəti                                      */
   ads: [
-    { type: "html", cls: "a-sun", seconds: 8,
-      title: { az: "Mükəmməl qaralma", ru: "Идеальный загар", en: "The perfect tan" },
-      text:  { az: "Alman keyfiyyəti · LED texnologiya", ru: "Немецкое качество · LED-технологии", en: "German quality · LED technology" } },
-    { type: "html", cls: "a-promo", seconds: 8,
-      title: { az: "10 seans paketi −15%", ru: "Пакет 10 сеансов −15%", en: "10-session pack −15%" },
-      text:  { az: "Daimi müştərilər üçün xüsusi qiymət", ru: "Специальная цена для постоянных клиентов", en: "Special price for regular guests" } },
-    { type: "html", cls: "a-vit", seconds: 8,
-      title: { az: "Soyuq içkilər, isti qəhvə", ru: "Холодные напитки, горячий кофе", en: "Cold drinks, hot coffee" },
-      text:  { az: "Seansdan sonra özünüzə bir fasilə verin", ru: "Сделайте паузу после сеанса", en: "Take a break after your session" } }
-    /* nümunə şəkil/video:
+    /* media/ qovluğundakı Ad1–Ad4 hazır afişalardır (992×1586 ≈ 5:8). Üstünə yazı əlavə edilmir. */
+    { type: "poster", src: "media/Ad1.png", ratio: 0.6255, seconds: 12 },   /* Game Over (Devoted Creations) */
+    { type: "poster", src: "media/Ad2.png", ratio: 0.6255, seconds: 12 },   /* Space 3000 */
+    { type: "poster", src: "media/Ad3.png", ratio: 0.6255, seconds: 12 },   /* Extrasun+ 5600 */
+    { type: "poster", src: "media/Ad4.png", ratio: 0.6259, seconds: 12 }    /* megaSun T200 */
+    /* başqa növlər (nümunə):
+    { type: "photo", src: "media/foto.webp", kb: "a", seconds: 10, eyebrow: {...}, title: {...}, text: {...} },
     { type: "image", src: "media/reklam1.jpg", seconds: 8 },
     { type: "video", src: "media/reklam2.mp4", seconds: 15 },
-    */
-  ]
+    */  ]
 };

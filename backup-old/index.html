@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#140800">
+<title>Menyu</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <aside id="cover">
+      <div id="cover-art"></div>
+      <img class="cover-logo" src="logo.svg" alt="megaSun">
+      <h1 id="cover-title"></h1>
+      <img id="cover-img" alt="">
+      <div class="cover-foot">
+        <div id="langs"></div>
+        <div id="note"></div>
+      </div>
+    </aside>
+    <main id="view"></main>
+  </div>
+
+  <section id="ad" class="hidden" aria-hidden="true">
+    <div id="slides"></div>
+    <div id="hint"></div>
+  </section>
+  <div id="dim"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

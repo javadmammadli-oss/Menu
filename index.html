@@ -7,26 +7,31 @@
 <title>Menyu</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="app">
-    <aside id="cover">
-      <div id="cover-art"></div>
-      <img class="cover-logo" src="logo.svg" alt="megaSun">
-      <h1 id="cover-title"></h1>
-      <img id="cover-img" alt="">
-      <div class="cover-foot">
-        <div id="langs"></div>
-        <div id="note"></div>
-      </div>
-    </aside>
-    <main id="view"></main>
+    <div id="poster">
+      <div class="logo"><img src="logo.svg" alt=""></div>
+      <div class="langs" id="langs"></div>
+      <h1 class="big"><span id="t1"></span><span id="t2"></span></h1>
+      <section class="card">
+        <div class="rim"><i class="rc2"></i><i class="rb"></i><i class="rr"></i></div>
+        <h2 id="ctitle"></h2>
+        <div class="list" id="view"></div>
+        <p class="foot-note" id="note"></p>
+      </section>
+      <footer class="contact" id="contact"></footer>
+      <div class="flare" id="flare"><i class="veil"></i><i class="core"></i><i class="s1"></i><i class="s2"></i><i class="g g1"></i><i class="g g2"></i><i class="g g3"></i><i class="g g4"></i></div>
+    </div>
   </div>
 
   <section id="ad" class="hidden" aria-hidden="true">
     <div id="slides"></div>
     <div id="hint"></div>
+    <div id="adnav"><button class="adnav" data-d="-1">◀</button><span id="adcount"></span><button class="adnav" data-d="1">▶</button><button class="adnav" data-d="x">✕</button></div>
   </section>
   <div id="dim"></div>
 

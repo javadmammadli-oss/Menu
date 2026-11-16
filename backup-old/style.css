@@ -1,0 +1,112 @@
+/* ---------- TOKENS ---------- */
+:root{
+  --ink:#14110a; --sand:#e8e3d3; --muted:#665f4c; --rule:rgba(20,17,10,.28);
+  --gold:#ffcc0c; --gold-deep:#e0a800; --on-gold:#1a1300;
+  --cover-top:#8a3a00; --cover-mid:#3b1700; --cover-bot:#140800;
+  --fs-xs:clamp(12px,1.7vh,18px); --fs-s:clamp(14px,2.05vh,24px); --fs-m:clamp(16px,2.4vh,28px);
+  --fs-title:clamp(34px,7.4vh,96px);
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+html,body{margin:0;height:100%;background:var(--cover-bot);color:var(--ink);
+  font-family:Roboto,"Segoe UI",system-ui,-apple-system,sans-serif;overflow:hidden;overscroll-behavior:none;touch-action:manipulation}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+.hidden{display:none!important}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes rise{from{opacity:0;transform:translateY(2vh)}to{opacity:1;transform:none}}
+
+/* ---------- LAYOUT ---------- */
+#app{height:100%;display:grid;grid-template-columns:minmax(250px,32vw) 1fr}
+
+/* sol panel: şəkil / günəş sahəsi + şaquli başlıq */
+#cover{position:relative;isolation:isolate;overflow:hidden;color:#fff;display:grid;
+  grid-template-columns:auto 1fr;grid-template-rows:auto 1fr auto;column-gap:.6vw;padding:4.4vh 1.8vw 3.6vh}
+.cover-logo{grid-column:1 / -1}
+.cover-foot{grid-column:1 / -1}
+#cover-img{grid-column:2;grid-row:2;align-self:center;justify-self:center;width:100%;max-height:100%;min-height:0;
+  object-fit:contain;filter:drop-shadow(0 1.4vh 3vh rgba(0,0,0,.45))}
+#cover-art{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,var(--cover-top) 0%,var(--cover-mid) 46%,var(--cover-bot) 100%);
+  background-size:cover;background-position:center}
+#cover-art::before{content:"";position:absolute;width:150vh;height:150vh;right:-75vh;top:-75vh;border-radius:50%;
+  background:repeating-conic-gradient(from 0deg,rgba(255,204,12,.2) 0 4deg,transparent 4deg 12deg);
+  -webkit-mask:radial-gradient(circle,#000 8%,transparent 56%);mask:radial-gradient(circle,#000 8%,transparent 56%);
+  animation:spin 360s linear infinite}
+.cover-logo{width:72%;max-height:8vh;object-fit:contain;object-position:left;display:block}
+#cover-title{grid-column:1;grid-row:2;margin:0;align-self:center;writing-mode:vertical-rl;transform:rotate(180deg);
+  font-size:var(--fs-title);line-height:1;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  text-shadow:0 .4vh 2vh rgba(0,0,0,.35)}
+.cover-foot{width:100%;display:flex;flex-direction:column;gap:1.8vh}
+#langs{display:flex;gap:.6vw}
+.lang{flex:1;height:clamp(44px,6.2vh,62px);border-radius:99px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.3);font-weight:700;font-size:var(--fs-s);letter-spacing:.06em;color:#fff;transition:.25s var(--ease)}
+.lang.on{background:var(--gold);color:var(--on-gold);border-color:transparent}
+#note{color:rgba(255,255,255,.85);font-size:var(--fs-xs);line-height:1.4}
+
+/* sağ panel: qiymət siyahısı */
+main{min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+  background:var(--sand);padding:4.6vh 3.6vw 3vh;animation:rise .4s var(--ease) both}
+main::-webkit-scrollbar{display:none}
+.sheet{display:grid;grid-template-columns:1fr 1fr;column-gap:4.6vw;row-gap:4vh;align-items:start}
+.col{display:flex;flex-direction:column;gap:3.2vh}
+.grp{align-self:flex-start;background:var(--ink);color:var(--gold);padding:.9vh 1.6vw;border-radius:99px;
+  font-size:var(--fs-xs);font-weight:800;letter-spacing:.22em;text-transform:uppercase}
+.sec{animation:rise .5s var(--ease) both;animation-delay:calc(var(--i,0) * 70ms + 100ms)}
+.sec h3{margin:0 0 1vh;display:flex;align-items:center;gap:.9vw;font-size:var(--fs-m);font-weight:800;
+  letter-spacing:.14em;text-transform:uppercase}
+.sec h3::before{content:"";flex:none;width:2.6vh;height:.7vh;border-radius:9px;background:var(--gold-deep)}
+.r{display:flex;align-items:baseline;gap:1vw;padding:.85vh 0}
+.rn{font-size:var(--fs-s);font-weight:500;letter-spacing:.05em;text-transform:uppercase}
+.rn small{margin-left:.7em;color:var(--muted);font-size:.8em;letter-spacing:.04em}
+.lead{flex:1;min-width:2vw;border-bottom:1.5px dotted var(--rule);transform:translateY(-.5vh)}
+.rp{font-size:var(--fs-s);font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.badge{margin-left:.8em;padding:.15em .6em;border-radius:99px;background:var(--ink);color:var(--gold);
+  font-size:.78em;font-weight:800;letter-spacing:.04em;vertical-align:.08em}
+.contact{display:flex;justify-content:space-between;gap:2vw;margin-top:3.4vh;padding-top:2vh;border-top:1px solid var(--rule);
+  color:var(--muted);font-size:var(--fs-xs);font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+
+/* portrait */
+@media (orientation:portrait){
+  #app{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  #cover{display:flex;flex-direction:row;align-items:center;gap:3vw;padding:2.4vh 4vw}
+  .cover-logo{width:auto;max-height:6vh}
+  #cover-title{writing-mode:horizontal-tb;transform:none;font-size:clamp(22px,3.4vh,40px);margin:0;align-self:center}
+  #cover-img{display:none}
+  .cover-foot{width:auto;margin-left:auto}
+  #note{display:none}
+  .sheet{grid-template-columns:1fr}
+  main{padding:3vh 5vw}
+}
+@media (prefers-reduced-motion:reduce){.sec,main,#cover-art::before{animation:none}}
+
+/* ---------- AD ---------- */
+#ad{position:fixed;inset:0;background:#000;z-index:50;cursor:pointer}
+#slides{position:absolute;inset:0}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.slide.on{opacity:1}
+.slide img,.slide video{width:100%;height:100%;object-fit:cover}
+.slide .txt{position:relative;z-index:2;text-align:center;padding:0 8vw;color:#fff;animation:drift 60s ease-in-out infinite alternate}
+.slide h1{margin:0 0 2vh;font-size:clamp(40px,10vh,120px);line-height:1.05;font-weight:900}
+.slide p{margin:0;font-size:clamp(20px,4vh,48px);opacity:.9}
+@keyframes drift{from{transform:translate(-1.5vw,-1vh)}to{transform:translate(1.5vw,1vh)}}
+.slide.on .txt h1{animation:rise .9s .2s var(--ease) both}
+.slide.on .txt p{animation:rise .9s .5s var(--ease) both}
+
+.a-sun{background:radial-gradient(circle at 50% 120%,#ff8a00,#7a2a00 45%,#120700 80%)}
+.a-sun::before{content:"";position:absolute;width:140vmax;height:140vmax;left:50%;top:50%;margin:-70vmax 0 0 -70vmax;
+  background:repeating-conic-gradient(from 0deg,rgba(255,184,0,.18) 0 5deg,transparent 5deg 15deg);animation:spin 90s linear infinite}
+.a-promo{background:linear-gradient(135deg,#1a1200,#4a3000 55%,#ffb800)}
+.a-promo::before{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.18),transparent 40%);animation:pulse 5s ease-in-out infinite alternate}
+.a-vit{background:linear-gradient(160deg,#08131f,#0e3a52 60%,#0b7a8f)}
+.a-vit::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(255,255,255,.14),transparent 45%);animation:pulse 6s ease-in-out infinite alternate}
+@keyframes pulse{from{transform:scale(1);opacity:.6}to{transform:scale(1.25);opacity:1}}
+
+#hint{position:absolute;left:0;right:0;bottom:5vh;text-align:center;z-index:5;color:#fff;font-size:clamp(18px,3vh,34px);font-weight:700;
+  letter-spacing:.5px;animation:blink 2.4s ease-in-out infinite;text-shadow:0 2px 12px #000;pointer-events:none}
+@keyframes blink{50%{opacity:.35}}
+
+#banner{position:fixed;left:50%;bottom:5vh;transform:translateX(-50%);z-index:30;background:#1faa59;color:#fff;
+  padding:1.4vh 3vw;border-radius:99px;font-size:clamp(18px,3vh,34px);font-weight:800;white-space:nowrap;
+  box-shadow:0 8px 30px rgba(0,0,0,.5);pointer-events:none}
+
+/* night dim */
+#dim{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;z-index:100;transition:opacity 3s}

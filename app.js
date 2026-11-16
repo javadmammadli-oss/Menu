@@ -13,49 +13,78 @@
   const money = (n) => (Number.isInteger(n) ? n : n.toFixed(2).replace(/0$/, "")) + " " + D.currency;
 
   /* ---------- QİYMƏT SİYAHISI ---------- */
-  function renderCover() {
-    $("langs").innerHTML = LANGS
-      .map((l) => `<button class="lang ${lang === l ? "on" : ""}" data-lang="${l}">${l.toUpperCase()}</button>`).join("");
-    $("note").textContent = t(D.ui.note);
-    $("cover-title").textContent = t(D.ui.title);
-    const img = $("cover-img"), src = D.cover && D.cover.image;
-    if (src) { if (img.getAttribute("src") !== src) img.src = src; img.hidden = false; } else img.hidden = true;
-    document.documentElement.lang = lang;
-  }
+  const ic = {
+    pin: '<svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>',
+    tel: '<svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>',
+    ig: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6"/></svg>'
+  };
+  const TITLE = { az: ["Qiymət", "Siyahısı"], ru: ["Прайс", "Лист"], en: ["Price", "List"] };
+  const HEAD = {
+    h1: { az: "Xidmət<br>növü", ru: "Название<br>процедуры", en: "Service<br>name" },
+    h2: { az: "Qiymət", ru: "Цена", en: "Price" }
+  };
 
   const row = (name, sub, price) =>
-    `<div class="r"><span class="rn">${name}${sub ? `<small>${sub}</small>` : ""}</span><i class="lead"></i><span class="rp">${price}</span></div>`;
-  const sec = (title, rows, i) =>
-    `<section class="sec" style="--i:${i}"><h3>${title}</h3>${rows}</section>`;
+    `<div class="row"><div class="n">${name}${sub ? `<small>${sub}</small>` : ""}</div><div class="p">${price}</div></div>`;
 
   function renderSheet() {
-    let i = 0;
-    const sol = D.solarium.map((s) =>
-      sec(t(s.name), s.prices.map((p) => row(`${p.minutes} ${t(D.ui.min)}`, "", money(p.price))).join(""), i++)).join("");
-    const packs = D.packages.length
-      ? sec(t(D.ui.packages), D.packages.map((p) =>
-          row(t(p.name) + (p.badge ? `<b class="badge">${p.badge}</b>` : ""), "", money(p.price))).join(""), i++) : "";
-    const bar = D.drinkCategories.map((c) =>
-      sec(t(c.name), D.drinks.filter((d) => d.cat === c.id).map((d) => row(t(d.name), d.size || "", money(d.price))).join(""), i++)).join("");
-    const c = D.contact;
-    const contact = c ? `<footer class="contact">${[c.address, c.phone, c.instagram].filter(Boolean).map((x) => `<span>${x}</span>`).join("")}</footer>` : "";
-    return `<div class="sheet">
-      <div class="col"><div class="grp">${t(D.ui.solarium)}</div>${sol}${packs}</div>
-      <div class="col"><div class="grp">${t(D.ui.drinks)}</div>${bar}</div>
-    </div>${contact}`;
+    const cols = D.solarium.map((s) =>
+      `<div class="colx"><div class="grp">${t(s.name)}</div>` +
+      s.prices.map((p) => row(`${p.minutes} ${t(D.ui.min)}`, "", money(p.price))).join("") + `</div>`).join("");
+    let h = `<div class="cols">${cols}</div>`;
+    if (D.packages.length) {
+      h += `<div class="extras">` +
+        D.packages.map((p) => row(t(p.name) + (p.badge ? `<span class="badge">${p.badge}</span>` : ""), "", (p.prefix || "") + money(p.price))).join("") + `</div>`;
+    }
+    return h;
   }
 
   function render() {
-    renderCover();
-    const v = $("view");
-    v.innerHTML = renderSheet();
-    v.scrollTop = 0;
-    v.style.animation = "none"; void v.offsetWidth; v.style.animation = "";
+    $("langs").innerHTML = LANGS
+      .map((l) => `<button class="lang ${lang === l ? "on" : ""}" data-lang="${l}">${l.toUpperCase()}</button>`).join("");
+    const T = TITLE[lang] || TITLE.az;
+    $("t1").textContent = T[0]; $("t2").textContent = T[1];
+    $("ctitle").textContent = t(D.ui.solarium);
+    $("note").textContent = t(D.ui.note);
+    const c = D.contact || {};
+    $("contact").innerHTML = [["pin", c.address], ["tel", c.phone], ["ig", c.instagram]]
+      .filter((x) => x[1]).map((x) => `<span>${ic[x[0]]}${x[1]}</span>`).join("");
+    $("view").innerHTML = renderSheet();
+    document.documentElement.lang = lang;
+  }
+
+  /* ---------- DİL KEÇİDİ ANİMASİYASI: köhnə mətn yumşaq çıxır, yenisi pillə-pillə gəlir ---------- */
+  const FX = "#t1,#t2,#ctitle,#note,.grp,.row";
+  let swapT = null, inT = null;
+  function animateIn() {
+    const poster = $("poster");
+    poster.classList.remove("in");
+    // başlıqlar əvvəl, sonra iki sütun EYNİ VAXTDA yuxarıdan aşağı pillə-pillə, ən axırda alt qeyd
+    const d = (sel, v) => { const el = poster.querySelector(sel); if (el) el.style.setProperty("--d", v); };
+    d("#t1", 0); d("#t2", 1); d("#ctitle", 2);
+    poster.querySelectorAll(".colx").forEach((col) =>
+      col.querySelectorAll(".grp,.row").forEach((el, i) => el.style.setProperty("--d", 4 + i)));
+    poster.querySelectorAll(".extras .row").forEach((el) => el.style.setProperty("--d", 15));
+    d("#note", 16);
+    void poster.offsetWidth;
+    poster.classList.add("in");
+    clearTimeout(inT);
+    inT = setTimeout(() => poster.classList.remove("in"), 2400);
+  }
+  function swapLang(l) {
+    if (l === lang) return;
+    lang = l; store.set("lang", lang);
+    document.querySelectorAll(".lang").forEach((b) => b.classList.toggle("on", b.dataset.lang === l));
+    const poster = $("poster");
+    poster.classList.remove("in");
+    poster.classList.add("out");
+    clearTimeout(swapT);
+    swapT = setTimeout(() => { render(); poster.classList.remove("out"); animateIn(); }, 280);
   }
 
   document.addEventListener("click", (e) => {
     const b = e.target.closest("button");
-    if (b && b.dataset.lang) { lang = b.dataset.lang; store.set("lang", lang); render(); }
+    if (b && b.dataset.lang) swapLang(b.dataset.lang);
   });
 
   /* ---------- ADS ---------- */
@@ -65,6 +94,23 @@
     $("slides").innerHTML = D.ads.map((a) => {
       if (a.type === "image") return `<div class="slide"><img src="${a.src}" alt=""></div>`;
       if (a.type === "video") return `<div class="slide"><video src="${a.src}" muted playsinline loop preload="auto"></video></div>`;
+      if (a.type === "poster") {
+        // hazır dizayn edilmiş afişa (üstünə yazı çıxmır) + göstərilən yerlərdə növbə ilə işıq vurğusu
+        const glows = (a.glows || []).map((g, n) =>
+          `<i class="glow" style="--gx:${g[0]}%;--gy:${g[1]}%;--gw:${g[2]}%;--gh:${g[3]}%;--gi:${n}"></i>`).join("");
+        return `<div class="slide poster"><div class="pbg" style="background-image:url('${a.src}')"></div><div class="pbox" style="--arn:${a.ratio || 0.5625}">` +
+          `<img src="${a.src}" alt="">${glows}<i class="psheen"></i></div></div>`;
+      }
+      if (a.type === "photo") {
+        // foto + yavaş zoom (Ken Burns) + söz-söz gələn başlıq + işıq keçidi + irəliləyiş xətti
+        const words = t(a.title).split(" ").map((w, n) => `<span class="w" style="--i:${n}">${w}</span>`).join(" ");
+        // fit:"frame" — kvadrat/uyğunsuz nisbətli məhsul şəkli: bulanıq fon + ortada çərçivəli şəkil
+        const frame = a.fit === "frame" ? `<div class="frm"><img src="${a.src}" alt=""></div>` : "";
+        return `<div class="slide photo${a.fit === "frame" ? " frame" : ""} kb-${a.kb || "a"}${a.pos ? " cap-" + a.pos : ""}"><div class="ph" style="background-image:url('${a.src}')"></div>` +
+          `<i class="shade"></i>${frame}<i class="sheen"></i><img class="ad-logo" src="logo.svg" alt="">` +
+          `<div class="cap">${a.eyebrow ? `<small>${t(a.eyebrow)}</small>` : ""}<h1>${words}</h1><p>${t(a.text)}</p></div>` +
+          `<i class="prog" style="--s:${a.seconds || 8}s"></i></div>`;
+      }
       return `<div class="slide ${a.cls || ""}"><div class="txt"><h1>${t(a.title)}</h1><p>${t(a.text)}</p></div></div>`;
     }).join("");
     $("hint").textContent = t(D.ui.touch);
@@ -72,8 +118,15 @@
 
   function showSlide(i) {
     const els = $("slides").children;
+    const cnt = $("adcount"); if (cnt) cnt.textContent = (i + 1) + " / " + els.length;
     for (let k = 0; k < els.length; k++) {
       const on = k === i;
+      // köhnə slayd solarkən animasiyası sıçramasın deyə 1.4 san "out" saxlanılır
+      if (!on && els[k].classList.contains("on")) {
+        els[k].classList.add("out");
+        setTimeout((el) => el.classList.remove("out"), 1400, els[k]);
+      }
+      if (on) els[k].classList.remove("out");
       els[k].classList.toggle("on", on);
       const v = els[k].querySelector("video");
       if (v) { if (on) { v.currentTime = 0; v.play().catch(() => {}); } else v.pause(); }
@@ -84,6 +137,7 @@
   function startAd() {
     if (adOn || !D.ads.length) return;
     adOn = true; adIdx = 0;
+    document.body.classList.add("ad-on");   // reklam açıqkən menyu animasiyaları dayanır (enerji qənaəti)
     buildSlides();
     $("ad").classList.remove("hidden");
     showSlide(0);
@@ -94,19 +148,38 @@
     clearTimeout(adTimer);
     $("ad").classList.add("hidden");
     $("slides").innerHTML = "";
+    document.body.classList.remove("ad-on");
     render();   // siyahı hər dəfə yuxarıdan açılır
+    animateIn();
   }
 
   /* ---------- IDLE ---------- */
   let last = Date.now();
   const touch = (e) => {
     last = Date.now();
+    if (adOn && e.target.closest && e.target.closest(".adnav")) return;   // test düymələri reklamı bağlamasın
     if (adOn) { e.preventDefault(); e.stopPropagation(); stopAd(); }
   };
   ["pointerdown", "touchstart", "keydown"].forEach((ev) =>
     document.addEventListener(ev, touch, { capture: true, passive: false }));
   // reklamdan çıxış toxunuşu menyudakı düyməyə "keçməsin"
-  document.addEventListener("click", (e) => { if (adOn) { e.stopPropagation(); e.preventDefault(); } }, true);
+  document.addEventListener("click", (e) => {
+    if (!adOn) return;
+    e.stopPropagation(); e.preventDefault();
+    const nb = e.target.closest && e.target.closest(".adnav");
+    if (nb) navAd(nb.dataset.d);
+  }, true);
+
+  /* TEST: reklam slaydları arasında keçid (◀ ▶ ✕). testButton: false olanda görünmür */
+  function navAd(d) {
+    if (d === "x") { stopAd(); return; }
+    const n = $("slides").children.length;
+    if (!n) return;
+    clearTimeout(adTimer);
+    adIdx = (adIdx + Number(d) + n) % n;
+    showSlide(adIdx);
+  }
+  if (!D.testButton) { const nav = $("adnav"); if (nav) nav.remove(); }
 
   setInterval(() => {
     if (!adOn && Date.now() - last > D.idleSeconds * 1000) startAd();
@@ -162,6 +235,15 @@
   // kontekst menyusunu və uzun basmanı blokla
   document.addEventListener("contextmenu", (e) => e.preventDefault());
 
+  /* TEST DÜYMƏSİ: reklamı dərhal göstərir. Söndürmək üçün data.js-də testButton: false */
+  if (D.testButton) {
+    const tb = document.createElement("button");
+    tb.id = "testad";
+    tb.textContent = "▶ Reklam";
+    tb.addEventListener("click", (e) => { e.stopPropagation(); startAd(); });
+    document.body.appendChild(tb);
+  }
+
   if (D.banner) {
     const p = (n) => String(n).padStart(2, "0"), d = new Date();
     const b = document.createElement("div");
@@ -174,4 +256,5 @@
   if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
 
   render();
+  animateIn();
 })();
