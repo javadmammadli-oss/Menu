@@ -196,6 +196,12 @@ body.ad-on #poster *,body.ad-on #poster,body.ad-on #poster .logo::after{animatio
   .card{left:calc(7 * var(--u));right:calc(7 * var(--u));width:auto;top:calc(24 * var(--u));bottom:calc(7 * var(--u))}
   .contact{left:calc(7 * var(--u));right:calc(7 * var(--u));width:auto}
 }
+/* ---------- PORTRET 3:4 (1620×2160): poster bütün ekranı doldurur, yanlarda boşluq qalmır ----------
+   Ölçü vahidi hündürlüyə görə (1u = hündürlüyün 0.625%-i), beləliklə şaquli düzülüş 5:8 dizaynla eynidir,
+   artıq en isə kartın və sətirlərin genişlənməsinə gedir. */
+@media (orientation:portrait) and (min-aspect-ratio:7/10){
+  #poster{width:100vw;height:100vh;height:100dvh;aspect-ratio:auto;--u:.625cqh;--cx:60;--cy:80}
+}
 /* ---- Bar: afişa önizləmə düyməsi və tam ekran görünüş ---- */
 .cols.bar .row .n{display:flex;align-items:center;gap:calc(1.3 * var(--u));white-space:nowrap;min-width:0}
 .pv{flex:none;display:inline-flex;align-items:center;gap:calc(.9 * var(--u));padding:calc(.6 * var(--u)) calc(1.5 * var(--u));border-radius:99px;
