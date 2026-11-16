@@ -1,9 +1,14 @@
 /* Butik dizaynı: tək səhifə, 3:4. Bütün ölçülər orijinal dizaynın piksel koordinatlarıdır (1086×1448),
-   ekrana --k vahidi ilə miqyaslanır. Mətnlər data.js-dəki D.boutique-dən gəlir. */
+   ekrana --k vahidi ilə miqyaslanır. Mətnlər data.js-dəki D.boutique-dən gəlir (3 dildə). */
 (function () {
   const D = window.MENU_DATA, B = D && D.boutique, host = document.getElementById("boutique");
   if (!B || !host) return;
   document.body.classList.add("bq-on");
+
+  const LANGS = ["az", "ru", "en"];
+  let lang = "az";
+  try { const l = localStorage.getItem("lang"); if (LANGS.includes(l)) lang = l; } catch (e) {}
+  const L = (o) => (o == null ? "" : typeof o === "string" ? o : o[lang] || o.az || "");
 
   const S = (o) => Object.entries(o).map(([k, v]) => `--${k}:${v}`).join(";");
   const a = (x, y, w, h, cls, inner = "") => `<div class="a ${cls}" style="${S({ x, y, w, h })}">${inner}</div>`;
@@ -26,67 +31,93 @@
   };
   const ico = (name, x, y, w, h) => `<svg class="a ic" style="${S({ x, y, w, h })}" viewBox="0 0 24 24">${svg[name] || ""}</svg>`;
 
-  const s = B.sessions, cr = B.creams;
-  let h = "";
+  function build() {
+    const s = B.sessions, cr = B.creams;
+    let h = "";
 
-  /* ---- başlıq (şəkil: loqo yazısı, qolbaq, bant) ---- */
-  h += a(0, 0, 1086, 196, "hdr", img("header"));
+    /* ---- başlıq (şəkil: loqo yazısı, qolbaq, bant) ---- */
+    h += a(0, 0, 1086, 196, "hdr", img("header"));
 
-  /* ---- 1. Solarium Sessions ---- */
-  h += a(28, 197, 320, 263, "tile", img("tile-solarium"));
-  h += a(350, 200, 712, 260, "glass");
-  h += tx(s.title, 388, 242, 40, "h");
-  s.rows.forEach((r, i) => {
-    const y = 294 + i * 41;
-    h += tx(r[0], 390, y, 25) + tx("—", 553, y, 25, "dim") + rt(r[1], 675, y, 25);
+    /* ---- 1. Solarium Sessions ---- */
+    h += a(28, 197, 320, 263, "tile", img("tile-solarium"));
+    h += a(350, 200, 712, 260, "glass");
+    h += tx(L(s.title), 388, 242, 40, "h");
+    s.rows.forEach((r, i) => {
+      const y = 294 + i * 41;
+      h += tx(r[0] + " " + L(s.unit), 390, y, 25) + tx("—", 553, y, 25, "dim") + rt(r[1], 675, y, 25);
+    });
+    h += line(719, 275, 1.4, 155);
+    s.notes.forEach((n, i) => {
+      const y = i ? 397 : 300;
+      h += ico(n[0], 760, y - 18, 38, 36) + `<p class="note a" style="${S({ x: 815, y: y - 33, w: 215, h: 66 })}"><span>${L(n[1])}</span></p>`;
+    });
+    h += a(985, 196, 101, 160, "tail", img("tail"));
+
+    /* ---- 2. Packages & Memberships ---- */
+    h += a(28, 480, 320, 229, "tile", img("tile-packages"));
+    h += a(350, 483, 712, 229, "glass");
+    const py = [519, 584, 657];
+    B.packages.forEach((p, i) => {
+      const y = py[i], sub = L(p.sub);
+      if (p.icon) h += ico(p.icon, 391, y - 17, 37, 34);
+      h += tx(L(p.name), p.icon ? 446 : 390, y, 25) + tx(p.price, 637, sub ? y - 6 : y, 24);
+      if (sub) h += tx(sub, 637, y + 27, 17, "dim");
+      h += `<span class="pill a" style="${S({ x: 742, y: y - 18, w: 200, h: 37 })}">${L(p.bonus)}</span>`;
+    });
+    h += line(390, 551, 525, 1.2) + line(390, 620, 525, 1.2);
+    h += `<svg class="a heart" style="${S({ x: 982, y: 566, w: 62, h: 68 })}" viewBox="0 0 60 66"><path d="M30 60C9 44 3 29 8 17 13 6 26 8 30 20 34 8 48 5 53 16 58 28 51 44 30 60z"/></svg>`;
+
+    /* ---- 3. Tanning Creams ---- */
+    h += a(28, 732, 320, 267, "tile", img("tile-creams"));
+    h += a(350, 735, 712, 263, "glass");
+    cr.left.forEach((r, i) => { const y = 765 + i * 33.7; h += tx(r[0], 386, y, 20) + tx("—", 575, y, 20, "dim") + rt(r[1], 685, y, 20); });
+    cr.right.forEach((r, i) => { const y = 762 + i * 29; h += tx(r[0], 732, y, 19) + tx("—", 936, y, 19, "dim") + rt(r[1], 1040, y, 19); });
+    h += line(708, 748, 1.4, 178);
+    h += a(383, 940, 447, 45, "chip");
+    h += ico("cup", 403, 949, 28, 28) + line(441, 951, 1.3, 24);
+    h += tx(cr.samples[0], 456, 963, 20) + line(635, 951, 1.3, 24) + tx(cr.samples[1], 670, 963, 20);
+
+    /* ---- 4. Bracelets ---- */
+    h += a(28, 1018, 343, 233, "tile", img("tile-lovers"));
+    h += a(372, 1018, 690, 233, "glass");
+    [408, 564, 720, 875].forEach((x, i) => { h += a(x, 1040, i === 3 ? 143 : 146, 142, "thumb", img("b" + (i + 1))); });
+    h += `<span class="arrow a" style="${S({ x: 1017, y: 1098, w: 34, h: 34 })}"><svg viewBox="0 0 24 24"><path d="M9.5 6.5L15 12l-5.5 5.5"/></svg></span>`;
+    h += tx(L(B.script), 570, 1212, 46, "script");
+
+    /* ---- xidmətlər (alt sıra) ---- */
+    const sx = [[25, 205], [243, 147], [402, 153], [568, 154], [735, 153], [900, 162]];
+    B.services.forEach((v, i) => {
+      const [x, w] = sx[i], cx = x + w / 2;
+      h += a(x, 1270, w, 142, "glass sv");
+      h += ico(v[0], cx - 21, 1292, 42, 42);
+      h += `<span class="svt a" style="${S({ x: x + 6, y: 1340, w: w - 12, h: 66 })}"><b>${L(v[1])}</b><small>${L(v[2])}</small></span>`;
+    });
+
+    /* ---- dil seçimi (alt mərkəz) ---- */
+    h += `<div class="langs a" style="${S({ x: 453, y: 1415, w: 180, h: 30 })}">` +
+      LANGS.map((l) => `<button class="lg${l === lang ? " on" : ""}" data-lang="${l}">${l.toUpperCase()}</button>`).join("") + `</div>`;
+
+    return h + (/[?&]ref=1/.test(location.search) ? '<img id="bqref" src="media/boutique/ref.jpg" alt="">' : "") + `<span id="bqver">${D.version || ""}</span>`;
+  }
+
+  function paint(animate) {
+    let bq = document.getElementById("bq");
+    if (!bq) { host.innerHTML = '<div id="bq"></div>'; bq = document.getElementById("bq"); }
+    bq.dataset.lang = lang;
+    document.documentElement.lang = lang;
+    bq.innerHTML = build();
+    if (animate) { bq.classList.remove("swap"); void bq.offsetWidth; bq.classList.add("swap"); }
+  }
+
+  host.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-lang]");
+    if (!b || b.dataset.lang === lang) return;
+    lang = b.dataset.lang;
+    try { localStorage.setItem("lang", lang); } catch (err) {}
+    // gizli köhnə posterin dilini də eyniləşdir (reklam mətnləri üçün)
+    const old = document.querySelector('#langs [data-lang="' + lang + '"]'); if (old) old.click();
+    paint(true);
   });
-  h += line(719, 275, 1.4, 155);
-  s.notes.forEach((n, i) => {
-    const y = i ? 397 : 300;
-    h += ico(n[0], 760, y - 18, 38, 36) + `<p class="note a" style="${S({ x: 815, y: y - 19, w: 205, h: 60 })}">${n[1]}</p>`;
-  });
-  h += a(985, 196, 101, 160, "tail", img("tail"));
 
-  /* ---- 2. Packages & Memberships ---- */
-  h += a(28, 480, 320, 229, "tile", img("tile-packages"));
-  h += a(350, 483, 712, 229, "glass");
-  const py = [519, 584, 657];
-  B.packages.forEach((p, i) => {
-    const y = py[i];
-    if (p.icon) h += ico(p.icon, 391, y - 17, 37, 34);
-    h += tx(p.name, p.icon ? 446 : 390, y, 25) + tx(p.price, 637, p.sub ? y - 6 : y, 24);
-    if (p.sub) h += tx(p.sub, 637, y + 27, 17, "dim");
-    h += `<span class="pill a" style="${S({ x: 742, y: y - 18, w: 200, h: 37 })}">${p.bonus}</span>`;
-  });
-  h += line(390, 551, 525, 1.2) + line(390, 620, 525, 1.2);
-  h += `<svg class="a heart" style="${S({ x: 982, y: 566, w: 62, h: 68 })}" viewBox="0 0 60 66"><path d="M30 60C9 44 3 29 8 17 13 6 26 8 30 20 34 8 48 5 53 16 58 28 51 44 30 60z"/></svg>`;
-
-  /* ---- 3. Tanning Creams ---- */
-  h += a(28, 732, 320, 267, "tile", img("tile-creams"));
-  h += a(350, 735, 712, 263, "glass");
-  cr.left.forEach((r, i) => { const y = 765 + i * 33.7; h += tx(r[0], 386, y, 20) + tx("—", 575, y, 20, "dim") + rt(r[1], 685, y, 20); });
-  cr.right.forEach((r, i) => { const y = 762 + i * 29; h += tx(r[0], 732, y, 19) + tx("—", 936, y, 19, "dim") + rt(r[1], 1040, y, 19); });
-  h += line(708, 748, 1.4, 178);
-  h += a(383, 940, 447, 45, "chip");
-  h += ico("cup", 403, 949, 28, 28) + line(441, 951, 1.3, 24);
-  h += tx(cr.samples[0], 456, 963, 20) + line(635, 951, 1.3, 24) + tx(cr.samples[1], 670, 963, 20);
-
-  /* ---- 4. Bracelets ---- */
-  h += a(28, 1018, 343, 233, "tile", img("tile-lovers"));
-  h += a(372, 1018, 690, 233, "glass");
-  [408, 564, 720, 875].forEach((x, i) => { h += a(x, 1040, i === 3 ? 143 : 146, 142, "thumb", img("b" + (i + 1))); });
-  h += `<span class="arrow a" style="${S({ x: 1017, y: 1098, w: 34, h: 34 })}"><svg viewBox="0 0 24 24"><path d="M9.5 6.5L15 12l-5.5 5.5"/></svg></span>`;
-  h += tx(B.script, 570, 1212, 46, "script");
-
-  /* ---- xidmətlər (alt sıra) ---- */
-  const sx = [[25, 205], [243, 147], [402, 153], [568, 154], [735, 153], [900, 162]];
-  B.services.forEach((v, i) => {
-    const [x, w] = sx[i], cx = x + w / 2;
-    h += a(x, 1270, w, 142, "glass sv");
-    h += ico(v[0], cx - 21, 1292, 42, 42);
-    h += `<span class="svt a" style="${S({ x: x + 6, y: 1340, w: w - 12, h: 62 })}"><b>${v[1]}</b><small>${v[2]}</small></span>`;
-  });
-
-  host.innerHTML = `<div id="bq">${h}${/[?&]ref=1/.test(location.search) ? '<img id="bqref" src="media/boutique/ref.jpg" alt="">' : ""}<span id="bqver"></span></div>`;
-  const v = document.getElementById("bqver"); if (v) v.textContent = D.version || "";
+  paint(false);
 })();

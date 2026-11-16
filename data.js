@@ -5,7 +5,7 @@
    =========================================================== */
 window.MENU_DATA = {
   brand: "megaSun",
-  version: "v3 · 16.11 23:09",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
+  version: "v4 · 16.11 23:26",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
   currency: "₼",
   idleSeconds: 45,                 // toxunulmasa neçə saniyədən sonra reklam başlasın
   reloadAt: "04:00",               // hər gün bu saatda səhifə özünü yeniləyir
@@ -19,15 +19,21 @@ window.MENU_DATA = {
   cover: { image: "media/cover.webp" },
   /* ---------- BUTİK DİZAYNI (tək səhifə, 3:4). Qiymətləri/mətnləri burada dəyiş. Bu blok silinsə köhnə menyu qayıdır ---------- */
   boutique: {
+    /* Mətn: ya sadə sətir (bütün dillərdə eyni), ya da { az: "...", ru: "...", en: "..." } */
     sessions: {
-      title: "Solarium Sessions",
-      rows: [["5 dəqiqə", "10 AZN"], ["10 dəqiqə", "18 AZN"], ["15 dəqiqə", "25 AZN"], ["20 dəqiqə", "32 AZN"]],
-      notes: [["chat", "İlk seans üçün konsultasiya — pulsuz və məcburidir."], ["clock", "Seanslar arasında minimum 24 saat fasilə."]]
+      title: { az: "Solarium Sessions", ru: "Сеансы солярия", en: "Solarium Sessions" },
+      unit: { az: "dəqiqə", ru: "минут", en: "minutes" },
+      rows: [[5, "10 AZN"], [10, "18 AZN"], [15, "25 AZN"], [20, "32 AZN"]],     // [dəqiqə, qiymət]
+      notes: [
+        ["chat",  { az: "İlk seans üçün konsultasiya — pulsuz və məcburidir.", ru: "Консультация перед первым сеансом — бесплатно и обязательно.", en: "Consultation before the first session — free and mandatory." }],
+        ["clock", { az: "Seanslar arasında minimum 24 saat fasilə.", ru: "Минимальный перерыв между сеансами — 24 часа.", en: "Minimum 24 hours between sessions." }]
+      ]
     },
     packages: [
-      { name: "Abonement №1", price: "100 AZN", bonus: "+ 40 AZN bonus" },
-      { name: "Abonement №2", price: "200 AZN", bonus: "+ 100 AZN bonus" },
-      { name: "VIP Abonement", icon: "crown", price: "200 AZN", sub: "(məhdud sayda)", bonus: "+ 150 AZN bonus" }
+      { name: { az: "Abonement №1", ru: "Абонемент №1", en: "Membership №1" }, price: "100 AZN", bonus: { az: "+ 40 AZN bonus", ru: "+ 40 AZN бонус", en: "+ 40 AZN bonus" } },
+      { name: { az: "Abonement №2", ru: "Абонемент №2", en: "Membership №2" }, price: "200 AZN", bonus: { az: "+ 100 AZN bonus", ru: "+ 100 AZN бонус", en: "+ 100 AZN bonus" } },
+      { name: { az: "VIP Abonement", ru: "VIP абонемент", en: "VIP Membership" }, icon: "crown", price: "200 AZN",
+        sub: { az: "(məhdud sayda)", ru: "(ограниченно)", en: "(limited)" }, bonus: { az: "+ 150 AZN bonus", ru: "+ 150 AZN бонус", en: "+ 150 AZN bonus" } }
     ],
     creams: {
       left:  [["Ride or Tide", "115 AZN"], ["Going Tropik", "115 AZN"], ["Caribbean Cool", "115 AZN"], ["Game Over", "115 AZN"], ["Sunshine Superstar", "125 AZN"]],
@@ -36,9 +42,12 @@ window.MENU_DATA = {
     },
     script: "Wear your heart",
     services: [
-      ["bag", "Boutique", "(Alo Yoga, Lululemon, On Cloud və s.)"], ["drink", "Refresh", "(Fresh juice)"],
-      ["icecream", "Ice Cream", "by MegaSun"], ["cake", "Tiramisu Bar", "(Catering)"],
-      ["caviar", "Caviar Atelier", "(Catering)"], ["calendar", "Events", "& Private Catering"]
+      ["bag", "Boutique", { az: "(Alo Yoga, Lululemon, On Cloud və s.)", ru: "(Alo Yoga, Lululemon, On Cloud и др.)", en: "(Alo Yoga, Lululemon, On Cloud, etc.)" }],
+      ["drink", "Refresh", { az: "(Fresh juice)", ru: "(Свежевыжатые соки)", en: "(Fresh juice)" }],
+      ["icecream", "Ice Cream", { az: "by MegaSun", ru: "от MegaSun", en: "by MegaSun" }],
+      ["cake", "Tiramisu Bar", { az: "(Catering)", ru: "(Кейтеринг)", en: "(Catering)" }],
+      ["caviar", "Caviar Atelier", { az: "(Catering)", ru: "(Кейтеринг)", en: "(Catering)" }],
+      ["calendar", "Events", { az: "& Private Catering", ru: "& частный кейтеринг", en: "& Private Catering" }]
     ]
   },
   /* Siyahının altındakı əlaqə sətri. Doldurmaq üçün: contact: { address: "...", phone: "...", instagram: "@..." } */
