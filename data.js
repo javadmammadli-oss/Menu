@@ -94,11 +94,14 @@ window.MENU_DATA = {
            "video" → src: "media/video.mp4" (səssiz, avtomatik)
      seconds: slaydın qalma müddəti                                      */
   ads: [
-    /* media/ qovluğundakı Ad1–Ad4 hazır afişalardır (992×1586 ≈ 5:8). Üstünə yazı əlavə edilmir. */
+    /* media/ qovluğundakı Ad1–Ad7 hazır afişalardır (992×1586 ≈ 5:8). Üstünə yazı əlavə edilmir. */
     { type: "poster", src: "media/Ad1.png", ratio: 0.6255, seconds: 12 },   /* Game Over (Devoted Creations) */
     { type: "poster", src: "media/Ad2.png", ratio: 0.6255, seconds: 12 },   /* Space 3000 */
     { type: "poster", src: "media/Ad3.png", ratio: 0.6255, seconds: 12 },   /* Extrasun+ 5600 */
-    { type: "poster", src: "media/Ad4.png", ratio: 0.6259, seconds: 12 }    /* megaSun T200 */
+    { type: "poster", src: "media/Ad4.png", ratio: 0.6259, seconds: 12 },   /* megaSun T200 */
+    { type: "poster", src: "media/Ad5.png", ratio: 0.6255, seconds: 12 },   /* Bahama Bronzer (Tanovations) */
+    { type: "poster", src: "media/Ad6.png", ratio: 0.6255, seconds: 12 },   /* Color Karma (Devoted Creations) */
+    { type: "poster", src: "media/Ad7.png", ratio: 0.6255, seconds: 12 }    /* Somewhere on a Beach (Devoted Creations) */
     /* başqa növlər (nümunə):
     { type: "photo", src: "media/foto.webp", kb: "a", seconds: 10, eyebrow: {...}, title: {...}, text: {...} },
     { type: "image", src: "media/reklam1.jpg", seconds: 8 },

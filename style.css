@@ -34,14 +34,14 @@ h1.big{position:absolute;z-index:4;left:calc(7 * var(--u));top:calc(16 * var(--u
 h1.big span{display:block;width:max-content}
 h1.big span+span{margin-left:calc(10 * var(--u))}
 /* dil keçidi: çıxış → giriş (pillə-pillə) */
-:is(#t1,#t2,#ctitle,#note,.grp,.row){transition:opacity .26s ease,transform .26s ease,filter .26s ease}
-#poster.out :is(#t1,#t2,#ctitle,#note,.grp,.row){opacity:0;transform:translateY(calc(-1.2 * var(--u)))}
-#poster.out :is(#t1,#t2,#ctitle){filter:blur(calc(.7 * var(--u)))}          /* blur yalnız iri başlıqlarda (yüngül qalsın) */
+:is(#t1,#t2,#note,.grp,.row){transition:opacity .26s ease,transform .26s ease,filter .26s ease}
+#poster.out :is(#t1,#t2,#note,.grp,.row){opacity:0;transform:translateY(calc(-1.2 * var(--u)))}
+#poster.out :is(#t1,#t2){filter:blur(calc(.7 * var(--u)))}          /* blur yalnız iri başlıqlarda (yüngül qalsın) */
 #poster.in :is(.grp,.row,#note){animation:txtin .7s var(--ease) both;animation-delay:calc(var(--d,0) * 45ms)}
-#poster.in :is(#t1,#t2,#ctitle){animation:txtin-big .9s var(--ease) both;animation-delay:calc(var(--d,0) * 70ms)}
+#poster.in :is(#t1,#t2){animation:txtin-big .9s var(--ease) both;animation-delay:calc(var(--d,0) * 70ms)}
 @keyframes txtin{from{opacity:0;transform:translateY(calc(1.6 * var(--u)))}to{opacity:1;transform:none}}
 @keyframes txtin-big{from{opacity:0;transform:translateY(calc(2.4 * var(--u)));filter:blur(calc(.9 * var(--u)))}to{opacity:1;transform:none;filter:blur(0)}}
-@media (prefers-reduced-motion:reduce){#poster.in :is(#t1,#t2,#ctitle,.grp,.row,#note){animation:none}}
+@media (prefers-reduced-motion:reduce){#poster.in :is(#t1,#t2,.grp,.row,#note){animation:none}}
 /* başlıq: loqo ilə kartın arasında şaquli ortada, loqo ilə eyni sol xətdə */
 h1.big{top:calc(32 * var(--u));transform:translateY(-50%);
   font-size:calc(16 * var(--u));line-height:.9;letter-spacing:-.02em;text-shadow:0 calc(.8 * var(--u)) calc(4 * var(--u)) rgba(0,0,0,.3)}
@@ -55,7 +55,18 @@ html[lang=ru] h1.big{font-size:calc(14.5 * var(--u))}
   backdrop-filter:blur(calc(2.2 * var(--u))) brightness(.62);-webkit-backdrop-filter:blur(calc(2.2 * var(--u))) brightness(.62);
   box-shadow:0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0,0,0,.25);
   padding:calc(6.6 * var(--u)) calc(6.4 * var(--u)) calc(4.6 * var(--u));display:flex;flex-direction:column;min-height:0;animation:rise .5s var(--ease) both}
-.card h2{margin:0 0 calc(3 * var(--u));font-weight:300;font-size:calc(6.6 * var(--u));letter-spacing:.01em}
+/* kart başlığı = iki tab: Solarium | Bar */
+.tabs{display:flex;gap:calc(5.5 * var(--u));margin:0 0 calc(3 * var(--u))}
+.tab{--o:.4;position:relative;padding:0 0 calc(1.5 * var(--u));font-weight:300;font-size:calc(6.6 * var(--u));letter-spacing:.01em;
+  color:var(--text);opacity:var(--o);transition:opacity .3s var(--ease),transform .26s ease}
+.tab.on{--o:1}
+.tab::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:calc(.5 * var(--u));border-radius:9px;background:var(--accent);
+  transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.tab.on::after{transform:scaleX(1)}
+#poster.tabs-too.out .tab{opacity:0;transform:translateY(calc(-1.2 * var(--u)))}
+#poster.tabs-too.in .tab{animation:tabin .8s var(--ease) both;animation-delay:calc(var(--d,0) * 70ms)}
+@keyframes tabin{from{opacity:0;transform:translateY(calc(2 * var(--u)))}to{opacity:var(--o);transform:none}}
+@media (prefers-reduced-motion:reduce){#poster.tabs-too.in .tab{animation:none}}
 
 .head,.row{display:grid;grid-template-columns:1fr calc(24 * var(--u));align-items:center}
 .head{font-size:calc(3 * var(--u));font-weight:300;line-height:1.25;color:var(--soft);padding-bottom:calc(3 * var(--u));border-bottom:1px solid var(--line)}
@@ -76,6 +87,10 @@ html[lang=ru] h1.big{font-size:calc(14.5 * var(--u))}
 .colx .row{grid-template-columns:1fr calc(17 * var(--u));font-size:calc(3.2 * var(--u))}
 .colx .row .p{font-size:calc(3.3 * var(--u))}
 .colx .grp{padding:0 0 calc(2.2 * var(--u));font-size:calc(3.5 * var(--u))}
+.colx .grp:not(:first-child){padding-top:calc(4.5 * var(--u))}
+/* bar menyusu: sətirlər sabit hündürlükdə, ölçü yanında kiçik */
+.cols.bar .row{flex:0 1 calc(8.2 * var(--u))}
+.cols.bar .row .n small{display:inline;margin:0 0 0 .7em}
 .extras{flex:none;margin-top:calc(2.5 * var(--u))}
 .extras .row{flex:none;height:calc(9 * var(--u));border-bottom:0;border-top:max(1.5px,calc(.2 * var(--u))) solid rgba(255,255,255,.65)}
 .foot-note{margin:calc(3 * var(--u)) 0 0;text-align:center;font-size:calc(2.7 * var(--u));font-weight:300;line-height:1.5;color:var(--soft)}

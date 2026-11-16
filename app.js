@@ -18,16 +18,17 @@
     tel: '<svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>',
     ig: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6"/></svg>'
   };
-  const TITLE = { az: ["Qiymət", "Siyahısı"], ru: ["Прайс", "Лист"], en: ["Price", "List"] };
-  const HEAD = {
-    h1: { az: "Xidmət<br>növü", ru: "Название<br>процедуры", en: "Service<br>name" },
-    h2: { az: "Qiymət", ru: "Цена", en: "Price" }
+  let view = store.get("view", "solarium");   // "solarium" | "bar"
+  const TITLES = {
+    solarium: { az: ["Qiymət", "Siyahısı"], ru: ["Прайс", "Лист"], en: ["Price", "List"] },
+    bar:      { az: ["Bar", "Menyusu"],     ru: ["Бар", "Меню"],    en: ["Bar", "Menu"] }
   };
+  const TABS = [["solarium", "solarium"], ["bar", "drinks"]];   // [view, D.ui açarı]
 
   const row = (name, sub, price) =>
     `<div class="row"><div class="n">${name}${sub ? `<small>${sub}</small>` : ""}</div><div class="p">${price}</div></div>`;
 
-  function renderSheet() {
+  function renderSolarium() {
     const cols = D.solarium.map((s) =>
       `<div class="colx"><div class="grp">${t(s.name)}</div>` +
       s.prices.map((p) => row(`${p.minutes} ${t(D.ui.min)}`, "", money(p.price))).join("") + `</div>`).join("");
@@ -39,29 +40,44 @@
     return h;
   }
 
+  // bar: kateqoriyalar iki sütuna bərabər bölünür (içki sayına görə)
+  function renderBar() {
+    const groups = D.drinkCategories
+      .map((c) => ({ c, items: D.drinks.filter((d) => d.cat === c.id) })).filter((g) => g.items.length);
+    const total = groups.reduce((s, g) => s + g.items.length, 0);
+    const cols = [[], []];
+    let acc = 0;
+    groups.forEach((g) => { cols[acc < total / 2 ? 0 : 1].push(g); acc += g.items.length; });
+    return `<div class="cols bar">` + cols.map((col) => `<div class="colx">` + col.map((g) =>
+      `<div class="grp">${t(g.c.name)}</div>` + g.items.map((d) => row(t(d.name), d.size || "", money(d.price))).join("")
+    ).join("") + `</div>`).join("") + `</div>`;
+  }
+
   function render() {
     $("langs").innerHTML = LANGS
       .map((l) => `<button class="lang ${lang === l ? "on" : ""}" data-lang="${l}">${l.toUpperCase()}</button>`).join("");
-    const T = TITLE[lang] || TITLE.az;
+    const T = (TITLES[view] || TITLES.solarium)[lang] || TITLES.solarium.az;
     $("t1").textContent = T[0]; $("t2").textContent = T[1];
-    $("ctitle").textContent = t(D.ui.solarium);
+    $("tabs").innerHTML = TABS.map(([v, k]) =>
+      `<button class="tab ${view === v ? "on" : ""}" data-view="${v}">${t(D.ui[k])}</button>`).join("");
     $("note").textContent = t(D.ui.note);
     const c = D.contact || {};
     $("contact").innerHTML = [["pin", c.address], ["tel", c.phone], ["ig", c.instagram]]
       .filter((x) => x[1]).map((x) => `<span>${ic[x[0]]}${x[1]}</span>`).join("");
-    $("view").innerHTML = renderSheet();
+    $("view").innerHTML = view === "bar" ? renderBar() : renderSolarium();
     document.documentElement.lang = lang;
   }
 
-  /* ---------- DİL KEÇİDİ ANİMASİYASI: köhnə mətn yumşaq çıxır, yenisi pillə-pillə gəlir ---------- */
-  const FX = "#t1,#t2,#ctitle,#note,.grp,.row";
+  /* ---------- KEÇİD ANİMASİYASI (dil və ya Solarium/Bar): köhnə mətn yumşaq çıxır, yenisi pillə-pillə gəlir ---------- */
+  const FX = "#t1,#t2,#note,.grp,.row";
   let swapT = null, inT = null;
   function animateIn() {
     const poster = $("poster");
     poster.classList.remove("in");
     // başlıqlar əvvəl, sonra iki sütun EYNİ VAXTDA yuxarıdan aşağı pillə-pillə, ən axırda alt qeyd
     const d = (sel, v) => { const el = poster.querySelector(sel); if (el) el.style.setProperty("--d", v); };
-    d("#t1", 0); d("#t2", 1); d("#ctitle", 2);
+    d("#t1", 0); d("#t2", 1);
+    poster.querySelectorAll(".tab").forEach((el, i) => el.style.setProperty("--d", 2 + i));
     poster.querySelectorAll(".colx").forEach((col) =>
       col.querySelectorAll(".grp,.row").forEach((el, i) => el.style.setProperty("--d", 4 + i)));
     poster.querySelectorAll(".extras .row").forEach((el) => el.style.setProperty("--d", 15));
@@ -69,24 +85,33 @@
     void poster.offsetWidth;
     poster.classList.add("in");
     clearTimeout(inT);
-    inT = setTimeout(() => poster.classList.remove("in"), 2400);
+    inT = setTimeout(() => poster.classList.remove("in", "tabs-too"), 2400);
+  }
+  function swapContent(change, withTabs) {
+    const poster = $("poster");
+    poster.classList.remove("in");
+    poster.classList.toggle("tabs-too", !!withTabs);
+    poster.classList.add("out");
+    clearTimeout(swapT);
+    swapT = setTimeout(() => { change(); render(); poster.classList.remove("out"); animateIn(); }, 280);
   }
   function swapLang(l) {
     if (l === lang) return;
-    lang = l; store.set("lang", lang);
     document.querySelectorAll(".lang").forEach((b) => b.classList.toggle("on", b.dataset.lang === l));
-    const poster = $("poster");
-    poster.classList.remove("in");
-    poster.classList.add("out");
-    clearTimeout(swapT);
-    swapT = setTimeout(() => { render(); poster.classList.remove("out"); animateIn(); }, 280);
+    swapContent(() => { lang = l; store.set("lang", l); }, true);
+  }
+  function swapView(v) {
+    if (v === view) return;
+    document.querySelectorAll(".tab").forEach((b) => b.classList.toggle("on", b.dataset.view === v));
+    swapContent(() => { view = v; store.set("view", v); }, false);
   }
 
   document.addEventListener("click", (e) => {
     const b = e.target.closest("button");
-    if (b && b.dataset.lang) swapLang(b.dataset.lang);
+    if (!b) return;
+    if (b.dataset.lang) swapLang(b.dataset.lang);
+    else if (b.dataset.view) swapView(b.dataset.view);
   });
-
   /* ---------- ADS ---------- */
   let adOn = false, adTimer = null, adIdx = 0;
 
@@ -149,6 +174,7 @@
     $("ad").classList.add("hidden");
     $("slides").innerHTML = "";
     document.body.classList.remove("ad-on");
+    view = "solarium"; store.set("view", view);   // reklamdan sonra həmişə qiymət siyahısı açılır
     render();   // siyahı hər dəfə yuxarıdan açılır
     animateIn();
   }
