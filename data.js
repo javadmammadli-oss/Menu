@@ -5,6 +5,7 @@
    =========================================================== */
 window.MENU_DATA = {
   brand: "megaSun",
+  version: "v2 · 16.11 22:54",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
   currency: "₼",
   idleSeconds: 45,                 // toxunulmasa neçə saniyədən sonra reklam başlasın
   reloadAt: "04:00",               // hər gün bu saatda səhifə özünü yeniləyir

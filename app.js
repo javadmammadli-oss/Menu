@@ -9,6 +9,9 @@
 
   let lang = store.get("lang", "az");
 
+  // versiya nömrəsi (data.js-dəki version): hər push-dan sonra artır, tabletin yeniləndiyini göstərir
+  $("ver").textContent = D.version || "";
+
   const t = (o) => (typeof o === "string" ? o : o[lang] || o.az);
   const money = (n) => (Number.isInteger(n) ? n : n.toFixed(2).replace(/0$/, "")) + " " + D.currency;
 
