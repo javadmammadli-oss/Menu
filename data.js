@@ -25,6 +25,8 @@ window.MENU_DATA = {
     solarium: { az: "Solarium",  ru: "Солярий",  en: "Solarium" },
     drinks:   { az: "Bar",       ru: "Бар",      en: "Bar" },
     min:      { az: "dəq",       ru: "мин",      en: "min" },
+    free:     { az: "Pulsuz",    ru: "Бесплатно", en: "Free" },
+    preview:  { az: "Bax",       ru: "Вид",       en: "View" },
     touch:    { az: "Menyu üçün toxunun", ru: "Коснитесь для меню", en: "Touch for menu" },
     note:     { az: "Qiymətlər manatla göstərilib", ru: "Цены указаны в манатах", en: "Prices are in AZN" }
   },
@@ -66,42 +68,37 @@ window.MENU_DATA = {
   packages: [
     { name: { az: "Vibra-nano", ru: "Вибра-нано", en: "Vibra-nano" }, price: 3, prefix: "+" }
   ],
-  /* ---------- İÇKİLƏR ---------- */
-  drinkCategories: [
-    { id: "energy", name: { az: "Enerji içkiləri", ru: "Энергетики", en: "Energy drinks" } },
-    { id: "coffee", name: { az: "Qəhvə",           ru: "Кофе",       en: "Coffee" } },
-    { id: "tea",    name: { az: "Çaylar",          ru: "Чай",        en: "Tea" } },
-    { id: "soft",   name: { az: "Sərinləşdirici",  ru: "Прохладительные", en: "Soft drinks" } }
-  ],
+  /* ---------- BAR (tək sütun, bu sırayla) ----------
+     free: true  → qiymət əvəzinə "Pulsuz" yazılır
+     preview: "media/X.png" → adın yanında "Bax" düyməsi çıxır, basanda afişa tam ekran açılır
+     price: null → qiymət hələ bilinmir, "—" göstərilir (real qiyməti yaz)    */
   drinks: [
-    { cat: "energy", emoji: "⚡", name: { az: "Red Bull",  ru: "Red Bull",  en: "Red Bull" }, size: "250 ml", price: 4.5 },
-    { cat: "energy", emoji: "⚡", name: { az: "Burn",      ru: "Burn",      en: "Burn" },     size: "250 ml", price: 3.5 },
-    { cat: "coffee", emoji: "☕", name: { az: "Espresso",  ru: "Эспрессо",  en: "Espresso" },   size: "30 ml",  price: 3 },
-    { cat: "coffee", emoji: "☕", name: { az: "Americano", ru: "Американо", en: "Americano" },  size: "200 ml", price: 3.5 },
-    { cat: "coffee", emoji: "🥛", name: { az: "Cappuccino",ru: "Капучино",  en: "Cappuccino" }, size: "250 ml", price: 4.5 },
-    { cat: "coffee", emoji: "🥛", name: { az: "Latte",     ru: "Латте",     en: "Latte" },      size: "300 ml", price: 5 },
-    { cat: "tea",    emoji: "🍵", name: { az: "Qara çay",  ru: "Чёрный чай",en: "Black tea" },  size: "300 ml", price: 2 },
-    { cat: "tea",    emoji: "🍵", name: { az: "Yaşıl çay", ru: "Зелёный чай",en: "Green tea" }, size: "300 ml", price: 2 },
-    { cat: "tea",    emoji: "🍋", name: { az: "Limonlu çay",ru: "Чай с лимоном",en: "Lemon tea" }, size: "300 ml", price: 2.5 },
-    { cat: "soft",   emoji: "💧", name: { az: "Su",        ru: "Вода",      en: "Water" },      size: "500 ml", price: 1 },
-    { cat: "soft",   emoji: "🥤", name: { az: "Coca-Cola", ru: "Coca-Cola", en: "Coca-Cola" },  size: "330 ml", price: 2.5 },
-    { cat: "soft",   emoji: "🍊", name: { az: "Fresh meyvə şirəsi", ru: "Свежевыжатый сок", en: "Fresh juice" }, size: "300 ml", price: 5 }
+    { name: { az: "Çay",       ru: "Чай",       en: "Tea" },       free: true },
+    { name: { az: "Nescafe",   ru: "Нескафе",   en: "Nescafe" },   free: true },
+    { name: { az: "Red Bull",  ru: "Red Bull",  en: "Red Bull" },  price: 4.5 },
+    { name: { az: "Americano", ru: "Американо", en: "Americano" }, price: 3.5 },
+    { name: { az: "MegaSun çay set 1", ru: "MegaSun чай сет 1", en: "MegaSun tea set 1" }, price: null, preview: "media/Ad8.png" },
+    { name: { az: "MegaSun çay set 2", ru: "MegaSun чай сет 2", en: "MegaSun tea set 2" }, price: null, preview: "media/Ad9.png" },
+    { name: { az: "Kök şirəsi", ru: "Морковный сок", en: "Carrot juice" }, price: null },
+    { name: { az: "Cola",      ru: "Кола",      en: "Cola" },      price: 2.5 },
+    { name: { az: "Yaşıl çay", ru: "Зелёный чай", en: "Green tea" }, price: 2 }
   ],
-
   /* ---------- REKLAM SLAYDLARI ----------
      type: "html"  → aşağıdakı animasiyalı HTML/CSS slayd (class: "a-sun", "a-promo", "a-vit")
            "image" → src: "media/foto.jpg"
            "video" → src: "media/video.mp4" (səssiz, avtomatik)
      seconds: slaydın qalma müddəti                                      */
   ads: [
-    /* media/ qovluğundakı Ad1–Ad7 hazır afişalardır (992×1586 ≈ 5:8). Üstünə yazı əlavə edilmir. */
-    { type: "poster", src: "media/Ad1.png", ratio: 0.6255, seconds: 12 },   /* Game Over (Devoted Creations) */
-    { type: "poster", src: "media/Ad2.png", ratio: 0.6255, seconds: 12 },   /* Space 3000 */
-    { type: "poster", src: "media/Ad3.png", ratio: 0.6255, seconds: 12 },   /* Extrasun+ 5600 */
-    { type: "poster", src: "media/Ad4.png", ratio: 0.6259, seconds: 12 },   /* megaSun T200 */
-    { type: "poster", src: "media/Ad5.png", ratio: 0.6255, seconds: 12 },   /* Bahama Bronzer (Tanovations) */
-    { type: "poster", src: "media/Ad6.png", ratio: 0.6255, seconds: 12 },   /* Color Karma (Devoted Creations) */
-    { type: "poster", src: "media/Ad7.png", ratio: 0.6255, seconds: 12 }    /* Somewhere on a Beach (Devoted Creations) */
+    /* media/ qovluğundakı Ad1–Ad9 hazır afişalardır (992×1586 ≈ 5:8). Üstünə yazı əlavə edilmir. */
+    { type: "poster", src: "media/Ad1.png", ratio: 0.6255, seconds: 8 },   /* Game Over (Devoted Creations) */
+    { type: "poster", src: "media/Ad2.png", ratio: 0.6255, seconds: 8 },   /* Space 3000 */
+    { type: "poster", src: "media/Ad3.png", ratio: 0.6255, seconds: 8 },   /* Extrasun+ 5600 */
+    { type: "poster", src: "media/Ad4.png", ratio: 0.6259, seconds: 8 },   /* megaSun T200 */
+    { type: "poster", src: "media/Ad5.png", ratio: 0.6255, seconds: 8 },   /* Bahama Bronzer (Tanovations) */
+    { type: "poster", src: "media/Ad6.png", ratio: 0.6255, seconds: 8 },   /* Color Karma (Devoted Creations) */
+    { type: "poster", src: "media/Ad7.png", ratio: 0.6255, seconds: 8 },   /* Somewhere on a Beach (Devoted Creations) */
+    { type: "poster", src: "media/Ad8.png", ratio: 0.6255, seconds: 8 },   /* MegaSun Çay Seti (fincan) */
+    { type: "poster", src: "media/Ad9.png", ratio: 0.6255, seconds: 8 }    /* MegaSun Çay Seti (armudu stəkan) */
     /* başqa növlər (nümunə):
     { type: "photo", src: "media/foto.webp", kb: "a", seconds: 10, eyebrow: {...}, title: {...}, text: {...} },
     { type: "image", src: "media/reklam1.jpg", seconds: 8 },

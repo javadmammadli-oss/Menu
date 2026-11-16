@@ -40,26 +40,31 @@
     return h;
   }
 
-  // bar: kateqoriyalar iki sütuna bərabər bölünür (içki sayına görə)
-  function renderBar() {
-    const groups = D.drinkCategories
-      .map((c) => ({ c, items: D.drinks.filter((d) => d.cat === c.id) })).filter((g) => g.items.length);
-    const total = groups.reduce((s, g) => s + g.items.length, 0);
-    const cols = [[], []];
-    let acc = 0;
-    groups.forEach((g) => { cols[acc < total / 2 ? 0 : 1].push(g); acc += g.items.length; });
-    return `<div class="cols bar">` + cols.map((col) => `<div class="colx">` + col.map((g) =>
-      `<div class="grp">${t(g.c.name)}</div>` + g.items.map((d) => row(t(d.name), d.size || "", money(d.price))).join("")
-    ).join("") + `</div>`).join("") + `</div>`;
-  }
+  // "Bax" düyməsi: adın yanında, basanda afişa tam ekran açılır
+  const EYE = '<svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+  const pvBtn = (src) => `<button class="pv" data-pv="${src}">${EYE}<span>${t(D.ui.preview)}</span></button>`;
 
+  // bar: tək sütun, data.js-dəki sıra ilə
+  function renderBar() {
+    const price = (d) => (d.free ? `<span class="free">${t(D.ui.free)}</span>` : d.price == null ? "—" : money(d.price));
+    return `<div class="cols bar"><div class="colx">` +
+      D.drinks.map((d) => row(t(d.name) + (d.preview ? pvBtn(d.preview) : ""), d.size || "", price(d))).join("") + `</div></div>`;
+  }
   function render() {
     $("langs").innerHTML = LANGS
       .map((l) => `<button class="lang ${lang === l ? "on" : ""}" data-lang="${l}">${l.toUpperCase()}</button>`).join("");
     const T = (TITLES[view] || TITLES.solarium)[lang] || TITLES.solarium.az;
     $("t1").textContent = T[0]; $("t2").textContent = T[1];
-    $("tabs").innerHTML = TABS.map(([v, k]) =>
-      `<button class="tab ${view === v ? "on" : ""}" data-view="${v}">${t(D.ui[k])}</button>`).join("");
+    // tab-lar bir dəfə qurulur (lövhənin sürüşmə animasiyası kəsilməsin deyə yenidən yaradılmır)
+    const tabs = $("tabs");
+    if (!tabs.children.length) {
+      tabs.innerHTML = `<i class="thumb"></i>` + TABS.map(([v]) => `<button class="tab" data-view="${v}"></button>`).join("");
+    }
+    tabs.dataset.on = String(TABS.findIndex(([v]) => v === view));
+    tabs.querySelectorAll(".tab").forEach((b, i) => {
+      b.textContent = t(D.ui[TABS[i][1]]);
+      b.classList.toggle("on", b.dataset.view === view);
+    });
     $("note").textContent = t(D.ui.note);
     const c = D.contact || {};
     $("contact").innerHTML = [["pin", c.address], ["tel", c.phone], ["ig", c.instagram]]
@@ -77,7 +82,7 @@
     // başlıqlar əvvəl, sonra iki sütun EYNİ VAXTDA yuxarıdan aşağı pillə-pillə, ən axırda alt qeyd
     const d = (sel, v) => { const el = poster.querySelector(sel); if (el) el.style.setProperty("--d", v); };
     d("#t1", 0); d("#t2", 1);
-    poster.querySelectorAll(".tab").forEach((el, i) => el.style.setProperty("--d", 2 + i));
+    d(".tabs", 2);
     poster.querySelectorAll(".colx").forEach((col) =>
       col.querySelectorAll(".grp,.row").forEach((el, i) => el.style.setProperty("--d", 4 + i)));
     poster.querySelectorAll(".extras .row").forEach((el) => el.style.setProperty("--d", 15));
@@ -102,6 +107,7 @@
   }
   function swapView(v) {
     if (v === view) return;
+    $("tabs").dataset.on = String(TABS.findIndex(([x]) => x === v));   // lövhə dərhal sürüşməyə başlayır
     document.querySelectorAll(".tab").forEach((b) => b.classList.toggle("on", b.dataset.view === v));
     swapContent(() => { view = v; store.set("view", v); }, false);
   }
@@ -109,9 +115,28 @@
   document.addEventListener("click", (e) => {
     const b = e.target.closest("button");
     if (!b) return;
-    if (b.dataset.lang) swapLang(b.dataset.lang);
+    if (b.dataset.pv) openPreview(b.dataset.pv);
+    else if (b.id === "pvclose") closePreview();
+    else if (b.dataset.lang) swapLang(b.dataset.lang);
     else if (b.dataset.view) swapView(b.dataset.view);
   });
+  /* ---------- AFİŞA ÖNİZLƏMƏ (Bar → "Bax") ---------- */
+  function openPreview(src) {
+    const box = $("pv");
+    $("pvimg").src = src;
+    $("pvbg").style.backgroundImage = `url('${src}')`;
+    box.classList.remove("hidden");
+    void box.offsetWidth;
+    box.classList.add("show");
+  }
+  function closePreview() {
+    const box = $("pv");
+    if (!box || box.classList.contains("hidden")) return;
+    box.classList.remove("show");
+    setTimeout(() => { if (!box.classList.contains("show")) box.classList.add("hidden"); }, 300);
+  }
+  $("pv").addEventListener("click", closePreview);
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closePreview(); });
   /* ---------- ADS ---------- */
   let adOn = false, adTimer = null, adIdx = 0;
 
@@ -162,6 +187,7 @@
   function startAd() {
     if (adOn || !D.ads.length) return;
     adOn = true; adIdx = 0;
+    closePreview();
     document.body.classList.add("ad-on");   // reklam açıqkən menyu animasiyaları dayanır (enerji qənaəti)
     buildSlides();
     $("ad").classList.remove("hidden");
