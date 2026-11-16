@@ -14,7 +14,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
 /* ---------- POSTER (9:16, ölçülər cqw ilə miqyaslanır) ---------- */
 #app{height:100%;display:grid;place-items:center}
-#poster{position:relative;overflow:hidden;container-type:size;
+#poster{--u:1cqw;--cx:50;--cy:80;position:relative;overflow:hidden;container-type:size;
   height:min(100vh,calc(100vw*8/5));aspect-ratio:5/8;
   background:
     linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.42)),
@@ -22,68 +22,68 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
     radial-gradient(circle at 70% 20%,#8a3a00,#3b1700 55%,#140800)}
 #poster::before{content:"";position:absolute;inset:0;background:rgba(20,14,8,.12)}
 
-.logo{position:absolute;top:6cqw;left:7cqw;z-index:3;height:8cqw}
+.logo{position:absolute;top:calc(6 * var(--u));left:calc(7 * var(--u));z-index:3;height:calc(8 * var(--u))}
 .logo img{height:100%;display:block}
-.langs{position:absolute;top:6cqw;right:7cqw;height:8cqw;z-index:5;display:flex;align-items:center;gap:1.4cqw}
-.lang{font-size:2.4cqw;letter-spacing:.1em;color:var(--soft);border:1px solid var(--line);
-  border-radius:99px;padding:.9cqw 2.6cqw;transition:.25s var(--ease)}
+.langs{position:absolute;top:calc(6 * var(--u));right:calc(7 * var(--u));height:calc(8 * var(--u));z-index:5;display:flex;align-items:center;gap:calc(1.4 * var(--u))}
+.lang{font-size:calc(2.4 * var(--u));letter-spacing:.1em;color:var(--soft);border:1px solid var(--line);
+  border-radius:99px;padding:calc(.9 * var(--u)) calc(2.6 * var(--u));transition:.25s var(--ease)}
 .lang.on{background:#fff;color:#1a1300;border-color:#fff}
 
-h1.big{position:absolute;z-index:4;left:7cqw;top:16cqw;margin:0;font-weight:200;font-size:21cqw;line-height:.86;
+h1.big{position:absolute;z-index:4;left:calc(7 * var(--u));top:calc(16 * var(--u));margin:0;font-weight:200;font-size:calc(21 * var(--u));line-height:.86;
   letter-spacing:-.01em;pointer-events:none}
 h1.big span{display:block;width:max-content}
-h1.big span+span{margin-left:10cqw}
+h1.big span+span{margin-left:calc(10 * var(--u))}
 /* dil keçidi: çıxış → giriş (pillə-pillə) */
 :is(#t1,#t2,#ctitle,#note,.grp,.row){transition:opacity .26s ease,transform .26s ease,filter .26s ease}
-#poster.out :is(#t1,#t2,#ctitle,#note,.grp,.row){opacity:0;transform:translateY(-1.2cqw)}
-#poster.out :is(#t1,#t2,#ctitle){filter:blur(.7cqw)}          /* blur yalnız iri başlıqlarda (yüngül qalsın) */
+#poster.out :is(#t1,#t2,#ctitle,#note,.grp,.row){opacity:0;transform:translateY(calc(-1.2 * var(--u)))}
+#poster.out :is(#t1,#t2,#ctitle){filter:blur(calc(.7 * var(--u)))}          /* blur yalnız iri başlıqlarda (yüngül qalsın) */
 #poster.in :is(.grp,.row,#note){animation:txtin .7s var(--ease) both;animation-delay:calc(var(--d,0) * 45ms)}
 #poster.in :is(#t1,#t2,#ctitle){animation:txtin-big .9s var(--ease) both;animation-delay:calc(var(--d,0) * 70ms)}
-@keyframes txtin{from{opacity:0;transform:translateY(1.6cqw)}to{opacity:1;transform:none}}
-@keyframes txtin-big{from{opacity:0;transform:translateY(2.4cqw);filter:blur(.9cqw)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes txtin{from{opacity:0;transform:translateY(calc(1.6 * var(--u)))}to{opacity:1;transform:none}}
+@keyframes txtin-big{from{opacity:0;transform:translateY(calc(2.4 * var(--u)));filter:blur(calc(.9 * var(--u)))}to{opacity:1;transform:none;filter:blur(0)}}
 @media (prefers-reduced-motion:reduce){#poster.in :is(#t1,#t2,#ctitle,.grp,.row,#note){animation:none}}
 /* başlıq: loqo ilə kartın arasında şaquli ortada, loqo ilə eyni sol xətdə */
-h1.big{top:32cqw;transform:translateY(-50%);
-  font-size:16cqw;line-height:.9;letter-spacing:-.02em;text-shadow:0 .8cqw 4cqw rgba(0,0,0,.3)}
-h1.big span+span{margin-left:8cqw}
-html[lang=az] h1.big{font-size:13.5cqw}
-html[lang=ru] h1.big{font-size:14.5cqw}
+h1.big{top:calc(32 * var(--u));transform:translateY(-50%);
+  font-size:calc(16 * var(--u));line-height:.9;letter-spacing:-.02em;text-shadow:0 calc(.8 * var(--u)) calc(4 * var(--u)) rgba(0,0,0,.3)}
+h1.big span+span{margin-left:calc(8 * var(--u))}
+html[lang=az] h1.big{font-size:calc(13.5 * var(--u))}
+html[lang=ru] h1.big{font-size:calc(14.5 * var(--u))}
 
-.card{position:absolute;z-index:2;left:7cqw;right:7cqw;top:50cqw;bottom:7cqw;
+.card{position:absolute;z-index:2;left:calc(7 * var(--u));right:calc(7 * var(--u));top:calc(50 * var(--u));bottom:calc(7 * var(--u));
   background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.07));
-  border:1px solid rgba(255,255,255,.14);border-radius:5.6cqw;
-  backdrop-filter:blur(2.2cqw) brightness(.62);-webkit-backdrop-filter:blur(2.2cqw) brightness(.62);
-  box-shadow:0 2cqw 8cqw rgba(0,0,0,.25);
-  padding:6.6cqw 6.4cqw 4.6cqw;display:flex;flex-direction:column;min-height:0;animation:rise .5s var(--ease) both}
-.card h2{margin:0 0 3cqw;font-weight:300;font-size:6.6cqw;letter-spacing:.01em}
+  border:1px solid rgba(255,255,255,.14);border-radius:calc(5.6 * var(--u));
+  backdrop-filter:blur(calc(2.2 * var(--u))) brightness(.62);-webkit-backdrop-filter:blur(calc(2.2 * var(--u))) brightness(.62);
+  box-shadow:0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0,0,0,.25);
+  padding:calc(6.6 * var(--u)) calc(6.4 * var(--u)) calc(4.6 * var(--u));display:flex;flex-direction:column;min-height:0;animation:rise .5s var(--ease) both}
+.card h2{margin:0 0 calc(3 * var(--u));font-weight:300;font-size:calc(6.6 * var(--u));letter-spacing:.01em}
 
-.head,.row{display:grid;grid-template-columns:1fr 24cqw;align-items:center}
-.head{font-size:3cqw;font-weight:300;line-height:1.25;color:var(--soft);padding-bottom:3cqw;border-bottom:1px solid var(--line)}
-.head .h2{text-align:center;color:#fff;font-size:3.4cqw}
+.head,.row{display:grid;grid-template-columns:1fr calc(24 * var(--u));align-items:center}
+.head{font-size:calc(3 * var(--u));font-weight:300;line-height:1.25;color:var(--soft);padding-bottom:calc(3 * var(--u));border-bottom:1px solid var(--line)}
+.head .h2{text-align:center;color:#fff;font-size:calc(3.4 * var(--u))}
 .list{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
-.grp{font-size:3.7cqw;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);padding:6cqw 0 1.6cqw}
-.grp:first-child{padding-top:1cqw}
-.row{flex:1 1 0;min-height:0;border-bottom:max(1.5px,.2cqw) solid rgba(255,255,255,.65);font-size:3.3cqw;font-weight:400}
+.grp{font-size:calc(3.7 * var(--u));font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);padding:calc(6 * var(--u)) 0 calc(1.6 * var(--u))}
+.grp:first-child{padding-top:calc(1 * var(--u))}
+.row{flex:1 1 0;min-height:0;border-bottom:max(1.5px,calc(.2 * var(--u))) solid rgba(255,255,255,.65);font-size:calc(3.3 * var(--u));font-weight:400}
 .row:last-child{border-bottom:0}
-.row .n{padding-right:2cqw}
+.row .n{padding-right:calc(2 * var(--u))}
 .row .n small{display:block;font-size:.78em;font-weight:300;color:var(--soft);margin-top:.3em}
 .row .p{height:62%;display:flex;align-items:center;justify-content:flex-end;border-left:0;
-  font-size:3.4cqw;white-space:nowrap;font-variant-numeric:tabular-nums}
+  font-size:calc(3.4 * var(--u));white-space:nowrap;font-variant-numeric:tabular-nums}
 .badge{margin-left:.7em;font-size:.72em;padding:.1em .6em;border-radius:99px;background:var(--accent);color:#1a1300;font-weight:500}
 /* iki sütun: Ayaqüstə | Uzanan */
-.cols{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;column-gap:5cqw}
+.cols{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;column-gap:calc(5 * var(--u))}
 .colx{display:flex;flex-direction:column;min-height:0}
-.colx .row{grid-template-columns:1fr 17cqw;font-size:3.2cqw}
-.colx .row .p{font-size:3.3cqw}
-.colx .grp{padding:0 0 2.2cqw;font-size:3.5cqw}
-.extras{flex:none;margin-top:2.5cqw}
-.extras .row{flex:none;height:9cqw;border-bottom:0;border-top:max(1.5px,.2cqw) solid rgba(255,255,255,.65)}
-.foot-note{margin:3cqw 0 0;text-align:center;font-size:2.7cqw;font-weight:300;line-height:1.5;color:var(--soft)}
+.colx .row{grid-template-columns:1fr calc(17 * var(--u));font-size:calc(3.2 * var(--u))}
+.colx .row .p{font-size:calc(3.3 * var(--u))}
+.colx .grp{padding:0 0 calc(2.2 * var(--u));font-size:calc(3.5 * var(--u))}
+.extras{flex:none;margin-top:calc(2.5 * var(--u))}
+.extras .row{flex:none;height:calc(9 * var(--u));border-bottom:0;border-top:max(1.5px,calc(.2 * var(--u))) solid rgba(255,255,255,.65)}
+.foot-note{margin:calc(3 * var(--u)) 0 0;text-align:center;font-size:calc(2.7 * var(--u));font-weight:300;line-height:1.5;color:var(--soft)}
 
-.contact{position:absolute;z-index:3;left:7cqw;right:7cqw;bottom:4.4cqw;display:flex;justify-content:space-between;
-  align-items:center;gap:2cqw;font-size:2.9cqw;font-weight:300}
-.contact span{display:flex;align-items:center;gap:1.4cqw;white-space:nowrap}
-.contact svg{width:4cqw;height:4cqw;stroke:#fff;fill:none;stroke-width:1.5}
+.contact{position:absolute;z-index:3;left:calc(7 * var(--u));right:calc(7 * var(--u));bottom:calc(4.4 * var(--u));display:flex;justify-content:space-between;
+  align-items:center;gap:calc(2 * var(--u));font-size:calc(2.9 * var(--u));font-weight:300}
+.contact span{display:flex;align-items:center;gap:calc(1.4 * var(--u));white-space:nowrap}
+.contact svg{width:calc(4 * var(--u));height:calc(4 * var(--u));stroke:#fff;fill:none;stroke-width:1.5}
 
 /* ---------- sun flare: poster-in sol yuxarı küncündə sabit günəş + kart şüşəsində yumşaq yansıma ----------
    Hər şey eyni 14 saniyəlik dövrə bağlıdır: günəş güclənir → işıq kartın küncünə düşür →
@@ -91,44 +91,44 @@ html[lang=ru] h1.big{font-size:14.5cqw}
 :root{--T:16s}
 
 /* ---- günəş (sabit yer, sol yuxarı künc) ---- */
-.flare{--x:3cqw;--y:2cqw;position:absolute;inset:0;z-index:6;pointer-events:none;overflow:hidden;
+.flare{--x:calc(3 * var(--u));--y:calc(2 * var(--u));position:absolute;inset:0;z-index:6;pointer-events:none;overflow:hidden;
   opacity:.5;will-change:opacity;animation:flare var(--T) ease-in-out infinite}
 .flare>*{position:absolute;display:block;transform:translate(-50%,-50%);border-radius:50%;will-change:transform}
-.flare .veil{left:var(--x);top:var(--y);width:130cqw;height:130cqw;
+.flare .veil{left:var(--x);top:var(--y);width:calc(130 * var(--u));height:calc(130 * var(--u));
   background:radial-gradient(circle,rgba(255,228,165,.30) 0,rgba(255,200,115,.17) 14%,rgba(255,185,95,.08) 32%,rgba(255,175,90,.03) 50%,transparent 66%)}
-.flare .core{left:var(--x);top:var(--y);width:22cqw;height:22cqw;animation:breathe var(--T) ease-in-out infinite;
+.flare .core{left:var(--x);top:var(--y);width:calc(22 * var(--u));height:calc(22 * var(--u));animation:breathe var(--T) ease-in-out infinite;
   background:radial-gradient(circle,#fff 0,rgba(255,250,230,.95) 8%,rgba(255,226,150,.62) 20%,rgba(255,200,110,.30) 38%,rgba(255,170,70,.10) 56%,transparent 72%)}
-.flare .s1{left:var(--x);top:var(--y);width:110cqw;height:.7cqw;border-radius:99px;animation:tilt var(--T) ease-in-out infinite;
+.flare .s1{left:var(--x);top:var(--y);width:calc(110 * var(--u));height:calc(.7 * var(--u));border-radius:99px;animation:tilt var(--T) ease-in-out infinite;
   background:linear-gradient(90deg,transparent,rgba(255,236,190,.15) 22%,rgba(255,240,200,.8) 50%,rgba(255,236,190,.15) 78%,transparent)}
-.flare .s2{left:var(--x);top:var(--y);width:46cqw;height:.45cqw;border-radius:99px;transform:translate(-50%,-50%) rotate(90deg);
+.flare .s2{left:var(--x);top:var(--y);width:calc(46 * var(--u));height:calc(.45 * var(--u));border-radius:99px;transform:translate(-50%,-50%) rotate(90deg);
   background:linear-gradient(90deg,transparent,rgba(255,226,170,.5) 50%,transparent)}
 /* ghost-lar: günəşdən posterin mərkəzinə doğru */
-.flare .g{--t:.3;--s:6cqw;left:calc(var(--x) + (50cqw - var(--x)) * var(--t));top:calc(var(--y) + (80cqw - var(--y)) * var(--t));
+.flare .g{--t:.3;--s:calc(6 * var(--u));left:calc(var(--x) + (var(--cx) * var(--u) - var(--x)) * var(--t));top:calc(var(--y) + (var(--cy) * var(--u) - var(--y)) * var(--t));
   width:var(--s);height:var(--s);animation:ghost var(--T) ease-in-out infinite}
-.flare .g1{--t:.24;--s:5cqw;background:radial-gradient(circle,rgba(255,196,110,.45),transparent 70%)}
-.flare .g2{--t:.46;--s:11cqw;border-radius:0;clip-path:polygon(25% 4%,75% 4%,100% 50%,75% 96%,25% 96%,0 50%);
+.flare .g1{--t:.24;--s:calc(5 * var(--u));background:radial-gradient(circle,rgba(255,196,110,.45),transparent 70%)}
+.flare .g2{--t:.46;--s:calc(11 * var(--u));border-radius:0;clip-path:polygon(25% 4%,75% 4%,100% 50%,75% 96%,25% 96%,0 50%);
   background:radial-gradient(circle,rgba(255,214,150,.03) 40%,rgba(255,200,120,.16) 78%,rgba(255,230,180,.24) 100%)}
-.flare .g3{--t:.68;--s:4cqw;background:radial-gradient(circle,rgba(170,215,255,.32),transparent 70%)}
-.flare .g4{--t:.92;--s:16cqw;background:radial-gradient(circle,transparent 58%,rgba(255,206,130,.16) 70%,transparent 80%)}
+.flare .g3{--t:.68;--s:calc(4 * var(--u));background:radial-gradient(circle,rgba(170,215,255,.32),transparent 70%)}
+.flare .g4{--t:.92;--s:calc(16 * var(--u));background:radial-gradient(circle,transparent 58%,rgba(255,206,130,.16) 70%,transparent 80%)}
 @keyframes flare{0%,100%{opacity:.5}28%{opacity:1}60%{opacity:.78}}
 @keyframes breathe{0%,100%{transform:translate(-50%,-50%) scale(.88)}28%{transform:translate(-50%,-50%) scale(1.12)}60%{transform:translate(-50%,-50%) scale(.98)}}
 @keyframes tilt{0%,100%{transform:translate(-50%,-50%) rotate(-2deg) scaleX(.85)}50%{transform:translate(-50%,-50%) rotate(2deg) scaleX(1.02)}}
-@keyframes ghost{0%,100%{transform:translate(calc(-50% - 1cqw * var(--t)),calc(-50% - .7cqw * var(--t)))}
-  50%{transform:translate(calc(-50% + 1cqw * var(--t)),calc(-50% + .7cqw * var(--t)))}}
+@keyframes ghost{0%,100%{transform:translate(calc(-50% - calc(1 * var(--u)) * var(--t)),calc(-50% - calc(.7 * var(--u)) * var(--t)))}
+  50%{transform:translate(calc(-50% + calc(1 * var(--u)) * var(--t)),calc(-50% + calc(.7 * var(--u)) * var(--t)))}}
 
 /* ---- kart şüşəsində yansıma: yalnız sağ aşağı küncdə, çox yumşaq və az görünən ---- */
-.rim{position:absolute;inset:-1px;border-radius:inherit;padding:.6cqw;pointer-events:none;overflow:hidden;z-index:3;
+.rim{position:absolute;inset:-1px;border-radius:inherit;padding:calc(.6 * var(--u));pointer-events:none;overflow:hidden;z-index:3;
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
 .rim>*{position:absolute;opacity:0;will-change:transform,opacity}
-.rim .rc2{right:0;bottom:0;width:46cqw;height:46cqw;animation:rimc2 var(--T) ease-in-out infinite;
+.rim .rc2{right:0;bottom:0;width:calc(46 * var(--u));height:calc(46 * var(--u));animation:rimc2 var(--T) ease-in-out infinite;
   background:radial-gradient(circle at 100% 100%,rgba(255,255,255,.7) 0,rgba(255,244,214,.42) 14%,rgba(255,226,170,.2) 34%,rgba(255,210,140,.07) 54%,transparent 76%)}
-.rim .rb{right:0;bottom:0;width:40cqw;height:5cqw;transform:translateX(10cqw);animation:rimb var(--T) cubic-bezier(.4,0,.2,1) infinite;
+.rim .rb{right:0;bottom:0;width:calc(40 * var(--u));height:calc(5 * var(--u));transform:translateX(calc(10 * var(--u)));animation:rimb var(--T) cubic-bezier(.4,0,.2,1) infinite;
   background:linear-gradient(270deg,rgba(255,255,255,.6),rgba(255,246,220,.34) 28%,rgba(255,244,214,.12) 60%,transparent)}
-.rim .rr{right:0;bottom:0;width:5cqw;height:40cqw;transform:translateY(10cqw);animation:rimr var(--T) cubic-bezier(.4,0,.2,1) infinite;
+.rim .rr{right:0;bottom:0;width:calc(5 * var(--u));height:calc(40 * var(--u));transform:translateY(calc(10 * var(--u)));animation:rimr var(--T) cubic-bezier(.4,0,.2,1) infinite;
   background:linear-gradient(0deg,rgba(255,255,255,.6),rgba(255,246,220,.34) 28%,rgba(255,244,214,.12) 60%,transparent)}
 @keyframes rimc2{0%,12%{opacity:0}42%{opacity:.5}68%{opacity:.22}96%,100%{opacity:0}}
-@keyframes rimb{0%,12%{opacity:0;transform:translateX(10cqw)}42%{opacity:.55}70%{opacity:.2}96%,100%{opacity:0;transform:translateX(-18cqw)}}
-@keyframes rimr{0%,12%{opacity:0;transform:translateY(10cqw)}42%{opacity:.55}70%{opacity:.2}96%,100%{opacity:0;transform:translateY(-18cqw)}}
+@keyframes rimb{0%,12%{opacity:0;transform:translateX(calc(10 * var(--u)))}42%{opacity:.55}70%{opacity:.2}96%,100%{opacity:0;transform:translateX(calc(-18 * var(--u)))}}
+@keyframes rimr{0%,12%{opacity:0;transform:translateY(calc(10 * var(--u)))}42%{opacity:.55}70%{opacity:.2}96%,100%{opacity:0;transform:translateY(calc(-18 * var(--u)))}}
 
 @media (prefers-reduced-motion:reduce){.card,.rim>*,.flare,.flare>*{animation:none!important}}
 
@@ -142,6 +142,16 @@ html[lang=ru] h1.big{font-size:14.5cqw}
 #testad:active{background:var(--accent);color:#1a1300}
 body.ad-on #poster *,body.ad-on #poster{animation-play-state:paused!important}
 
+/* ---------- LANDSCAPE (üfüqi ekran, məs. 1920×1200): sol tərəfdə başlıq, sağda şüşə kart ----------
+   Bütün ölçülər --u vahidindədir. Üfüqi rejimdə 1u = hündürlüyün 0.8%-i (1200 px-də 9.6 px) */
+@media (orientation:landscape){
+  #poster{height:min(100vh,calc(100vw * 5 / 8));aspect-ratio:8/5;--u:.8cqh;--cx:100;--cy:62}
+  h1.big{top:50%;left:calc(7 * var(--u));font-size:calc(24 * var(--u))}
+  html[lang=az] h1.big{font-size:calc(19 * var(--u))}
+  html[lang=ru] h1.big{font-size:calc(21 * var(--u))}
+  .card{left:auto;right:calc(7 * var(--u));width:calc(88.8 * var(--u));top:calc(16 * var(--u));bottom:calc(7 * var(--u))}
+  .contact{right:auto;width:calc(88 * var(--u));left:calc(7 * var(--u));bottom:calc(7 * var(--u))}
+}
 /* ---------- AD ---------- */
 #ad{position:fixed;inset:0;background:#000;z-index:50;cursor:pointer}
 #slides{position:absolute;inset:0}
