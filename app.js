@@ -21,9 +21,10 @@
   let view = store.get("view", "solarium");   // "solarium" | "bar"
   const TITLES = {
     solarium: { az: ["Qiymət", "Siyahısı"], ru: ["Прайс", "Лист"], en: ["Price", "List"] },
-    bar:      { az: ["Bar", "Menyusu"],     ru: ["Бар", "Меню"],    en: ["Bar", "Menu"] }
+    bar:      { az: ["Bar", "Menyusu"],     ru: ["Бар", "Меню"],    en: ["Bar", "Menu"] },
+    creams:   { az: ["Solarium", "Kremləri"], ru: ["Кремы для", "солярия"], en: ["Tanning", "Creams"] }
   };
-  const TABS = [["solarium", "solarium"], ["bar", "drinks"]];   // [view, D.ui açarı]
+  const TABS = [["solarium", "solarium"], ["bar", "drinks"], ["creams", "creams"]];   // [view, D.ui açarı]
 
   const row = (name, sub, price) =>
     `<div class="row"><div class="n">${name}${sub ? `<small>${sub}</small>` : ""}</div><div class="p">${price}</div></div>`;
@@ -50,6 +51,11 @@
     return `<div class="cols bar"><div class="colx">` +
       D.drinks.map((d) => row(t(d.name) + (d.preview ? pvBtn(d.preview) : ""), d.size || "", price(d))).join("") + `</div></div>`;
   }
+  // kremlər: dairədə şəkil + ad; basanda məlumat pəncərəsi açılır
+  function renderCreams() {
+    return `<div class="creams">` + (D.creams || []).map((c, i) =>
+      `<button class="cr-item" data-cr="${i}"><span class="cr-c" style="background-image:url('${c.img}');background-position:50% ${c.pos}%"></span><span class="cr-n">${c.name}</span><small>${c.brand}</small></button>`).join("") + `</div>`;
+  }
   function render() {
     $("langs").innerHTML = LANGS
       .map((l) => `<button class="lang ${lang === l ? "on" : ""}" data-lang="${l}">${l.toUpperCase()}</button>`).join("");
@@ -69,7 +75,7 @@
     const c = D.contact || {};
     $("contact").innerHTML = [["pin", c.address], ["tel", c.phone], ["ig", c.instagram]]
       .filter((x) => x[1]).map((x) => `<span>${ic[x[0]]}${x[1]}</span>`).join("");
-    $("view").innerHTML = view === "bar" ? renderBar() : renderSolarium();
+    $("view").innerHTML = view === "bar" ? renderBar() : view === "creams" ? renderCreams() : renderSolarium();
     document.documentElement.lang = lang;
   }
 
@@ -83,6 +89,7 @@
     const d = (sel, v) => { const el = poster.querySelector(sel); if (el) el.style.setProperty("--d", v); };
     d("#t1", 0); d("#t2", 1);
     d(".tabs", 2);
+    poster.querySelectorAll(".creams .cr-item").forEach((el, i) => el.style.setProperty("--d", 4 + i * 2));
     poster.querySelectorAll(".colx").forEach((col) =>
       col.querySelectorAll(".grp,.row").forEach((el, i) => el.style.setProperty("--d", 4 + i)));
     poster.querySelectorAll(".extras .row").forEach((el) => el.style.setProperty("--d", 15));
@@ -115,7 +122,9 @@
   document.addEventListener("click", (e) => {
     const b = e.target.closest("button");
     if (!b) return;
-    if (b.dataset.pv) openPreview(b.dataset.pv);
+    if (b.dataset.cr) openCream(+b.dataset.cr);
+    else if (b.id === "crclose") closeCream();
+    else if (b.dataset.pv) openPreview(b.dataset.pv);
     else if (b.id === "pvclose") closePreview();
     else if (b.dataset.lang) swapLang(b.dataset.lang);
     else if (b.dataset.view) swapView(b.dataset.view);
@@ -135,8 +144,27 @@
     box.classList.remove("show");
     setTimeout(() => { if (!box.classList.contains("show")) box.classList.add("hidden"); }, 300);
   }
+  /* ---------- KREM MƏLUMATI ---------- */
+  function openCream(i) {
+    const c = (D.creams || [])[i]; if (!c) return;
+    $("crimg").src = c.img;
+    $("crbg").style.backgroundImage = `url('${c.img}')`;
+    $("crinfo").innerHTML = `<div class="crbrand">${c.brand}</div><h2 class="crname">${c.name}</h2><div class="crtype">${t(c.type)}</div>` +
+      `<span class="crvol">${c.vol}</span><p class="crdesc">${t(c.desc)}</p><ul class="crfeats">${(c.feats[lang] || c.feats.az).map((f) => `<li>${f}</li>`).join("")}</ul>`;
+    const box = $("cr");
+    box.classList.remove("hidden");
+    void box.offsetWidth;
+    box.classList.add("show");
+  }
+  function closeCream() {
+    const box = $("cr");
+    if (!box || box.classList.contains("hidden")) return;
+    box.classList.remove("show");
+    setTimeout(() => { if (!box.classList.contains("show")) box.classList.add("hidden"); }, 300);
+  }
+  $("cr").addEventListener("click", (e) => { if (!e.target.closest(".crinfo,.crimg")) closeCream(); });
   $("pv").addEventListener("click", closePreview);
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closePreview(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") { closePreview(); closeCream(); } });
   /* ---------- ADS ---------- */
   let adOn = false, adTimer = null, adIdx = 0;
 
@@ -187,7 +215,7 @@
   function startAd() {
     if (adOn || !D.ads.length) return;
     adOn = true; adIdx = 0;
-    closePreview();
+    closePreview(); closeCream();
     document.body.classList.add("ad-on");   // reklam açıqkən menyu animasiyaları dayanır (enerji qənaəti)
     buildSlides();
     $("ad").classList.remove("hidden");

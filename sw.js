@@ -1,4 +1,4 @@
-const CACHE = "menu-v38";
+const CACHE = "menu-v39";
 const FILES = ["./", "index.html", "style.css", "app.js", "data.js", "icon.svg", "logo.svg", "manifest.webmanifest", "media/bg.avif", "media/Ad1.png", "media/Ad2.png", "media/Ad3.png", "media/Ad4.png", "media/Ad5.png", "media/Ad6.png", "media/Ad7.png", "media/Ad8.png", "media/Ad9.png"];
 
 self.addEventListener("install", (e) => {
