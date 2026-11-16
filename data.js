@@ -5,7 +5,7 @@
    =========================================================== */
 window.MENU_DATA = {
   brand: "megaSun",
-  version: "v2 · 16.11 22:54",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
+  version: "v3 · 16.11 23:09",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
   currency: "₼",
   idleSeconds: 45,                 // toxunulmasa neçə saniyədən sonra reklam başlasın
   reloadAt: "04:00",               // hər gün bu saatda səhifə özünü yeniləyir
@@ -17,6 +17,30 @@ window.MENU_DATA = {
 
   /* Sol paneldəki şəkil (media qovluğunda). Şəkil istəmirsənsə: cover: { image: "" } */
   cover: { image: "media/cover.webp" },
+  /* ---------- BUTİK DİZAYNI (tək səhifə, 3:4). Qiymətləri/mətnləri burada dəyiş. Bu blok silinsə köhnə menyu qayıdır ---------- */
+  boutique: {
+    sessions: {
+      title: "Solarium Sessions",
+      rows: [["5 dəqiqə", "10 AZN"], ["10 dəqiqə", "18 AZN"], ["15 dəqiqə", "25 AZN"], ["20 dəqiqə", "32 AZN"]],
+      notes: [["chat", "İlk seans üçün konsultasiya — pulsuz və məcburidir."], ["clock", "Seanslar arasında minimum 24 saat fasilə."]]
+    },
+    packages: [
+      { name: "Abonement №1", price: "100 AZN", bonus: "+ 40 AZN bonus" },
+      { name: "Abonement №2", price: "200 AZN", bonus: "+ 100 AZN bonus" },
+      { name: "VIP Abonement", icon: "crown", price: "200 AZN", sub: "(məhdud sayda)", bonus: "+ 150 AZN bonus" }
+    ],
+    creams: {
+      left:  [["Ride or Tide", "115 AZN"], ["Going Tropik", "115 AZN"], ["Caribbean Cool", "115 AZN"], ["Game Over", "115 AZN"], ["Sunshine Superstar", "125 AZN"]],
+      right: [["Somewhere on a Beach", "125 AZN"], ["Bali Beach", "125 AZN"], ["Bahama Bronzer", "125 AZN"], ["Neon Rose", "125 AZN"], ["Color Karma", "135 AZN"], ["Sunset Strip", "135 AZN"]],
+      samples: ["15 ml — 10 AZN", "6 ml — 6 AZN"]
+    },
+    script: "Wear your heart",
+    services: [
+      ["bag", "Boutique", "(Alo Yoga, Lululemon, On Cloud və s.)"], ["drink", "Refresh", "(Fresh juice)"],
+      ["icecream", "Ice Cream", "by MegaSun"], ["cake", "Tiramisu Bar", "(Catering)"],
+      ["caviar", "Caviar Atelier", "(Catering)"], ["calendar", "Events", "& Private Catering"]
+    ]
+  },
   /* Siyahının altındakı əlaqə sətri. Doldurmaq üçün: contact: { address: "...", phone: "...", instagram: "@..." } */
   contact: null,
 

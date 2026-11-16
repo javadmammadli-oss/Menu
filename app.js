@@ -271,7 +271,7 @@
   }, 1000);
 
   /* ---------- AUTO UPDATE ---------- */
-  const WATCH = ["index.html", "data.js", "app.js", "style.css", "logo.svg"];
+  const WATCH = ["index.html", "data.js", "app.js", "style.css", "logo.svg", "boutique.js", "boutique.css"];
   let version = null, updatePending = false;
   async function checkUpdate() {
     try {

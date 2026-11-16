@@ -1,0 +1,46 @@
+/* Butik dizaynı: stage 3:4, --k = 1 orijinal piksel (1086 px eninə görə) */
+body.bq-on #app{display:none}
+#boutique{display:none}
+body.bq-on #boutique{position:fixed;inset:0;z-index:1;display:grid;place-items:center;overflow:hidden;background:#e2d6ce}
+#bq{--k:calc(100cqw / 1086);position:relative;overflow:hidden;container-type:size;
+  height:min(100vh,calc(100vw * 4 / 3));height:min(100dvh,calc(100vw * 4 / 3));aspect-ratio:3/4;
+  background:#e2d6ce url("media/boutique/bg.jpg") center/100% 100% no-repeat;
+  --ink:#3a2622;--ink2:#5b4540;--dim:#8a7168;--serif:"Cormorant Garamond","EB Garamond","Noto Serif",Georgia,"Times New Roman",serif;
+  font-family:var(--serif);color:var(--ink);user-select:none;-webkit-user-select:none}
+#bq *{box-sizing:border-box}
+.a{position:absolute;left:calc(var(--x) * var(--k));top:calc(var(--y) * var(--k));width:calc(var(--w) * var(--k));height:calc(var(--h) * var(--k));margin:0}
+.t{position:absolute;left:calc(var(--x) * var(--k));top:calc(var(--y) * var(--k));font-size:calc(var(--fs) * var(--k));line-height:1;
+  transform:translateY(-50%);white-space:nowrap;font-weight:600;letter-spacing:.005em}
+.t.r{transform:translate(-100%,-50%);font-variant-numeric:lining-nums}
+.t.h{font-size:calc(var(--fs) * var(--k));font-weight:600;letter-spacing:.01em}
+.t.dim{color:var(--dim);font-weight:500}
+.t.script{font-family:"Great Vibes","Segoe Script","Brush Script MT",cursive;font-weight:400;color:#8c5f52;line-height:1.1}
+
+.hdr img,.tile img,.thumb img,.tail img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.hdr{-webkit-mask:linear-gradient(#000 92%,transparent);mask:linear-gradient(#000 92%,transparent)}
+.tail{z-index:3;clip-path:polygon(8% 0,79% 0,89% 37.5%,94% 75%,97% 100%,59% 100%,47.5% 75%,25.7% 37.5%)}
+.tile,.thumb{overflow:hidden;border-radius:calc(30 * var(--k));border:calc(2 * var(--k)) solid rgba(255,255,255,.7);
+  box-shadow:0 calc(8 * var(--k)) calc(22 * var(--k)) rgba(120,90,80,.2)}
+.tile img{transform:scale(1.06)}
+.thumb{border-radius:calc(16 * var(--k));box-shadow:0 calc(4 * var(--k)) calc(12 * var(--k)) rgba(120,90,80,.18);border-width:calc(1.5 * var(--k))}
+.thumb img{transform:scale(1.04)}
+.glass{border-radius:calc(30 * var(--k));border:calc(1.6 * var(--k)) solid rgba(255,255,255,.8);
+  background:linear-gradient(180deg,rgba(255,255,255,.5),rgba(255,248,244,.34));
+  box-shadow:0 calc(8 * var(--k)) calc(24 * var(--k)) rgba(120,90,80,.14),inset 0 0 calc(26 * var(--k)) rgba(255,255,255,.55)}
+.glass.sv{border-radius:calc(26 * var(--k))}
+.ln{background:rgba(110,80,70,.28)}
+.ic{fill:none;stroke:#5b4038;stroke-width:1.35;stroke-linecap:round;stroke-linejoin:round}
+.note{font-size:calc(19.5 * var(--k));line-height:1.28;font-weight:600;color:var(--ink2)}
+.pill{display:flex;align-items:center;justify-content:center;border-radius:99px;font-size:calc(23 * var(--k));font-weight:600;
+  background:linear-gradient(180deg,#e9d8ca,#dcc5b4);box-shadow:inset 0 0 0 calc(1 * var(--k)) rgba(255,255,255,.6);color:#4a2f28;white-space:nowrap}
+.heart{fill:none;stroke:#a67e6e;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transform:rotate(8deg)}
+.chip{border-radius:99px;background:rgba(255,255,255,.42);border:calc(1.2 * var(--k)) solid rgba(255,255,255,.75)}
+.arrow{display:grid;place-items:center;border-radius:50%;border:calc(1.4 * var(--k)) solid rgba(110,80,70,.4);background:rgba(255,255,255,.4)}
+.arrow svg{width:55%;height:55%;fill:none;stroke:#5b4038;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.svt{display:flex;flex-direction:column;align-items:center;text-align:center;line-height:1.12}
+.svt b{font-size:calc(19.5 * var(--k));font-weight:700;color:var(--ink)}
+.svt small{font-size:calc(15.5 * var(--k));font-weight:500;color:var(--ink2);margin-top:calc(1 * var(--k))}
+#bqver{position:absolute;right:calc(10 * var(--k));bottom:calc(4 * var(--k));font:300 calc(9 * var(--k)) Inter,Roboto,sans-serif;letter-spacing:.08em;color:rgba(70,45,40,.4);pointer-events:none}
+/* test düyməsi (testButton: true) dizaynı bağlamasın: sağ aşağı küncdə kiçik */
+body.bq-on #testad{left:50%;transform:translateX(-50%);bottom:.5vmin;opacity:.55;padding:.5vmin 1.8vmin;font-size:1.5vmin}
+#bqref{position:absolute;inset:0;width:100%;height:100%;opacity:.5;z-index:20;pointer-events:none}
