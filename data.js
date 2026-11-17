@@ -6,6 +6,8 @@
 window.MENU_DATA = {
   brand: "megaSun",
   version: "v6 · 17.11 19:18",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
+  /* DİZAYN: "classic" = köhnə menyu (Solarium / Bar / Kremlər), "boutique" = yeni butik dizaynı. Dəyişib push etmək kifayətdir. Linkdə ?design=boutique ilə də sınaya bilərsən */
+  design: "classic",
   currency: "₼",
   idleSeconds: 45,                 // toxunulmasa neçə saniyədən sonra reklam başlasın
   reloadAt: "04:00",               // hər gün bu saatda səhifə özünü yeniləyir

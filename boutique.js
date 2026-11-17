@@ -3,6 +3,9 @@
 (function () {
   const D = window.MENU_DATA, B = D && D.boutique, host = document.getElementById("boutique");
   if (!B || !host) return;
+  /* Dizayn seçimi: data.js-də design: "classic" (köhnə menyu) və ya "boutique" (yeni). Test üçün linkdə ?design=boutique / ?design=classic */
+  const want = (location.search.match(/[?&]design=(classic|boutique)/) || [])[1] || D.design || "boutique";
+  if (want !== "boutique") return;
   document.body.classList.add("bq-on");
 
   const LANGS = ["az", "ru", "en"];

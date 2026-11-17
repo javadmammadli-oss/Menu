@@ -1,4 +1,4 @@
-const CACHE = "menu-v79";
+const CACHE = "menu-v80";
 const FILES = ["./", "index.html", "style.css", "app.js", "data.js", "icon.svg", "logo.svg", "manifest.webmanifest", "boutique.js", "boutique.css", "media/boutique/bg-satin.jpg", "media/boutique/bow.webp", "media/card/solarium.webp", "media/card/packages.webp", "media/card/creams.webp", "media/card/lovers.webp", "media/qolbaq/qolbaq_1.webp", "media/qolbaq/qolbaq_2.webp", "media/qolbaq/qolbaq_3.webp", "media/qolbaq/qolbaq_4.webp", "media/qolbaq/qolbaq_5.webp", "media/qolbaq/qolbaq_6.webp",
   "media/bg.avif", "media/Ad1.png", "media/Ad2.png", "media/Ad3.png", "media/Ad4.png", "media/Ad5.png", "media/Ad6.png", "media/Ad7.png", "media/Ad8.png", "media/Ad9.png"];
 
