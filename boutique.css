@@ -21,7 +21,7 @@ body.bq-on #boutique{position:fixed;inset:0;z-index:1;display:grid;place-items:c
 .slot{background:var(--ph)}
 .t.c{transform:translate(-50%,-50%)}
 .t.brand{font-weight:300;letter-spacing:-.012em;color:#34201d}
-.t.sub{font-weight:500;letter-spacing:.42em;margin-right:-.42em;color:#3d2925}
+.t.sub{font-weight:700;letter-spacing:.34em;color:#34201d;-webkit-text-stroke:calc(.7 * var(--k)) #34201d;transform:translate(calc(-50% + .17em),-50%)}
 .t.ser{font-style:italic;font-weight:500}
 .t.rom{font-weight:500}
 .t.sp{letter-spacing:.05em}
@@ -60,3 +60,80 @@ body.bq-on #boutique{position:fixed;inset:0;z-index:1;display:grid;place-items:c
 /* test düyməsi (testButton: true) dizaynı bağlamasın: sağ aşağı küncdə kiçik */
 body.bq-on #testad{left:1vmin;transform:none;bottom:.5vmin;opacity:.55;padding:.5vmin 1.8vmin;font-size:1.5vmin}
 #bqref{position:absolute;inset:0;width:100%;height:100%;opacity:.5;z-index:20;pointer-events:none}
+
+.bow{z-index:6;pointer-events:none}
+.bow img{display:block;width:100%;height:100%}
+
+.bqlogo{fill:#34201d;stroke:none;overflow:visible}
+
+/* ---------- yansıma: yalnız fon şəklinin üzərindən süzülür. Bloklar maska ilə kəsilib (üstünə və içinə düşmür) ---------- */
+#bqshine{position:absolute;inset:0;overflow:hidden;pointer-events:none;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+#bqshine i{position:absolute;top:-15%;bottom:-15%;left:0;width:55%;opacity:0;
+  background:linear-gradient(100deg,transparent 0,rgba(255,250,245,.14) 28%,rgba(255,252,248,.55) 50%,rgba(255,250,245,.14) 72%,transparent 100%);
+  transform:translateX(-120%) skewX(-18deg);will-change:transform,opacity;
+  animation:bqbgshine 12s cubic-bezier(.45,.05,.35,1) infinite}
+@keyframes bqbgshine{0%,22%{opacity:0;transform:translateX(-120%) skewX(-18deg)}32%{opacity:1}72%{opacity:1}86%,100%{opacity:0;transform:translateX(230%) skewX(-18deg)}}
+@media (prefers-reduced-motion:reduce){#bqshine i{animation:none;opacity:0}}
+
+/* qolbaqlar: ox düyməsi + yumşaq dəyişmə */
+.thumb img{transition:opacity .26s ease}
+.thumb.fade img{opacity:0}
+.arrow{cursor:pointer;padding:0;transition:transform .2s ease,background .2s ease}
+.arrow:active{transform:scale(.9);background:rgba(255,255,255,.75)}
+
+/* qolbaq lenti: pəncərə daxilində sürüşən sıra (ox düyməsi basılanda 4 şəkil yana süzülür) */
+.brwin{overflow:hidden}
+.brtrack{position:absolute;left:calc(8 * var(--k));top:calc(12 * var(--k));display:flex;gap:calc(10 * var(--k));
+  transform:translateX(calc(var(--p) * -154 * var(--k)));transition:transform .85s cubic-bezier(.65,.04,.22,1);will-change:transform}
+.brtrack .thumb{flex:none;position:relative;width:calc(144 * var(--k));height:calc(142 * var(--k))}
+@media (prefers-reduced-motion:reduce){.brtrack{transition:none}}
+
+/* barmaqla sürüşdürmə: üfüqi jest bizə, şaquli jest səhifəyə */
+.brwin{touch-action:pan-y;cursor:grab;-webkit-user-select:none;user-select:none}
+.brwin.dragging{cursor:grabbing}
+.brtrack .thumb img{-webkit-user-drag:none;pointer-events:none}
+
+/* şəkilli bloklarda yazı oxunsun deyə yumşaq tünd örtük */
+.tile.has::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(52,30,22,.58) 0,rgba(52,30,22,.44) 60%,rgba(52,30,22,.3) 100%)}
+.t.lt{text-shadow:0 calc(1 * var(--k)) calc(5 * var(--k)) rgba(40,22,15,.6),0 0 calc(14 * var(--k)) rgba(40,22,15,.35)}
+
+/* ---------- SOLARIUM daxili səhifə + blokun işıqlanması ---------- */
+.langs{z-index:30}
+.hit{background:transparent;border:0;padding:0;border-radius:calc(30 * var(--k));cursor:pointer;-webkit-tap-highlight-color:transparent;z-index:5}
+.hit:active{background:rgba(255,255,255,.12)}
+.tile img{transition:filter .5s ease}
+.tile.has::before{transition:opacity .45s ease}
+.tile{transition:box-shadow .5s ease}
+.tile.lit::before{opacity:.06}   /* yalnız tünd örtük azalır (parıltı/parlaqlıq yoxdur) */
+.go-arrow{display:grid;place-items:center;border-radius:50%;border:calc(1.4 * var(--k)) solid rgba(110,80,70,.4);background:rgba(255,255,255,.5);pointer-events:none}
+.go-arrow svg{width:55%;height:55%;fill:none;stroke:#5b4038;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+#bqpage{position:absolute;inset:0;z-index:20;overflow:hidden}   /* fon yoxdur: əsas fon şəkli sabit qalır */
+#bqpage .pgbg{position:absolute;inset:0;overflow:hidden}
+#bqpage .pgbg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(calc(10 * var(--k)));transform:scale(1.06)}
+#bqpage .pgveil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(250,242,237,.7),rgba(246,234,227,.62))}
+.pgrow{position:absolute;inset:0}
+.pg.go .pgrow{animation:pgin .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(.56s + var(--n) * .035s)}
+@keyframes pgin{from{opacity:0;transform:translateY(calc(18 * var(--k)))}to{opacity:1;transform:none}}
+.pg.closing .pgrow{opacity:0;transform:translateY(calc(-8 * var(--k)));transition:opacity .22s ease,transform .22s ease}
+.t.up{text-transform:uppercase}
+.t.pghead{font-weight:700;letter-spacing:.2em;color:#8a5a34}
+.t.pgrw{font-weight:600;font-variant-numeric:lining-nums}
+.t.pgt{font-weight:600;letter-spacing:.01em}
+.pgcard{background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,248,244,.4))}
+.pgback{display:flex;align-items:center;justify-content:center;gap:calc(6 * var(--k));border-radius:99px;border:calc(1.4 * var(--k)) solid rgba(110,80,70,.4);
+  background:rgba(255,255,255,.55);color:var(--ink);font:600 calc(22 * var(--k)) var(--serif);cursor:pointer;z-index:2}
+.pgback svg{width:calc(22 * var(--k));height:calc(22 * var(--k));fill:none;stroke:#5b4038;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pgback:active{background:#fff}
+@media (prefers-reduced-motion:reduce){.pg.go .pgrow{animation:none}}
+#bqpage .note{font-size:calc(22 * var(--k))}
+#bq:not([data-lang=az]) #bqpage .note{font-size:calc(21 * var(--k))}
+
+/* qruplar (zolaqlar): əsas səhifə sola sürüşəndə hər biri ayrıca hərəkət edir; səhifə açıqkən gizlidir */
+.mg{position:absolute;inset:0;will-change:transform}
+#bq.page-open .mg:not(.ms){visibility:hidden}
+.mg{pointer-events:none}
+.mg .hit,.mg .brwin,.mg .arrow{pointer-events:auto}
+.mg[data-g="0"]{z-index:6}
+#bqpage .pgbg{display:none}
+#bqshine{transition:opacity .3s ease}

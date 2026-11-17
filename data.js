@@ -5,7 +5,7 @@
    =========================================================== */
 window.MENU_DATA = {
   brand: "megaSun",
-  version: "v5 · 17.11 17:06",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
+  version: "v6 · 17.11 19:18",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
   currency: "₼",
   idleSeconds: 45,                 // toxunulmasa neçə saniyədən sonra reklam başlasın
   reloadAt: "04:00",               // hər gün bu saatda səhifə özünü yeniləyir
@@ -40,16 +40,28 @@ window.MENU_DATA = {
       right: [["Somewhere on a Beach", "125 AZN"], ["Bali Beach", "125 AZN"], ["Bahama Bronzer", "125 AZN"], ["Neon Rose", "125 AZN"], ["Color Karma", "135 AZN"], ["Sunset Strip", "135 AZN"]],
       samples: ["15 ml — 10 AZN", "6 ml — 6 AZN"]
     },
-    /* Şəkil yerləri: fayl yolunu yaz (məs. "media/boutique/solarium.jpg"). Boş qalsa rəngli boş sahə görünür. */
-    images: { solarium: "", packages: "", creams: "", lovers: "", bracelets: ["", "", "", ""] },
-    script: "Wear your heart",
+    /* bracelets: istənilən sayda şəkil; 4-dən çox olanda ox düyməsi növbəti 4-lüyü göstərir (dövrə vurur). Şəkil yerləri: fayl yolunu yaz (məs. "media/boutique/solarium.jpg"). Boş qalsa rəngli boş sahə görünür. */
+    images: { solarium: "media/card/solarium.webp", packages: "media/card/packages.webp", creams: "media/card/creams.webp", lovers: "media/card/lovers.webp", bracelets: ["media/qolbaq/qolbaq_1.webp", "media/qolbaq/qolbaq_2.webp", "media/qolbaq/qolbaq_3.webp", "media/qolbaq/qolbaq_4.webp", "media/qolbaq/qolbaq_5.webp", "media/qolbaq/qolbaq_6.webp"] },
+    /* Başlıq altı, blok yazıları və qalan sabit mətnlər (3 dildə). Sətir massivləri = ayrı sətirlər */
+    back: { az: "Geri", ru: "Назад", en: "Back" },
+    studio: { az: "SOLARİUM STUDİYASI &amp; BUTİK", ru: "СОЛЯРИЙ-СТУДИЯ И БУТИК", en: "SOLARIUM STUDIO &amp; BOUTIQUE" },
+    tiles: {
+      solarium: { az: "Solarium", ru: "Солярий", en: "Solarium" },
+      packages: { az: ["Paketlər", "və abonementlər"], ru: ["Пакеты", "и абонементы"], en: ["Packages", "&amp; Memberships"] },
+      creams: { az: ["Bronzlaşdırıcı", "kremlər"], ru: ["Кремы", "для загара"], en: ["Tanning", "Creams"] },
+      brand: "Devoted Creations",
+      lovers: ["MegaSun", "Lovers"],
+      loversSub: { az: "Qolbaq kolleksiyası", ru: "Коллекция браслетов", en: "Bracelet Collection" }
+    },
+    ml: { az: "ml", ru: "мл", en: "ml" },
+    script: { az: "Ürəyini daşı", ru: "Носи своё сердце", en: "Wear your heart" },
     services: [
-      ["bag", "Boutique", { az: "(Alo Yoga, Lululemon, On Cloud və s.)", ru: "(Alo Yoga, Lululemon, On Cloud и др.)", en: "(Alo Yoga, Lululemon, On Cloud, etc.)" }],
-      ["drink", "Refresh", { az: "(Fresh juice)", ru: "(Свежевыжатые соки)", en: "(Fresh juice)" }],
-      ["icecream", "Ice Cream", { az: "by MegaSun", ru: "от MegaSun", en: "by MegaSun" }],
+      ["bag", { az: "Butik", ru: "Бутик", en: "Boutique" }, { az: "(Alo Yoga, Lululemon, On Cloud və s.)", ru: "(Alo Yoga, Lululemon, On Cloud и др.)", en: "(Alo Yoga, Lululemon, On Cloud, etc.)" }],
+      ["drink", { az: "Təravət", ru: "Освежись", en: "Refresh" }, { az: "(Təzə şirələr)", ru: "(Свежевыжатые соки)", en: "(Fresh juice)" }],
+      ["icecream", { az: "Dondurma", ru: "Мороженое", en: "Ice Cream" }, { az: "MegaSun-dan", ru: "от MegaSun", en: "by MegaSun" }],
       ["cake", "Tiramisu Bar", { az: "(Catering)", ru: "(Кейтеринг)", en: "(Catering)" }],
-      ["caviar", "Caviar Atelier", { az: "(Catering)", ru: "(Кейтеринг)", en: "(Catering)" }],
-      ["calendar", "Events", { az: "& Private Catering", ru: "& частный кейтеринг", en: "& Private Catering" }]
+      ["caviar", { az: "Kürü Atelyesi", ru: "Икорное ателье", en: "Caviar Atelier" }, { az: "(Catering)", ru: "(Кейтеринг)", en: "(Catering)" }],
+      ["calendar", { az: "Tədbirlər", ru: "Мероприятия", en: "Events" }, { az: "& Özəl catering", ru: "& частный кейтеринг", en: "& Private Catering" }]
     ]
   },
   /* Siyahının altındakı əlaqə sətri. Doldurmaq üçün: contact: { address: "...", phone: "...", instagram: "@..." } */
