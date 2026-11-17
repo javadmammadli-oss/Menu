@@ -12,9 +12,12 @@
 
   const S = (o) => Object.entries(o).map(([k, v]) => `--${k}:${v}`).join(";");
   const a = (x, y, w, h, cls, inner = "") => `<div class="a ${cls}" style="${S({ x, y, w, h })}">${inner}</div>`;
-  const img = (src) => `<img src="media/boutique/${src}.jpg" alt="" draggable="false">`;
+  const pic = (src) => (src ? `<img src="${src}" alt="" draggable="false">` : "");
+  const IM = B.images || {};
   const tx = (s, x, y, fs, cls = "") => `<span class="t ${cls}" style="${S({ x, y, fs })}">${s}</span>`;      // x = sol kənar, y = şaquli mərkəz
-  const rt = (s, x, y, fs, cls = "") => tx(s, x, y, fs, "r " + cls);                                          // x = sağ kənar
+  const rt = (s, x, y, fs, cls = "") => tx(s, x, y, fs, "r " + cls);
+  const tc = (s, x, y, fs, cls = "") => tx(s, x, y, fs, "c " + cls);                                       // x = mərkəz
+  const slot = (x, y, w, h, cls, ph, src) => `<div class="a ${cls} slot" style="${S({ x, y, w, h })};--ph:${ph}">${pic(src)}</div>`;   // şəkil yeri: şəkil verilməyibsə rəngli boş sahə                                          // x = sağ kənar
   const line = (x, y, w, h) => `<i class="a ln" style="${S({ x, y, w, h })}"></i>`;
 
   const svg = {
@@ -27,19 +30,22 @@
     icecream: '<path d="M7.5 11h9L12 22l-4.5-11z"/><path d="M7 11a5 5 0 0 1 10 0"/><path d="M12 4V2.8"/>',
     cake: '<path d="M4 14h16v5H4z"/><path d="M4 14l2-5h12l2 5"/><path d="M12 9V6"/><path d="M10 6h4"/>',
     caviar: '<ellipse cx="12" cy="11" rx="9" ry="3.4"/><path d="M3 11v4c0 1.9 4 3.4 9 3.4s9-1.5 9-3.4v-4"/><path d="M8 10.6h8"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/>',
     calendar: '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/><path d="M12 12.4l.9 1.9 2 .3-1.5 1.4.4 2-1.8-1-1.8 1 .4-2-1.5-1.4 2-.3z"/>'
   };
-  const ico = (name, x, y, w, h) => `<svg class="a ic" style="${S({ x, y, w, h })}" viewBox="0 0 24 24">${svg[name] || ""}</svg>`;
+  const ico = (name, x, y, w, h, cls = "") => `<svg class="a ic ${cls}" style="${S({ x, y, w, h })}" viewBox="0 0 24 24">${svg[name] || ""}</svg>`;
 
   function build() {
     const s = B.sessions, cr = B.creams;
     let h = "";
 
-    /* ---- başlıq (şəkil: loqo yazısı, qolbaq, bant) ---- */
-    h += a(0, 0, 1086, 196, "hdr", img("header"));
+    /* ---- başlıq (vektor mətn; qolbaq fonun özündədir) ---- */
+    h += tc("MegaSun", 545, 82, 100, "brand");
+    h += tc("SOLARIUM STUDIO &amp; BOUTIQUE", 545, 143, 17.5, "sub");
 
     /* ---- 1. Solarium Sessions ---- */
-    h += a(28, 197, 320, 263, "tile", img("tile-solarium"));
+    h += slot(28, 197, 320, 263, "tile", "linear-gradient(145deg,#b39a8b,#8d7466)", IM.solarium);
+    h += ico("sun", 163, 276, 54, 54, "sun") + tc("Solarium", 187, 352, 74, "script lt") + ico("sun", 162, 396, 54, 54, "sun");
     h += a(350, 200, 712, 260, "glass");
     h += tx(L(s.title), 388, 242, 40, "h");
     s.rows.forEach((r, i) => {
@@ -51,10 +57,10 @@
       const y = i ? 397 : 300;
       h += ico(n[0], 760, y - 18, 38, 36) + `<p class="note a" style="${S({ x: 815, y: y - 33, w: 215, h: 66 })}"><span>${L(n[1])}</span></p>`;
     });
-    h += a(985, 196, 101, 160, "tail", img("tail"));
 
     /* ---- 2. Packages & Memberships ---- */
-    h += a(28, 480, 320, 229, "tile", img("tile-packages"));
+    h += slot(28, 480, 320, 229, "tile", "linear-gradient(145deg,#b98560,#946146)", IM.packages);
+    h += tx("Packages", 59, 571, 42, "ser lt") + tx("&amp; Memberships", 80, 615, 40, "ser lt");
     h += a(350, 483, 712, 229, "glass");
     const py = [519, 584, 657];
     B.packages.forEach((p, i) => {
@@ -68,7 +74,8 @@
     h += `<svg class="a heart" style="${S({ x: 982, y: 566, w: 62, h: 68 })}" viewBox="0 0 60 66"><path d="M30 60C9 44 3 29 8 17 13 6 26 8 30 20 34 8 48 5 53 16 58 28 51 44 30 60z"/></svg>`;
 
     /* ---- 3. Tanning Creams ---- */
-    h += a(28, 732, 320, 267, "tile", img("tile-creams"));
+    h += slot(28, 732, 320, 267, "tile", "linear-gradient(145deg,#cbb0a0,#a98b7c)", IM.creams);
+    h += tx("Tanning", 64, 812, 44, "ser lt") + tx("Creams", 71, 864, 44, "ser lt") + tx("Devoted Creations", 71, 905, 24, "rom lt");
     h += a(350, 735, 712, 263, "glass");
     cr.left.forEach((r, i) => { const y = 765 + i * 33.7; h += tx(r[0], 386, y, 20) + tx("—", 575, y, 20, "dim") + rt(r[1], 685, y, 20); });
     cr.right.forEach((r, i) => { const y = 762 + i * 29; h += tx(r[0], 732, y, 19) + tx("—", 936, y, 19, "dim") + rt(r[1], 1040, y, 19); });
@@ -78,9 +85,10 @@
     h += tx(cr.samples[0], 456, 963, 20) + line(635, 951, 1.3, 24) + tx(cr.samples[1], 670, 963, 20);
 
     /* ---- 4. Bracelets ---- */
-    h += a(28, 1018, 343, 233, "tile", img("tile-lovers"));
+    h += slot(28, 1018, 343, 233, "tile", "linear-gradient(145deg,#c9b09e,#9d8374)", IM.lovers);
+    h += tx("MegaSun", 62, 1059, 44, "ser lt") + tx("Lovers", 84, 1100, 44, "ser lt") + tx("Bracelet Collection", 71, 1134, 21, "rom lt sp");
     h += a(372, 1018, 690, 233, "glass");
-    [408, 564, 720, 875].forEach((x, i) => { h += a(x, 1040, i === 3 ? 143 : 146, 142, "thumb", img("b" + (i + 1))); });
+    [408, 564, 720, 875].forEach((x, i) => { h += slot(x, 1040, i === 3 ? 143 : 146, 142, "thumb", "linear-gradient(160deg,#eadccf,#d9c5b6)", (IM.bracelets || [])[i]); });
     h += `<span class="arrow a" style="${S({ x: 1017, y: 1098, w: 34, h: 34 })}"><svg viewBox="0 0 24 24"><path d="M9.5 6.5L15 12l-5.5 5.5"/></svg></span>`;
     h += tx(L(B.script), 570, 1212, 46, "script");
 

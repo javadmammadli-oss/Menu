@@ -316,7 +316,7 @@
   }, 20000);
 
   // kontekst menyusunu və uzun basmanı blokla
-  document.addEventListener("contextmenu", (e) => e.preventDefault());
+  document.addEventListener("contextmenu", (e) => { if (!/[?&]inspect=1/.test(location.search)) e.preventDefault(); });   // kioskda sağ klik bağlıdır; inspect üçün ?inspect=1
 
   /* TEST DÜYMƏSİ: reklamı dərhal göstərir. Söndürmək üçün data.js-də testButton: false */
   if (D.testButton) {

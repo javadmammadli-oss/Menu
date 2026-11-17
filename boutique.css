@@ -1,10 +1,10 @@
 /* Butik dizaynı: stage 3:4, --k = 1 orijinal piksel (1086 px eninə görə) */
 body.bq-on #app{display:none}
 #boutique{display:none}
-body.bq-on #boutique{position:fixed;inset:0;z-index:1;display:grid;place-items:center;overflow:hidden;background:#e2d6ce}
+body.bq-on #boutique{position:fixed;inset:0;z-index:1;display:grid;place-items:center;overflow:hidden;background:#e6d8d0}
 #bq{--k:calc(100cqw / 1086);position:relative;overflow:hidden;container-type:size;
   height:min(100vh,calc(100vw * 4 / 3));height:min(100dvh,calc(100vw * 4 / 3));aspect-ratio:3/4;
-  background:#e2d6ce url("media/boutique/bg.jpg") center/100% 100% no-repeat;
+  background:#e6d8d0 url("media/boutique/bg-satin.jpg") center/100% 100% no-repeat;
   --ink:#3a2622;--ink2:#5b4540;--dim:#8a7168;--serif:"Cormorant Garamond","EB Garamond","Noto Serif",Georgia,"Times New Roman",serif;
   font-family:var(--serif);color:var(--ink);user-select:none;-webkit-user-select:none}
 #bq *{box-sizing:border-box}
@@ -16,14 +16,21 @@ body.bq-on #boutique{position:fixed;inset:0;z-index:1;display:grid;place-items:c
 .t.dim{color:var(--dim);font-weight:500}
 .t.script{font-family:"Great Vibes","Segoe Script","Brush Script MT",cursive;font-weight:400;color:#8c5f52;line-height:1.1}
 
-.hdr img,.tile img,.thumb img,.tail img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none}
-.hdr{-webkit-mask:linear-gradient(#000 92%,transparent);mask:linear-gradient(#000 92%,transparent)}
-.tail{z-index:3;clip-path:polygon(8% 0,79% 0,89% 37.5%,94% 75%,97% 100%,59% 100%,47.5% 75%,25.7% 37.5%)}
+.tile img,.thumb img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none}
+#bq{text-rendering:geometricPrecision;-webkit-font-smoothing:antialiased}
+.slot{background:var(--ph)}
+.t.c{transform:translate(-50%,-50%)}
+.t.brand{font-weight:300;letter-spacing:-.012em;color:#34201d}
+.t.sub{font-weight:500;letter-spacing:.42em;margin-right:-.42em;color:#3d2925}
+.t.ser{font-style:italic;font-weight:500}
+.t.rom{font-weight:500}
+.t.sp{letter-spacing:.05em}
+.t.lt{color:#fbeee5;text-shadow:0 calc(1 * var(--k)) calc(6 * var(--k)) rgba(60,35,25,.35)}
+.t.script.lt{color:#fbeee5;font-weight:400}
+.ic.sun{stroke:#fbeee5;stroke-width:1.1}
 .tile,.thumb{overflow:hidden;border-radius:calc(30 * var(--k));border:calc(2 * var(--k)) solid rgba(255,255,255,.7);
   box-shadow:0 calc(8 * var(--k)) calc(22 * var(--k)) rgba(120,90,80,.2)}
-.tile img{transform:scale(1.06)}
 .thumb{border-radius:calc(16 * var(--k));box-shadow:0 calc(4 * var(--k)) calc(12 * var(--k)) rgba(120,90,80,.18);border-width:calc(1.5 * var(--k))}
-.thumb img{transform:scale(1.04)}
 .glass{border-radius:calc(30 * var(--k));border:calc(1.6 * var(--k)) solid rgba(255,255,255,.8);
   background:linear-gradient(180deg,rgba(255,255,255,.5),rgba(255,248,244,.34));
   box-shadow:0 calc(8 * var(--k)) calc(24 * var(--k)) rgba(120,90,80,.14),inset 0 0 calc(26 * var(--k)) rgba(255,255,255,.55)}

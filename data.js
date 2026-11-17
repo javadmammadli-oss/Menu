@@ -5,7 +5,7 @@
    =========================================================== */
 window.MENU_DATA = {
   brand: "megaSun",
-  version: "v4 · 16.11 23:26",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
+  version: "v5 · 17.11 17:06",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
   currency: "₼",
   idleSeconds: 45,                 // toxunulmasa neçə saniyədən sonra reklam başlasın
   reloadAt: "04:00",               // hər gün bu saatda səhifə özünü yeniləyir
@@ -40,6 +40,8 @@ window.MENU_DATA = {
       right: [["Somewhere on a Beach", "125 AZN"], ["Bali Beach", "125 AZN"], ["Bahama Bronzer", "125 AZN"], ["Neon Rose", "125 AZN"], ["Color Karma", "135 AZN"], ["Sunset Strip", "135 AZN"]],
       samples: ["15 ml — 10 AZN", "6 ml — 6 AZN"]
     },
+    /* Şəkil yerləri: fayl yolunu yaz (məs. "media/boutique/solarium.jpg"). Boş qalsa rəngli boş sahə görünür. */
+    images: { solarium: "", packages: "", creams: "", lovers: "", bracelets: ["", "", "", ""] },
     script: "Wear your heart",
     services: [
       ["bag", "Boutique", { az: "(Alo Yoga, Lululemon, On Cloud və s.)", ru: "(Alo Yoga, Lululemon, On Cloud и др.)", en: "(Alo Yoga, Lululemon, On Cloud, etc.)" }],
