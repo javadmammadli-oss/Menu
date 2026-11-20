@@ -5,7 +5,7 @@
    =========================================================== */
 window.MENU_DATA = {
   brand: "megaSun",
-  version: "v10 · 20.11 20:16",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
+  version: "v11 · 20.11 20:24",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
   /* DİZAYN: "classic" = köhnə menyu (Solarium / Bar / Kremlər), "boutique" = yeni butik dizaynı. Dəyişib push etmək kifayətdir. Linkdə ?design=boutique ilə də sınaya bilərsən */
   design: "classic",
   currency: "₼",
@@ -119,7 +119,7 @@ window.MENU_DATA = {
   ],
   /* əlavə xidmətlər (istəməsən boş burax: []) — prefix: qiymətin qarşısındakı işarə */
   packages: [
-    { name: { az: "Vibra-nano", ru: "Вибра-нано", en: "Vibra-nano" }, price: 3, prefix: "+", info: "media/Ad10.png" }
+    { name: { az: "Vibra-nano", ru: "Вибра-нано", en: "Vibra-nano" }, price: 3, prefix: "+", info: "media/ads/Ad10.webp" }
   ],
   /* ---------- ABUNƏLİKLƏR (kart şəkli + abonement növləri) ----------
      card.number: kartın üzərindəki nömrə. price/bonus: manatla (rəqəm).
@@ -143,8 +143,8 @@ window.MENU_DATA = {
     { name: { az: "Çay",       ru: "Чай",       en: "Tea" },       free: true },
     { name: { az: "Nescafe",   ru: "Нескафе",   en: "Nescafe" },   free: true },
     { name: { az: "Red Bull",  ru: "Red Bull",  en: "Red Bull" },  price: 6 },
-    { name: "MegaSun Special", price: 5, preview: "media/Ad8.png" },
-    { name: { az: "Kök şirəsi", ru: "Морковный сок", en: "Carrot juice" }, price: 6 }
+    { name: "MegaSun Special", price: 5, preview: "media/ads/Ad8.webp" },
+    { name: { az: "Kök şirəsi", ru: "Морковный сок", en: "Carrot juice" }, price: 6, preview: "media/ads/Ad11.webp" }
   ],
   /* ---------- KREMLƏR (dairədə şəkil + ad; basanda məlumat). img: afişa, pos: dairədə şəklin şaquli yeri (%) ---------- */
   creams: [
@@ -171,20 +171,22 @@ window.MENU_DATA = {
            "video" → src: "media/video.mp4" (səssiz, avtomatik)
      seconds: slaydın qalma müddəti                                      */
   ads: [
-    /* media/ qovluğundakı Ad1–Ad9 hazır afişalardır (992×1586 ≈ 5:8). Üstünə yazı əlavə edilmir. */
-    { type: "poster", src: "media/Ad1.png", ratio: 0.6255, seconds: 8 },   /* Game Over (Devoted Creations) */
-    { type: "poster", src: "media/Ad2.png", ratio: 0.6255, seconds: 8 },   /* Space 3000 */
-    { type: "poster", src: "media/Ad3.png", ratio: 0.6255, seconds: 8 },   /* Extrasun+ 5600 */
-    { type: "poster", src: "media/Ad4.png", ratio: 0.6259, seconds: 8 },   /* megaSun T200 */
-    { type: "poster", src: "media/Ad5.png", ratio: 0.6255, seconds: 8 },   /* Bahama Bronzer (Tanovations) */
-    { type: "poster", src: "media/Ad6.png", ratio: 0.6255, seconds: 8 },   /* Color Karma (Devoted Creations) */
-    { type: "poster", src: "media/Ad7.png", ratio: 0.6255, seconds: 8 },   /* Somewhere on a Beach (Devoted Creations) */
-    { type: "poster", src: "media/Ad8.png", ratio: 0.6255, seconds: 8 },   /* MegaSun Çay Seti (fincan) */
-    { type: "poster", src: "media/Ad9.png", ratio: 0.6255, seconds: 8 },   /* MegaSun Çay Seti (armudu stəkan) */
-    { type: "poster", src: "media/Ad10.png", ratio: 0.6255, seconds: 8 }   /* Vibra-nano */
+    /* media/ads/ qovluğundakı Ad1–Ad11 hazır afişalardır, hamısı 3:4 (1200×1600). Üstünə yazı əlavə edilmir. */
+    { type: "poster", src: "media/ads/Ad1.webp", ratio: 0.75, seconds: 8 }   /* Game Over (Devoted Creations) */,
+    { type: "poster", src: "media/ads/Ad2.webp", ratio: 0.75, seconds: 8 }   /* Space 3000 */,
+    { type: "poster", src: "media/ads/Ad3.webp", ratio: 0.75, seconds: 8 }   /* Extrasun+ 5600 */,
+    { type: "poster", src: "media/ads/Ad4.webp", ratio: 0.75, seconds: 8 }   /* megaSun T200 */,
+    { type: "poster", src: "media/ads/Ad5.webp", ratio: 0.75, seconds: 8 }   /* Bahama Bronzer (Tanovations) */,
+    { type: "poster", src: "media/ads/Ad6.webp", ratio: 0.75, seconds: 8 }   /* Color Karma (Devoted Creations) */,
+    { type: "poster", src: "media/ads/Ad7.webp", ratio: 0.75, seconds: 8 }   /* Somewhere on a Beach (Devoted Creations) */,
+    { type: "poster", src: "media/ads/Ad8.webp", ratio: 0.75, seconds: 8 }   /* MegaSun Special çay seti (fincan) */,
+    { type: "poster", src: "media/ads/Ad9.webp", ratio: 0.75, seconds: 8 }   /* MegaSun çay seti (armudu stəkan) */,
+    { type: "poster", src: "media/ads/Ad10.webp", ratio: 0.75, seconds: 8 }   /* Vibra-nano */,
+    { type: "poster", src: "media/ads/Ad11.webp", ratio: 0.75, seconds: 8 }   /* Carrot Glow (kök şirəsi) */
     /* başqa növlər (nümunə):
     { type: "photo", src: "media/foto.webp", kb: "a", seconds: 10, eyebrow: {...}, title: {...}, text: {...} },
     { type: "image", src: "media/reklam1.jpg", seconds: 8 },
     { type: "video", src: "media/reklam2.mp4", seconds: 15 },
-    */  ]
+    */
+  ]
 };
