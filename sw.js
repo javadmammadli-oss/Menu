@@ -1,6 +1,6 @@
-const CACHE = "menu-v85";
+const CACHE = "menu-v86";
 const FILES = ["./", "index.html", "style.css", "app.js", "data.js", "icon.svg", "logo.svg", "manifest.webmanifest", "boutique.js", "boutique.css", "media/abone/sun.svg", "media/abone/word.svg", "media/boutique/bg-satin.jpg", "media/boutique/bow.webp", "media/card/solarium.webp", "media/card/packages.webp", "media/card/creams.webp", "media/card/lovers.webp", "media/qolbaq/qolbaq_1.webp", "media/qolbaq/qolbaq_2.webp", "media/qolbaq/qolbaq_3.webp", "media/qolbaq/qolbaq_4.webp", "media/qolbaq/qolbaq_5.webp", "media/qolbaq/qolbaq_6.webp",
-  "media/bg.avif", "media/Ad1.png", "media/Ad5.png", "media/Ad6.png", "media/Ad7.png", "media/ads/Ad1.webp", "media/ads/Ad2.webp", "media/ads/Ad3.webp", "media/ads/Ad4.webp", "media/ads/Ad5.webp", "media/ads/Ad6.webp", "media/ads/Ad7.webp", "media/ads/Ad8.webp", "media/ads/Ad9.webp", "media/ads/Ad10.webp", "media/ads/Ad11.webp"];
+  "media/bg2.webp", "media/Ad1.png", "media/Ad5.png", "media/Ad6.png", "media/Ad7.png", "media/ads/Ad1.webp", "media/ads/Ad2.webp", "media/ads/Ad3.webp", "media/ads/Ad4.webp", "media/ads/Ad5.webp", "media/ads/Ad6.webp", "media/ads/Ad7.webp", "media/ads/Ad8.webp", "media/ads/Ad9.webp", "media/ads/Ad10.webp", "media/ads/Ad11.webp"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(FILES)).then(() => self.skipWaiting()));
