@@ -215,8 +215,9 @@
         // hazır dizayn edilmiş afişa (üstünə yazı çıxmır) + göstərilən yerlərdə növbə ilə işıq vurğusu
         const glows = (a.glows || []).map((g, n) =>
           `<i class="glow" style="--gx:${g[0]}%;--gy:${g[1]}%;--gw:${g[2]}%;--gh:${g[3]}%;--gi:${n}"></i>`).join("");
-        return `<div class="slide poster"><div class="pbg" style="background-image:url('${a.src}')"></div><div class="pbox" style="--arn:${a.ratio || 0.5625}">` +
-          `<img src="${a.src}" alt="">${glows}<i class="psheen"></i></div></div>`;
+        // şəkil dərhal yüklənmir (data-src): yaddaşda yalnız göstərilən, əvvəlki və növbəti slayd saxlanılır (iPad yaddaşı)
+        return `<div class="slide poster" data-src="${a.src}"><div class="pbg"></div><div class="pbox" style="--arn:${a.ratio || 0.5625}">` +
+          `<img alt="">${glows}<i class="psheen"></i></div></div>`;
       }
       if (a.type === "photo") {
         // foto + yavaş zoom (Ken Burns) + söz-söz gələn başlıq + işıq keçidi + irəliləyiş xətti
@@ -233,7 +234,21 @@
     $("hint").textContent = t(D.ui.touch);
   }
 
+  // afişa şəkillərini yalnız lazım olan slaydlarda yüklə, qalanlarını yaddaşdan burax
+  function loadPosters(i) {
+    const els = $("slides").children, n = els.length;
+    for (let k = 0; k < n; k++) {
+      const el = els[k], src = el.dataset.src;
+      if (!src) continue;
+      const keep = k === i || k === (i + 1) % n || el.classList.contains("on") || el.classList.contains("out");
+      const img = el.querySelector(".pbox img"), bg = el.querySelector(".pbg");
+      if (keep && !el.dataset.loaded) { img.src = src; bg.style.backgroundImage = `url('${src}')`; el.dataset.loaded = "1"; }
+      else if (!keep && el.dataset.loaded) { img.removeAttribute("src"); bg.style.backgroundImage = ""; delete el.dataset.loaded; }
+    }
+  }
+
   function showSlide(i) {
+    loadPosters(i);
     const els = $("slides").children;
     const cnt = $("adcount"); if (cnt) cnt.textContent = (i + 1) + " / " + els.length;
     for (let k = 0; k < els.length; k++) {
