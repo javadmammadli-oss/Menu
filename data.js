@@ -5,7 +5,7 @@
    =========================================================== */
 window.MENU_DATA = {
   brand: "megaSun",
-  version: "v11 · 20.11 20:24",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
+  version: "v12 · 20.11 20:31",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
   /* DİZAYN: "classic" = köhnə menyu (Solarium / Bar / Kremlər), "boutique" = yeni butik dizaynı. Dəyişib push etmək kifayətdir. Linkdə ?design=boutique ilə də sınaya bilərsən */
   design: "classic",
   currency: "₼",
@@ -171,7 +171,7 @@ window.MENU_DATA = {
            "video" → src: "media/video.mp4" (səssiz, avtomatik)
      seconds: slaydın qalma müddəti                                      */
   ads: [
-    /* media/ads/ qovluğundakı Ad1–Ad11 hazır afişalardır, hamısı 3:4 (1200×1600). Üstünə yazı əlavə edilmir. */
+    /* media/ads/ qovluğundakı Ad1–Ad11 hazır afişalardır, hamısı 3:4 (1620×2160, iPad), heç nə kəsilməyib. Üstünə yazı əlavə edilmir. */
     { type: "poster", src: "media/ads/Ad1.webp", ratio: 0.75, seconds: 8 }   /* Game Over (Devoted Creations) */,
     { type: "poster", src: "media/ads/Ad2.webp", ratio: 0.75, seconds: 8 }   /* Space 3000 */,
     { type: "poster", src: "media/ads/Ad3.webp", ratio: 0.75, seconds: 8 }   /* Extrasun+ 5600 */,
