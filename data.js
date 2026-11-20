@@ -5,7 +5,7 @@
    =========================================================== */
 window.MENU_DATA = {
   brand: "megaSun",
-  version: "v17 · 20.11 20:57",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
+  version: "v18 · 20.11 21:00",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
   /* DİZAYN: "classic" = köhnə menyu (Solarium / Bar / Kremlər), "boutique" = yeni butik dizaynı. Dəyişib push etmək kifayətdir. Linkdə ?design=boutique ilə də sınaya bilərsən */
   design: "classic",
   currency: "₼",
@@ -126,7 +126,7 @@ window.MENU_DATA = {
      vip: true → tac işarəsi və qızılı vurğu. sub: adın altında kiçik yazı.
      notes: kartın altındakı qısa qeydlər (istəməsən boş burax: [])          */
   subscriptions: {
-    card: { number: "000000" },
+    card: { number: "000000" },   // kart indi hazır şəkildir (media/abone/card.webp), nömrə şəklin üzərindədir
     plans: [
       { name: "Gold",    price: 100, bonus: 40 },
       { name: "Diamond", price: 200, bonus: 100 }
