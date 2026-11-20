@@ -5,7 +5,7 @@
    =========================================================== */
 window.MENU_DATA = {
   brand: "megaSun",
-  version: "v9 · 20.11 20:01",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
+  version: "v10 · 20.11 20:16",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
   /* DİZAYN: "classic" = köhnə menyu (Solarium / Bar / Kremlər), "boutique" = yeni butik dizaynı. Dəyişib push etmək kifayətdir. Linkdə ?design=boutique ilə də sınaya bilərsən */
   design: "classic",
   currency: "₼",
@@ -143,12 +143,8 @@ window.MENU_DATA = {
     { name: { az: "Çay",       ru: "Чай",       en: "Tea" },       free: true },
     { name: { az: "Nescafe",   ru: "Нескафе",   en: "Nescafe" },   free: true },
     { name: { az: "Red Bull",  ru: "Red Bull",  en: "Red Bull" },  price: 6 },
-    { name: { az: "Americano", ru: "Американо", en: "Americano" }, price: 3.5 },
-    { name: { az: "MegaSun çay set 1", ru: "MegaSun чай сет 1", en: "MegaSun tea set 1" }, price: null, preview: "media/Ad8.png" },
-    { name: { az: "MegaSun çay set 2", ru: "MegaSun чай сет 2", en: "MegaSun tea set 2" }, price: null, preview: "media/Ad9.png" },
-    { name: { az: "Kök şirəsi", ru: "Морковный сок", en: "Carrot juice" }, price: null },
-    { name: { az: "Cola",      ru: "Кола",      en: "Cola" },      price: 2.5 },
-    { name: { az: "Yaşıl çay", ru: "Зелёный чай", en: "Green tea" }, price: 2 }
+    { name: "MegaSun Special", price: 5, preview: "media/Ad8.png" },
+    { name: { az: "Kök şirəsi", ru: "Морковный сок", en: "Carrot juice" }, price: 6 }
   ],
   /* ---------- KREMLƏR (dairədə şəkil + ad; basanda məlumat). img: afişa, pos: dairədə şəklin şaquli yeri (%) ---------- */
   creams: [
