@@ -69,8 +69,8 @@
   function renderSubs() {
     const S = D.subscriptions;
     const card = `<div class="mcard-wrap"><div class="mcard">` +
-      `<img class="ms-sun" src="media/abone/sun.svg" alt=""><img class="ms-word" src="media/abone/word.svg" alt="megaSun">` +
-      `<span class="ms-no">${(S.card && S.card.number) || ""}</span><i class="ms-shine"></i></div></div>`;
+      `<i class="ms-brush"></i><i class="ms-gold ms-sun"></i><i class="ms-gold ms-word"></i>` +
+      `<span class="ms-tag">MEMBER</span><span class="ms-no">${(S.card && S.card.number) || ""}</span><i class="ms-shine"></i><i class="ms-edge"></i></div></div>`;
     const plans = S.plans.map((p) =>
       `<div class="row sub-row${p.vip ? " vip" : ""}"><div class="n">${p.vip ? `<span class="crown">${CROWN}</span>` : ""}${t(p.name)}` +
       `${p.sub ? `<small>${t(p.sub)}</small>` : ""}</div>` +
