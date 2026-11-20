@@ -5,7 +5,7 @@
    =========================================================== */
 window.MENU_DATA = {
   brand: "megaSun",
-  version: "v7 · 20.11 19:47",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
+  version: "v8 · 20.11 19:52",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
   /* DİZAYN: "classic" = köhnə menyu (Solarium / Bar / Kremlər), "boutique" = yeni butik dizaynı. Dəyişib push etmək kifayətdir. Linkdə ?design=boutique ilə də sınaya bilərsən */
   design: "classic",
   currency: "₼",
@@ -125,12 +125,10 @@ window.MENU_DATA = {
      vip: true → tac işarəsi və qızılı vurğu. sub: adın altında kiçik yazı.
      notes: kartın altındakı qısa qeydlər (istəməsən boş burax: [])          */
   subscriptions: {
-    card: { number: "005098" },
+    card: { number: "000000" },
     plans: [
-      { name: { az: "Abonement №1", ru: "Абонемент №1", en: "Membership №1" }, price: 100, bonus: 40 },
-      { name: { az: "Abonement №2", ru: "Абонемент №2", en: "Membership №2" }, price: 200, bonus: 100 },
-      { name: { az: "VIP Abonement", ru: "VIP абонемент", en: "VIP Membership" }, price: 200, bonus: 150, vip: true,
-        sub: { az: "məhdud sayda", ru: "ограниченно", en: "limited" } }
+      { name: "Gold",    price: 100, bonus: 40 },
+      { name: "Diamond", price: 200, bonus: 100 }
     ],
     bonus: { az: "bonus", ru: "бонус", en: "bonus" },
     notes: []
