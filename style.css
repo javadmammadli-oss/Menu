@@ -378,22 +378,18 @@ body.ad-on #poster *,body.ad-on #poster,body.ad-on #poster .logo::after{animatio
 /* metal kart: gümüşü fırçalanmış polad, loqo və nömrə CNC ilə oyulmuş (frezlənmiş) kimi */
 .mcard{position:relative;width:calc(52 * var(--u));aspect-ratio:85.6/54;border-radius:calc(2.4 * var(--u));overflow:hidden;
   background:
-    radial-gradient(140% 100% at 15% 0%,rgba(255,255,255,.55),transparent 50%),
-    radial-gradient(120% 120% at 100% 100%,rgba(60,66,74,.35),transparent 60%),
-    linear-gradient(125deg,#e4e7ea 0%,#b9bdc3 22%,#f2f4f6 42%,#a7acb3 62%,#d9dce0 80%,#9da2a9 100%);
+    radial-gradient(90% 70% at 20% 10%,rgba(255,255,255,.95),transparent 55%),
+    radial-gradient(70% 60% at 85% 90%,rgba(255,255,255,.55),transparent 60%),
+    linear-gradient(118deg,#f7f8fa 0%,#c6cbd2 14%,#8e959e 24%,#eef0f3 36%,#ffffff 42%,#b4bac2 52%,#7f868f 62%,#dfe3e8 74%,#ffffff 80%,#a9afb7 92%,#d4d8dd 100%);
   box-shadow:
     0 calc(3.4 * var(--u)) calc(7 * var(--u)) rgba(0,0,0,.55),
     0 calc(.8 * var(--u)) calc(1.6 * var(--u)) rgba(0,0,0,.35),
-    inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(0,0,0,.35),
-    inset 1px 0 0 rgba(255,255,255,.5),inset -1px 0 0 rgba(0,0,0,.2);
+    inset 0 1px 0 rgba(255,255,255,1),inset 0 -1px 0 rgba(0,0,0,.35),
+    inset 1px 0 0 rgba(255,255,255,.7),inset -1px 0 0 rgba(0,0,0,.2);
   transform-style:preserve-3d;animation:mfloat 7s ease-in-out infinite}
-/* fırçalanmış metal xətləri */
-.ms-brush{position:absolute;inset:0;pointer-events:none;opacity:.7;mix-blend-mode:soft-light;
-  background:
-    repeating-linear-gradient(0deg,rgba(255,255,255,.35) 0 1px,transparent 1px 2px),
-    repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px),
-    repeating-linear-gradient(0deg,rgba(255,255,255,.18) 0 2px,transparent 2px 7px),
-    repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0 1px,transparent 1px 11px)}
+/* güzgü kimi parlaq gümüş: fırça xətləri yoxdur, yalnız yumşaq əks olunma zolaqları */
+.ms-brush{position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;opacity:.6;
+  background:linear-gradient(160deg,transparent 30%,rgba(255,255,255,.7) 45%,transparent 52%,transparent 70%,rgba(255,255,255,.5) 78%,transparent 84%)}
 .mcard::before{display:none}
 /* CNC oyma: forma maska ilə kəsilir; içi bir az tünd, frez izləri (dairəvi xətlər) görünür;
    üst kənarda kölgə, alt kənarda işıq → səthə oyulmuş dərinlik effekti */
@@ -409,8 +405,8 @@ body.ad-on #poster *,body.ad-on #poster,body.ad-on #poster .logo::after{animatio
 .ms-no{position:absolute;right:7%;bottom:9%;font-variant-numeric:tabular-nums;
   font-size:calc(2.3 * var(--u));font-weight:600;letter-spacing:.16em;color:#7a8088;
   text-shadow:0 calc(-.15 * var(--u)) 0 rgba(40,44,50,.7),0 calc(.15 * var(--u)) 0 rgba(255,255,255,.95)}
-.ms-shine{position:absolute;inset:-40% -60%;pointer-events:none;mix-blend-mode:soft-light;
-  background:linear-gradient(110deg,transparent 40%,rgba(255,255,255,.25) 46%,rgba(255,255,255,.9) 50%,rgba(255,255,255,.25) 54%,transparent 60%);
+.ms-shine{position:absolute;inset:-40% -60%;pointer-events:none;mix-blend-mode:screen;
+  background:linear-gradient(110deg,transparent 38%,rgba(255,255,255,.15) 45%,rgba(255,255,255,.75) 50%,rgba(255,255,255,.15) 55%,transparent 62%);
   transform:translateX(-60%);animation:mshine 7s ease-in-out 1s infinite}
 /* kənar faska: incə parlaq haşiyə */
 .ms-edge{position:absolute;inset:0;border-radius:inherit;pointer-events:none;
