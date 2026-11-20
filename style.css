@@ -216,6 +216,10 @@ body.ad-on #poster *,body.ad-on #poster,body.ad-on #poster .logo::after{animatio
   transition:background .25s ease,color .25s ease}
 .pv svg{width:calc(2.6 * var(--u));height:calc(2.6 * var(--u));fill:none;stroke:currentColor;stroke-width:1.7}
 .pv:active{background:#fff;color:#1a1300}
+.extras .row .n{display:flex;align-items:center;gap:calc(1.6 * var(--u));min-width:0}
+.pv.info{border-color:rgba(255,204,12,.7);background:rgba(255,204,12,.14);color:var(--accent)}
+.pv.info svg circle:last-child{fill:currentColor}
+.pv.info:active{background:var(--accent);color:#1a1300}
 #pv{position:fixed;inset:0;z-index:45;display:grid;place-items:center;background:#050912;opacity:0;transition:opacity .3s ease;cursor:pointer}
 #pv.show{opacity:1}
 #pv .pvbg{position:absolute;inset:-12%;background-size:cover;background-position:center;filter:blur(5vmin) brightness(.7) saturate(1.2)}

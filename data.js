@@ -5,7 +5,7 @@
    =========================================================== */
 window.MENU_DATA = {
   brand: "megaSun",
-  version: "v8 · 20.11 19:52",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
+  version: "v9 · 20.11 20:01",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
   /* DİZAYN: "classic" = köhnə menyu (Solarium / Bar / Kremlər), "boutique" = yeni butik dizaynı. Dəyişib push etmək kifayətdir. Linkdə ?design=boutique ilə də sınaya bilərsən */
   design: "classic",
   currency: "₼",
@@ -79,6 +79,7 @@ window.MENU_DATA = {
     min:      { az: "dəq",       ru: "мин",      en: "min" },
     free:     { az: "Pulsuz",    ru: "Бесплатно", en: "Free" },
     preview:  { az: "Bax",       ru: "Вид",       en: "View" },
+    info:     { az: "Info",      ru: "Инфо",      en: "Info" },
     touch:    { az: "Menyu üçün toxunun", ru: "Коснитесь для меню", en: "Touch for menu" },
     note:     { az: "Qiymətlər manatla göstərilib", ru: "Цены указаны в манатах", en: "Prices are in AZN" }
   },
@@ -118,7 +119,7 @@ window.MENU_DATA = {
   ],
   /* əlavə xidmətlər (istəməsən boş burax: []) — prefix: qiymətin qarşısındakı işarə */
   packages: [
-    { name: { az: "Vibra-nano", ru: "Вибра-нано", en: "Vibra-nano" }, price: 3, prefix: "+" }
+    { name: { az: "Vibra-nano", ru: "Вибра-нано", en: "Vibra-nano" }, price: 3, prefix: "+", info: "media/Ad10.png" }
   ],
   /* ---------- ABUNƏLİKLƏR (kart şəkli + abonement növləri) ----------
      card.number: kartın üzərindəki nömrə. price/bonus: manatla (rəqəm).
@@ -136,6 +137,7 @@ window.MENU_DATA = {
   /* ---------- BAR (tək sütun, bu sırayla) ----------
      free: true  → qiymət əvəzinə "Pulsuz" yazılır
      preview: "media/X.png" → adın yanında "Bax" düyməsi çıxır, basanda afişa tam ekran açılır
+     (Əlavə xidmətlərdə info: "media/X.png" → adın yanında "Info" düyməsi)
      price: null → qiymət hələ bilinmir, "—" göstərilir (real qiyməti yaz)    */
   drinks: [
     { name: { az: "Çay",       ru: "Чай",       en: "Tea" },       free: true },
@@ -182,7 +184,8 @@ window.MENU_DATA = {
     { type: "poster", src: "media/Ad6.png", ratio: 0.6255, seconds: 8 },   /* Color Karma (Devoted Creations) */
     { type: "poster", src: "media/Ad7.png", ratio: 0.6255, seconds: 8 },   /* Somewhere on a Beach (Devoted Creations) */
     { type: "poster", src: "media/Ad8.png", ratio: 0.6255, seconds: 8 },   /* MegaSun Çay Seti (fincan) */
-    { type: "poster", src: "media/Ad9.png", ratio: 0.6255, seconds: 8 }    /* MegaSun Çay Seti (armudu stəkan) */
+    { type: "poster", src: "media/Ad9.png", ratio: 0.6255, seconds: 8 },   /* MegaSun Çay Seti (armudu stəkan) */
+    { type: "poster", src: "media/Ad10.png", ratio: 0.6255, seconds: 8 }   /* Vibra-nano */
     /* başqa növlər (nümunə):
     { type: "photo", src: "media/foto.webp", kb: "a", seconds: 10, eyebrow: {...}, title: {...}, text: {...} },
     { type: "image", src: "media/reklam1.jpg", seconds: 8 },

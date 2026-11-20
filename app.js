@@ -41,7 +41,7 @@
     let h = `<div class="cols">${cols}</div>`;
     if (D.packages.length) {
       h += `<div class="extras">` +
-        D.packages.map((p) => row(t(p.name) + (p.badge ? `<span class="badge">${p.badge}</span>` : ""), "", (p.prefix || "") + money(p.price))).join("") + `</div>`;
+        D.packages.map((p) => row(t(p.name) + (p.badge ? `<span class="badge">${p.badge}</span>` : "") + (p.info ? infoBtn(p.info) : ""), "", (p.prefix || "") + money(p.price))).join("") + `</div>`;
     }
     return h;
   }
@@ -49,6 +49,9 @@
   // "Bax" düyməsi: adın yanında, basanda afişa tam ekran açılır
   const EYE = '<svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
   const pvBtn = (src) => `<button class="pv" data-pv="${src}">${EYE}<span>${t(D.ui.preview)}</span></button>`;
+  // "Info" düyməsi (əlavə xidmətlər, məs. Vibra-nano): basanda məlumat afişası tam ekran açılır
+  const INFO = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6"/><circle cx="12" cy="7.6" r=".4"/></svg>';
+  const infoBtn = (src) => `<button class="pv info" data-pv="${src}">${INFO}<span>${t(D.ui.info || D.ui.preview)}</span></button>`;
 
   // bar: tək sütun, data.js-dəki sıra ilə
   function renderBar() {
