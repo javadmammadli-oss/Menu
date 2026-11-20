@@ -25,9 +25,11 @@
   const TITLES = {
     solarium: { az: ["Qiymət", "Siyahısı"], ru: ["Прайс", "Лист"], en: ["Price", "List"] },
     bar:      { az: ["Bar", "Menyusu"],     ru: ["Бар", "Меню"],    en: ["Bar", "Menu"] },
-    creams:   { az: ["Solarium", "Kremləri"], ru: ["Кремы для", "солярия"], en: ["Tanning", "Creams"] }
+    creams:   { az: ["Solarium", "Kremləri"], ru: ["Кремы для", "солярия"], en: ["Tanning", "Creams"] },
+    subs:     { az: ["Abunəlik", "Kartları"], ru: ["Клубные", "карты"], en: ["Membership", "Cards"] }
   };
-  const TABS = [["solarium", "solarium"], ["bar", "drinks"], ["creams", "creams"]];   // [view, D.ui açarı]
+  const TABS = [["solarium", "solarium"], ["bar", "drinks"], ["creams", "creams"]];
+  if (D.subscriptions) TABS.push(["subs", "subs"]);   // [view, D.ui açarı]
 
   const row = (name, sub, price) =>
     `<div class="row"><div class="n">${name}${sub ? `<small>${sub}</small>` : ""}</div><div class="p">${price}</div></div>`;
@@ -59,6 +61,31 @@
     return `<div class="creams">` + (D.creams || []).map((c, i) =>
       `<button class="cr-item" data-cr="${i}"><span class="cr-c" style="background-image:url('${c.img}');background-position:50% ${c.pos}%"></span><span class="cr-n">${c.name}</span><small>${c.brand}</small></button>`).join("") + `</div>`;
   }
+  // abunəliklər: yuxarıda megaSun kartı, altında abonement növləri
+  const CROWN = '<svg viewBox="0 0 24 24"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></svg>';
+  function renderSubs() {
+    const S = D.subscriptions;
+    const card = `<div class="mcard-wrap"><div class="mcard">` +
+      `<img class="ms-sun" src="media/abone/sun.svg" alt=""><img class="ms-word" src="media/abone/word.svg" alt="megaSun">` +
+      `<span class="ms-no">${(S.card && S.card.number) || ""}</span><i class="ms-shine"></i></div></div>`;
+    const plans = S.plans.map((p) =>
+      `<div class="row sub-row${p.vip ? " vip" : ""}"><div class="n">${p.vip ? `<span class="crown">${CROWN}</span>` : ""}${t(p.name)}` +
+      `${p.sub ? `<small>${t(p.sub)}</small>` : ""}</div>` +
+      `<div class="p">${money(p.price)}</div>` +
+      `<div class="b">${p.bonus ? `+${money(p.bonus)}<small>${t(S.bonus)}</small>` : ""}</div></div>`).join("");
+    const notes = (S.notes || []).map((n) => `<p class="sub-note">${t(n)}</p>`).join("");
+    return `<div class="subs">${card}<div class="sub-list">${plans}</div>${notes}</div>`;
+  }
+  // aktiv tab-ın altındakı ağ lövhə: düymənin real ölçüsü və yerinə görə (tab-ların eni fərqli ola bilər)
+  function placeThumb(i) {
+    const tabs = $("tabs"), btns = tabs.querySelectorAll(".tab"), th = tabs.querySelector(".thumb");
+    if (!th || !btns[i]) return;
+    th.style.width = btns[i].offsetWidth + "px";
+    th.style.transform = `translateX(${btns[i].offsetLeft - btns[0].offsetLeft}px)`;
+  }
+  window.addEventListener("resize", () => placeThumb(TABS.findIndex(([v]) => v === view)));
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => placeThumb(TABS.findIndex(([v]) => v === view)));
+
   function render() {
     $("langs").innerHTML = LANGS
       .map((l) => `<button class="lang ${lang === l ? "on" : ""}" data-lang="${l}">${l.toUpperCase()}</button>`).join("");
@@ -67,6 +94,7 @@
     // tab-lar bir dəfə qurulur (lövhənin sürüşmə animasiyası kəsilməsin deyə yenidən yaradılmır)
     const tabs = $("tabs");
     if (!tabs.children.length) {
+      tabs.dataset.n = String(TABS.length);
       tabs.innerHTML = `<i class="thumb"></i>` + TABS.map(([v]) => `<button class="tab" data-view="${v}"></button>`).join("");
     }
     tabs.dataset.on = String(TABS.findIndex(([v]) => v === view));
@@ -74,11 +102,12 @@
       b.textContent = t(D.ui[TABS[i][1]]);
       b.classList.toggle("on", b.dataset.view === view);
     });
+    placeThumb(TABS.findIndex(([v]) => v === view));
     $("note").textContent = t(D.ui.note);
     const c = D.contact || {};
     $("contact").innerHTML = [["pin", c.address], ["tel", c.phone], ["ig", c.instagram]]
       .filter((x) => x[1]).map((x) => `<span>${ic[x[0]]}${x[1]}</span>`).join("");
-    $("view").innerHTML = view === "bar" ? renderBar() : view === "creams" ? renderCreams() : renderSolarium();
+    $("view").innerHTML = view === "bar" ? renderBar() : view === "creams" ? renderCreams() : view === "subs" && D.subscriptions ? renderSubs() : renderSolarium();
     document.documentElement.lang = lang;
   }
 
@@ -95,6 +124,9 @@
     poster.querySelectorAll(".creams .cr-item").forEach((el, i) => el.style.setProperty("--d", 4 + i * 2));
     poster.querySelectorAll(".colx").forEach((col) =>
       col.querySelectorAll(".grp,.row").forEach((el, i) => el.style.setProperty("--d", 4 + i)));
+    d(".mcard-wrap", 3);
+    poster.querySelectorAll(".sub-row").forEach((el, i) => el.style.setProperty("--d", 7 + i * 2));
+    poster.querySelectorAll(".sub-note").forEach((el) => el.style.setProperty("--d", 14));
     poster.querySelectorAll(".extras .row").forEach((el) => el.style.setProperty("--d", 15));
     d("#note", 16);
     void poster.offsetWidth;
@@ -117,7 +149,8 @@
   }
   function swapView(v) {
     if (v === view) return;
-    $("tabs").dataset.on = String(TABS.findIndex(([x]) => x === v));   // lövhə dərhal sürüşməyə başlayır
+    $("tabs").dataset.on = String(TABS.findIndex(([x]) => x === v));
+    placeThumb(TABS.findIndex(([x]) => x === v));   // lövhə dərhal sürüşməyə başlayır
     document.querySelectorAll(".tab").forEach((b) => b.classList.toggle("on", b.dataset.view === v));
     swapContent(() => { view = v; store.set("view", v); }, false);
   }

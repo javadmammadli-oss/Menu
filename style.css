@@ -41,10 +41,10 @@ h1.big{position:absolute;z-index:4;left:calc(7 * var(--u));top:calc(16 * var(--u
 h1.big span{display:block;width:max-content}
 h1.big span+span{margin-left:calc(10 * var(--u))}
 /* dil keçidi: çıxış → giriş (pillə-pillə) */
-:is(#t1,#t2,#note,.grp,.row,.cr-item){transition:opacity .26s ease,transform .26s ease,filter .26s ease}
-#poster.out :is(#t1,#t2,#note,.grp,.row,.cr-item){opacity:0;transform:translateY(calc(-1.2 * var(--u)))}
+:is(#t1,#t2,#note,.grp,.row,.cr-item,.mcard-wrap,.sub-note){transition:opacity .26s ease,transform .26s ease,filter .26s ease}
+#poster.out :is(#t1,#t2,#note,.grp,.row,.cr-item,.mcard-wrap,.sub-note){opacity:0;transform:translateY(calc(-1.2 * var(--u)))}
 #poster.out :is(#t1,#t2){filter:blur(calc(.7 * var(--u)))}          /* blur yalnız iri başlıqlarda (yüngül qalsın) */
-#poster.in :is(.grp,.row,#note,.cr-item){animation:txtin .7s var(--ease) both;animation-delay:calc(var(--d,0) * 45ms)}
+#poster.in :is(.grp,.row,#note,.cr-item,.mcard-wrap,.sub-note){animation:txtin .7s var(--ease) both;animation-delay:calc(var(--d,0) * 45ms)}
 #poster.in :is(#t1,#t2){animation:txtin-big .9s var(--ease) both;animation-delay:calc(var(--d,0) * 70ms)}
 @keyframes txtin{from{opacity:0;transform:translateY(calc(1.6 * var(--u)))}to{opacity:1;transform:none}}
 @keyframes txtin-big{from{opacity:0;transform:translateY(calc(2.4 * var(--u)));filter:blur(calc(.9 * var(--u)))}to{opacity:1;transform:none;filter:blur(0)}}
@@ -74,6 +74,10 @@ html[lang=ru] h1.big{font-size:calc(12 * var(--u))}
   transition:transform .5s var(--ease)}
 .tabs[data-on="1"] .thumb{transform:translateX(100%)}
 .tabs[data-on="2"] .thumb{transform:translateX(200%)}
+/* 4 tab (Abunəliklər əlavə olunanda): enlər mətnə görə, lövhənin yeri/eni JS ilə (placeThumb) */
+.tabs[data-n="4"]{grid-template-columns:repeat(4,auto)}
+.tabs[data-n="4"] .thumb{transition:transform .5s var(--ease),width .5s var(--ease)}
+.tabs[data-n="4"] .tab{min-width:calc(11 * var(--u));padding:0 calc(1.9 * var(--u));font-size:calc(1.9 * var(--u));letter-spacing:.12em;text-indent:.12em}
 .tab{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;height:calc(5.2 * var(--u));line-height:1;
   min-width:calc(13 * var(--u));padding:0 calc(2.4 * var(--u));
   font-size:calc(2.15 * var(--u));font-weight:500;letter-spacing:.14em;text-indent:.14em;text-transform:uppercase;
@@ -363,3 +367,41 @@ body.ad-on #poster *,body.ad-on #poster,body.ad-on #poster .logo::after{animatio
   .crimg{height:calc(104 * var(--k))}
   .crinfo{width:calc(76 * var(--k));max-width:56vw}
 }
+
+/* ---------- ABUNƏLİKLƏR: megaSun kartı + abonement növləri ---------- */
+.subs{flex:1;min-height:0;display:flex;flex-direction:column}
+.mcard-wrap{flex:none;display:flex;justify-content:center;padding:calc(1 * var(--u)) 0 calc(5 * var(--u));perspective:calc(120 * var(--u))}
+.mcard{position:relative;width:calc(50 * var(--u));aspect-ratio:85.6/54;border-radius:calc(2.6 * var(--u));overflow:hidden;
+  background:
+    radial-gradient(120% 90% at 30% 15%,rgba(255,255,255,.10),transparent 55%),
+    linear-gradient(150deg,#1d1c1a 0%,#0c0c0b 55%,#121110 100%);
+  border:1px solid rgba(233,221,184,.22);
+  box-shadow:0 calc(3 * var(--u)) calc(7 * var(--u)) rgba(0,0,0,.55),0 calc(.6 * var(--u)) calc(1.4 * var(--u)) rgba(0,0,0,.4),
+    inset 0 1px 0 rgba(255,255,255,.12);
+  transform-style:preserve-3d;animation:mfloat 7s ease-in-out infinite}
+/* mat səth: incə dənəvərlik */
+.mcard::before{content:"";position:absolute;inset:0;opacity:.18;mix-blend-mode:overlay;pointer-events:none;
+  background:repeating-linear-gradient(45deg,rgba(255,255,255,.06) 0 1px,transparent 1px 3px)}
+.ms-sun{position:absolute;left:50%;top:15%;width:22%;transform:translateX(-50%);filter:drop-shadow(0 0 calc(.6 * var(--u)) rgba(233,221,184,.25))}
+.ms-word{position:absolute;left:50%;top:55%;width:60%;transform:translateX(-50%)}
+.ms-no{position:absolute;right:7%;bottom:9%;font-size:calc(2.2 * var(--u));font-weight:300;letter-spacing:.06em;color:rgba(233,221,184,.75);
+  font-variant-numeric:tabular-nums}
+.ms-shine{position:absolute;inset:-40% -60%;pointer-events:none;
+  background:linear-gradient(110deg,transparent 42%,rgba(255,240,200,.16) 48%,rgba(255,255,255,.28) 50%,rgba(255,240,200,.16) 52%,transparent 58%);
+  transform:translateX(-60%);animation:mshine 7s ease-in-out 1s infinite}
+@keyframes mfloat{0%,100%{transform:rotateX(8deg) rotateY(-10deg) translateY(0)}50%{transform:rotateX(4deg) rotateY(8deg) translateY(calc(-1 * var(--u)))}}
+@keyframes mshine{0%{transform:translateX(-60%)}45%,100%{transform:translateX(60%)}}
+body.ad-on :is(.mcard,.ms-shine){animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.mcard,.ms-shine{animation:none}}
+
+.sub-list{flex:1;min-height:0;display:flex;flex-direction:column}
+.row.sub-row{grid-template-columns:1fr calc(16 * var(--u)) calc(19 * var(--u));max-height:calc(13 * var(--u))}
+.sub-row .n small{font-size:.66em;letter-spacing:.08em;text-transform:uppercase}
+.sub-row .p{font-size:calc(3.6 * var(--u));font-weight:500}
+.sub-row .b{justify-self:end;width:calc(17 * var(--u));display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;
+  padding:calc(.9 * var(--u)) calc(1.8 * var(--u));border-radius:99px;border:1px solid rgba(255,204,12,.55);background:rgba(255,204,12,.10);
+  color:var(--accent);font-size:calc(2.8 * var(--u));font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
+.sub-row .b small{font-size:.58em;font-weight:400;letter-spacing:.14em;text-transform:uppercase;margin-top:.35em;color:rgba(255,204,12,.8)}
+.sub-row.vip .n{color:#ffe08a}
+.sub-row .crown svg{width:calc(3.2 * var(--u));height:calc(3.2 * var(--u));fill:var(--accent);vertical-align:-.12em;margin-right:calc(1.2 * var(--u))}
+.sub-note{flex:none;margin:calc(2.5 * var(--u)) 0 0;text-align:center;font-size:calc(2.3 * var(--u));font-weight:300;color:var(--soft)}

@@ -5,7 +5,7 @@
    =========================================================== */
 window.MENU_DATA = {
   brand: "megaSun",
-  version: "v6 · 17.11 19:18",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
+  version: "v7 · 20.11 19:47",                   // hər push-da avtomatik artır (bump.ps1), ekranın sağ aşağısında kiçik görünür
   /* DİZAYN: "classic" = köhnə menyu (Solarium / Bar / Kremlər), "boutique" = yeni butik dizaynı. Dəyişib push etmək kifayətdir. Linkdə ?design=boutique ilə də sınaya bilərsən */
   design: "classic",
   currency: "₼",
@@ -75,6 +75,7 @@ window.MENU_DATA = {
     solarium: { az: "Solarium",  ru: "Солярий",  en: "Solarium" },
     drinks:   { az: "Bar",       ru: "Бар",      en: "Bar" },
     creams:   { az: "Kremlər",   ru: "Кремы",    en: "Creams" },
+    subs:     { az: "Abunəliklər", ru: "Абонементы", en: "Memberships" },
     min:      { az: "dəq",       ru: "мин",      en: "min" },
     free:     { az: "Pulsuz",    ru: "Бесплатно", en: "Free" },
     preview:  { az: "Bax",       ru: "Вид",       en: "View" },
@@ -119,6 +120,21 @@ window.MENU_DATA = {
   packages: [
     { name: { az: "Vibra-nano", ru: "Вибра-нано", en: "Vibra-nano" }, price: 3, prefix: "+" }
   ],
+  /* ---------- ABUNƏLİKLƏR (kart şəkli + abonement növləri) ----------
+     card.number: kartın üzərindəki nömrə. price/bonus: manatla (rəqəm).
+     vip: true → tac işarəsi və qızılı vurğu. sub: adın altında kiçik yazı.
+     notes: kartın altındakı qısa qeydlər (istəməsən boş burax: [])          */
+  subscriptions: {
+    card: { number: "005098" },
+    plans: [
+      { name: { az: "Abonement №1", ru: "Абонемент №1", en: "Membership №1" }, price: 100, bonus: 40 },
+      { name: { az: "Abonement №2", ru: "Абонемент №2", en: "Membership №2" }, price: 200, bonus: 100 },
+      { name: { az: "VIP Abonement", ru: "VIP абонемент", en: "VIP Membership" }, price: 200, bonus: 150, vip: true,
+        sub: { az: "məhdud sayda", ru: "ограниченно", en: "limited" } }
+    ],
+    bonus: { az: "bonus", ru: "бонус", en: "bonus" },
+    notes: []
+  },
   /* ---------- BAR (tək sütun, bu sırayla) ----------
      free: true  → qiymət əvəzinə "Pulsuz" yazılır
      preview: "media/X.png" → adın yanında "Bax" düyməsi çıxır, basanda afişa tam ekran açılır
